@@ -13,46 +13,17 @@
 
 @import "./scss/mixins";
 @import "./scss/bootstrap";
-@import "./scss/global";
-@import "./scss/fonts";
 // @import "./scss/libraries";
-@import "./scss/frontend";
-@import "./scss/auth";
 @import "./scss/dashboard";
 @import "./scss/screen-loader";
 @import "./scss/buttons";
 @import "./scss/utilities";
 
-:root {
-    --swiper-navigation-size: 20px !important;
-    --swiper-theme-color: #2b3674 !important;
-}
 
 #root {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-}
-
-
-.ant-input {
-    background-color: #1e293b !important;
-    color: white;
-    opacity: 50%;
-
-    .ant-input::placeholder {
-        color: whitesmoke;
-    }
-}
-
-/* If you want to style the search icon as well */
-.ant-input-prefix svg {
-    fill: whitesmoke;
-}
-
-.light-input {
-    background-color: white !important;
-    /* or any other light color */
 }
 
 main {

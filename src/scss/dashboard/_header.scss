@@ -1,20 +1,9 @@
 .dashboard-header {
-    background-color: black;
+    background-color: $body-light;
     z-index: 1000;
     overflow: hidden;
     padding: 15px 15px;
     height: 109px;
-
-    // .ant-input.dark-input {
-    //     background-color: #1e293b;
-    //     color: white;
-    //     /* You might need to adjust text color for readability */
-    // }
-
-    // .light-input {
-    //     background-color: white;
-    //     /* or any other light color */
-    // }
 
     span.ant-input-affix-wrapper {
         background: #FFFFFF;

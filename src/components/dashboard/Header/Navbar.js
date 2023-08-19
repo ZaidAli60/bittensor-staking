@@ -45,14 +45,14 @@ export default function Navbar() {
     const style = { width: `calc(100% - ${siderWidth + 15}px)`, marginLeft: siderWidth, transition: "all 0.2s", zIndex: 1000 }
 
     return (
-        <header className={`dashboard-header position-fixed flex-between dashboard ${theme}`} style={style}>
+        <header className="dashboard-header position-fixed flex-between dashboard" style={style}>
             <div className='flex-grow-1 me-3'>
                 <Row gutter={16} className='align-items-center'>
                     <Col span={12}>
-                        <Title className={`mb-0 ${theme === "dark" ? "text-white" : "text-blue"} opacity-75`} level={2}>Welcome to Bittensor Staking</Title>
+                        <Title className={`mb-0 text-blue opacity-75`} level={3}>Welcome to Bittensor Staking</Title>
                     </Col>
                     <Col span={12} className='text-end'>
-                        <Input size="large" className={`mw-600px border-0 shadow  ${theme === 'dark' ? 'dark-input' : 'light-input'}`} placeholder="Search Bitten..." prefix={<SearchOutlined />} style={{ backgroundColor: "#1e293b" }} />
+                        <Input size="large" className="mw-600px border-0 shadow" placeholder="Search Bitten..." prefix={<SearchOutlined />} />
                     </Col>
                 </Row>
             </div>

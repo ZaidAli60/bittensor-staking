@@ -1,15 +1,6 @@
 $body-light: #f5f5f5;
 @import "./dashboard/sidebar";
 @import "./dashboard/header";
-@import "./dashboard/home";
-@import "./dashboard/transactions";
-@import "./dashboard/templates";
-@import "./dashboard/growth";
-@import "./dashboard/settings";
-@import "./dashboard/collaborator";
-@import "./dashboard/tasksandappointments";
-@import "./dashboard/leads";
-@import "./dashboard/archives";
 
 @mixin marginStart($value) {
     margin-left: $value !important;
@@ -99,9 +90,11 @@ $body-light: #f5f5f5;
 
 .rounded_10_checkbox {
     border-radius: 10px !important;
+
     .ant-checkbox.ant-checkbox-checked::after {
         border-radius: 10px !important;
     }
+
     .ant-checkbox-inner {
         border-radius: 10px !important;
     }

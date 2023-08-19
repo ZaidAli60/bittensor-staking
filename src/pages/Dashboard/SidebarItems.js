@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
+import { IoAnalyticsOutline } from "react-icons/io5"
+import { MdHowToVote } from "react-icons/md"
 import { AppstoreOutlined, BarChartOutlined, CommentOutlined, TransactionOutlined, ToolOutlined, UserOutlined, SettingOutlined, InboxOutlined, PlusSquareOutlined, RiseOutlined, StarOutlined } from '@ant-design/icons';
-// import { FAIcon } from 'components/FAIcon'
-import { FaUserFriends } from "react-icons/fa"
 
-const root = "/dashboard";
+const root = "/";
 
 export const items = [
     { key: "home", icon: <AppstoreOutlined />, label: <Link to={root} className="text-decoration-none">Home</Link> },
-    { key: "social", icon: <CommentOutlined />, label: <Link to={root + "/social"} className="text-decoration-none">Stake Tao</Link> },
-    { key: "vote", icon: <CommentOutlined />, label: <Link to={root + "/vote"} className="text-decoration-none">Vote</Link> },
+    { key: "social", icon: <IoAnalyticsOutline />, label: <Link to={root + "tao-stake"} className="text-decoration-none">Stake Tao</Link> },
+    { key: "vote", icon: <MdHowToVote />, label: <Link to={root + "vote"} className="text-decoration-none">Vote</Link> },
     // {
     //     key: "leads", icon: <RiseOutlined />, label: "Leads",
     //     children: [
