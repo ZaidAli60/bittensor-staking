@@ -1,0 +1,23 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+$primary: #4d238f;
+$blue: #2B3674;
+$pink: #D066CE;
+$gray: #DFE1EA;
+$yellow: #FEF479;
+$body-light: #f5f5f5;
+
+$custom-colors: (
+    "primary": $primary,
+    "blue": $blue,
+    "pink": $pink,
+    "pink-light": rgba(208, 102, 206, 0.07),
+    "gray": $gray,
+    "yellow": $yellow,
+    "body-light": $body-light,
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import '~bootstrap/scss/bootstrap.scss'
