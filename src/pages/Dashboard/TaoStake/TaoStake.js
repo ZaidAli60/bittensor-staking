@@ -1,9 +1,20 @@
 import { Table, Typography } from 'antd';
+import { useValidatorsContext } from 'context/ValidatorsContext';
 import React from 'react'
 
 const { Title } = Typography;
 
 export default function TaoStake() {
+
+    const { validators } = useValidatorsContext()
+    console.log('validators', validators)
+
+    const dataSource = Object.keys(validators).map((address) => ({
+        key: address,
+        name: validators[address].name,
+        url: validators[address].url,
+        description: validators[address].description,
+    }));
 
     const columns = [
         {
@@ -11,69 +22,34 @@ export default function TaoStake() {
             dataIndex: 'name',
         },
         {
-            title: 'Chinese Score',
-            dataIndex: 'chinese',
+            title: 'Hot Key',
+            dataIndex: 'key',
             sorter: {
                 compare: (a, b) => a.chinese - b.chinese,
                 multiple: 3,
             },
         },
         {
-            title: 'Math Score',
-            dataIndex: 'math',
+            title: 'URL',
+            dataIndex: 'url',
             sorter: {
                 compare: (a, b) => a.math - b.math,
                 multiple: 2,
             },
-        },
-        {
-            title: 'English Score',
-            dataIndex: 'english',
-            sorter: {
-                compare: (a, b) => a.english - b.english,
-                multiple: 1,
-            },
-        },
+        }
     ];
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            chinese: 98,
-            math: 60,
-            english: 70,
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            chinese: 98,
-            math: 66,
-            english: 89,
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            chinese: 98,
-            math: 90,
-            english: 70,
-        },
-        {
-            key: '4',
-            name: 'Jim Red',
-            chinese: 88,
-            math: 99,
-            english: 89,
-        },
-    ];
+
     const onChange = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
     };
+
+
 
     return (
         <div className='vh-100'>
             <div className="card p-3">
                 <Title level={4} className='text-uppercase text-primary mb-3'>Bittensor Validators</Title>
-                <Table columns={columns} dataSource={data} onChange={onChange} />
+                <Table columns={columns} dataSource={dataSource} bordered onChange={onChange} scroll={{ x: true }} />
             </div>
         </div>
     )

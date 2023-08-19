@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import ThemeContext from './context/ThemeContext';
 import SidebarContextProvider from './context/SideBarContext';
+import ValidatorsContext from 'context/ValidatorsContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -12,7 +13,9 @@ root.render(
     <BrowserRouter>
       <ThemeContext>
         <SidebarContextProvider>
-          <App />
+          <ValidatorsContext>
+            <App />
+          </ValidatorsContext>
         </SidebarContextProvider>
       </ThemeContext>
     </BrowserRouter>
