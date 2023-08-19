@@ -1,0 +1,130 @@
+.dashboard-header {
+    background-color: black;
+    z-index: 1000;
+    overflow: hidden;
+    padding: 15px 15px;
+    height: 109px;
+
+    // .ant-input.dark-input {
+    //     background-color: #1e293b;
+    //     color: white;
+    //     /* You might need to adjust text color for readability */
+    // }
+
+    // .light-input {
+    //     background-color: white;
+    //     /* or any other light color */
+    // }
+
+    span.ant-input-affix-wrapper {
+        background: #FFFFFF;
+        border: 1px solid rgba(238, 238, 238, 0.5) !important;
+        box-shadow: 10px 10px 30px 4px rgba(112, 144, 176, 0.08) !important;
+        border-radius: 15px;
+        padding: 12px 20px;
+
+        .ant-input-prefix {
+            margin-right: 11px;
+
+            img {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+
+    .card {
+        height: 60px;
+        border-radius: 35px 35px 20px 20px;
+        padding: 0 24px;
+        background: #FDFDFF;
+        border: 1px solid rgba(222, 210, 249, 0.5) !important;
+        box-shadow: 0 0 0 0;
+
+        .icon-container {
+            width: 48px;
+            height: 48px;
+            padding: 12px;
+            margin-right: 20px;
+            background: #FFFFFF;
+            border: 1px solid rgba(238, 238, 238, 0.5);
+            box-shadow: 14px 17px 40px 4px rgba(112, 144, 176, 0.08);
+            border-radius: 15px;
+            position: relative;
+
+            .icon {
+                width: 24px;
+                height: 24px;
+            }
+
+        }
+
+        .pic-container {
+            margin-right: 12px;
+            position: relative;
+
+            img {
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                border: 1px solid white;
+                filter: drop-shadow(0px 15px 24px rgba(0, 0, 0, 0.04));
+            }
+
+        }
+
+        h5 {
+            font-size: 18px;
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .dashboard-header {
+        h2 {
+            font-size: 24px;
+        }
+
+        .card {
+            padding: 0 18px;
+
+            .icon-container {
+                width: 32px;
+                height: 32px;
+                padding: 5px 7px;
+                margin-right: 12px;
+                border-radius: 7.5px;
+
+                .icon {
+                    width: 16px;
+                    height: 16px;
+                }
+
+            }
+
+            .pic-container {
+                margin-right: 8px;
+
+                img {
+                    width: 32px;
+                    height: 32px;
+                }
+
+            }
+
+            h5 {
+                font-size: 14px;
+            }
+
+            .notify {
+                top: 5px;
+                right: 4px;
+            }
+
+            .notify.green {
+                right: 1px;
+            }
+
+        }
+    }
+}

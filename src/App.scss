@@ -1,1 +1,186 @@
 @import "./scss/bootstrap";
+
+.dashboard.light {
+    background-color: #fcfcfc;
+    color: black !important;
+}
+
+.dashboard.dark {
+    background-color: #0d1321;
+    color: #fcfcfc;
+}
+
+
+@import "./scss/mixins";
+@import "./scss/bootstrap";
+@import "./scss/global";
+@import "./scss/fonts";
+// @import "./scss/libraries";
+@import "./scss/frontend";
+@import "./scss/auth";
+@import "./scss/dashboard";
+@import "./scss/screen-loader";
+@import "./scss/buttons";
+@import "./scss/utilities";
+
+:root {
+    --swiper-navigation-size: 20px !important;
+    --swiper-theme-color: #2b3674 !important;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+.ant-input {
+    background-color: #1e293b !important;
+    color: white;
+    opacity: 50%;
+
+    .ant-input::placeholder {
+        color: whitesmoke;
+    }
+}
+
+/* If you want to style the search icon as well */
+.ant-input-prefix svg {
+    fill: whitesmoke;
+}
+
+.light-input {
+    background-color: white !important;
+    /* or any other light color */
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.flex-center {
+    @include flex-center();
+}
+
+.align-center {
+    @include align-center();
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card.main {
+    border: 0;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.mw-200px {
+    max-width: 200px;
+}
+
+.mw-300px {
+    max-width: 300px;
+}
+
+.mw-400px {
+    max-width: 400px;
+}
+
+.mw-600px {
+    max-width: 600px;
+}
+
+.min-w-200px {
+    min-width: 200px;
+}
+
+.min-w-300px {
+    min-width: 300px;
+}
+
+.min-w-400px {
+    min-width: 400px;
+}
+
+.h-340px {
+    height: 340px !important;
+}
+
+.h-400px {
+    height: 400px !important;
+}
+
+.py-6 {
+    padding-top: 4em !important;
+    padding-bottom: 4em !important;
+}
+
+.py-7 {
+    padding-top: 5em !important;
+    padding-bottom: 5em !important;
+}
+
+.image-preview {
+    max-width: 120px;
+    max-height: 120px;
+    overflow: hidden;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 4px;
+    margin: 0 auto;
+}
+
+.avatar {
+    max-height: 40px;
+    border-radius: 50%;
+}
+
+.spinner-body {
+    background-color: rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.shadow {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px !important;
+}
+
+.card-shadow-sm {
+    box-shadow: 14px 17px 50px 4px rgba(112, 144, 176, 0.1) !important;
+}
+
+.card-shadow {
+    box-shadow: 14px 17px 50px 4px rgba(112, 144, 176, 0.2) !important;
+}
+
+.fw-500 {
+    font-weight: 500 !important;
+}
+
+.fw-600 {
+    font-weight: 600 !important;
+}
+
+.shadow-dropdown-btn {
+    border: 1px solid rgba(238, 238, 238, 0.5);
+    border: 0;
+}
+
+.parties-dropdown-btn {
+    border: 1px solid rgba(238, 238, 238, 0.5) !important;
+    box-shadow: 14px 17px 50px 4px rgba(112, 144, 176, 0.1) !important;
+    border-radius: 10px;
+    padding: 12px 20px !important;
+    height: 47px;
+    font-size: 15px;
+}

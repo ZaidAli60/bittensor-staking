@@ -1,0 +1,15 @@
+button.bg-pink:hover {
+    background-color: #d77dd5 !important;
+}
+
+button.bg-blue:hover {
+    background-color: #252e63 !important;
+}
+
+button.bg-gray {
+    color: $blue !important;
+
+    &:hover {
+        background-color: #e4e6ed !important;
+    }
+}
