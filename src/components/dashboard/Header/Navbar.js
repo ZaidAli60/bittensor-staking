@@ -7,18 +7,15 @@ import { useSidebarContext } from '../../../context/SideBarContext';
 import { useThemeContext } from 'context/ThemeContext'
 import { web3Accounts, web3Enable } from '@polkadot/extension-dapp';
 import { useConnectWallet } from 'context/ConnectWalletContext'
-
-
 const { Title } = Typography;
 
 export default function Navbar() {
-
     const { siderWidth } = useSidebarContext()
     const { theme, toggleTheme } = useThemeContext()
     const { state, dispatch } = useConnectWallet()
     const [isAccounts, setisAccounts] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
-    console.log('state', state)
+
     const handleConnectWallet = async () => {
         try {
             await web3Enable('Bittensor-Staking'); // Enable your app to access the extension
@@ -80,14 +77,7 @@ export default function Navbar() {
                     }
                 </div>
             </header>
-            <Modal
-                title="Accounts"
-                centered
-                open={modalOpen}
-                onOk={() => setModalOpen(false)}
-                onCancel={() => setModalOpen(false)}
-                footer={null}
-            >
+            <Modal title="Accounts" centered open={modalOpen} onOk={() => setModalOpen(false)} onCancel={() => setModalOpen(false)} footer={null}   >
                 <div className="py-2">
                     {state && state.accounts?.map((account, index) => {
                         return <div key={index} className="card border- mb-2">
@@ -97,7 +87,6 @@ export default function Navbar() {
                     })}
                 </div>
             </Modal>
-
         </>
     )
 }
