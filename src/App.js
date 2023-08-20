@@ -1,6 +1,6 @@
-import { ConfigProvider } from 'antd';
 import './App.scss';
 import Routes from './pages/Routes';
+import { ConfigProvider } from 'antd';
 // import { useThemeContext } from './context/ThemeContext';
 
 function App() {

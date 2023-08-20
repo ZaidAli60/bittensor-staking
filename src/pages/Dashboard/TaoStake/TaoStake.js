@@ -1,13 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Button, Table, Typography } from 'antd';
+import { Button, Col, Form, Input, InputNumber, Modal, Row, Select, Table, Typography, message } from 'antd';
+import { useConnectWallet } from 'context/ConnectWalletContext';
 
 const { Title } = Typography;
+const { Option } = Select;
 
 export default function TaoStake() {
+
+    const { state } = useConnectWallet()
     const [validators, setValidators] = useState({});
     const [isProcessing, setIsProcessing] = useState(false)
-
-    console.log('validators', validators)
+    const [modalOpen, setModalOpen] = useState(false);
+    const [validator, setValidator] = useState({})
 
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
@@ -58,6 +62,15 @@ export default function TaoStake() {
             })),
     ];
 
+    const handleOpenModel = (data) => {
+        if (state && state.accounts.length > 0) {
+            setValidator(data)
+            setModalOpen(true)
+        } else {
+            message.error("No accounts available from WalletConnect. Please check your connection.")
+        }
+    }
+
     const columns = [
         {
             title: 'Name',
@@ -87,14 +100,17 @@ export default function TaoStake() {
         {
             title: 'Action',
             key: 'action',
-            render: (_, record) => {
-                return <Button type='primary'>Stake</Button>
+            render: (_, row) => {
+                return <Button type='primary' onClick={() => handleOpenModel(row)}>Stake</Button>
             }
         },
     ];
 
     const onChange = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
+    };
+    const handleChange = (value) => {
+        console.log(`selected ${value}`);
     };
 
     return (
@@ -105,6 +121,42 @@ export default function TaoStake() {
                     <Table columns={columns} bordered dataSource={dataSource} onChange={onChange} scroll={{ x: true }} loading={isProcessing} />
                 </div>
             </div>
+            <Modal
+                title="Tao Stake"
+                centered
+                open={modalOpen}
+                onOk={() => setModalOpen(false)}
+                onCancel={() => setModalOpen(false)}
+                footer={null}
+            >
+                <div className="py-3">
+                    <Form layout='vertical'>
+                        <Form.Item label="Account" className='mb-1' required   >
+                            <Select style={{ width: "100%" }}>
+                                {state && state.accounts.map((account, i) =>
+                                    <Option key={i} value={account.address}>{account.meta?.name}</Option>
+                                )}
+                            </Select>
+                        </Form.Item>
+                        <Typography>Available Balance : <span className='text-info fw-bold'>0.001𝞃</span></Typography>
+                        <Form.Item label="Validator" className='fw-bold' required>
+                            <Input value={validator.name} />
+                        </Form.Item>
+                        <Typography>Delegated Stake : <span className='text-info fw-bold'>0.001𝞃</span></Typography>
+                        <Form.Item className='pt-3'>
+                            <InputNumber style={{ width: "100%" }} />
+                        </Form.Item>
+                        <Row gutter={16}>
+                            <Col xs={12}>
+                                <Button type='primary' className='text-uppercase' style={{ width: "100%" }}>Delegate</Button>
+                            </Col>
+                            <Col xs={12}>
+                                <Button type='primary' className='text-uppercase' style={{ width: "100%" }}>Undelegate</Button>
+                            </Col>
+                        </Row>
+                    </Form>
+                </div>
+            </Modal>
         </div>
     )
 }
