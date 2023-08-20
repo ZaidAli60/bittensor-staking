@@ -12,6 +12,11 @@ export default function TaoStake() {
     const [isProcessing, setIsProcessing] = useState(false)
     const [modalOpen, setModalOpen] = useState(false);
     const [validator, setValidator] = useState({})
+    const [accountAddress, setAccountAddress] = useState("")
+
+    useEffect(() => {
+        setAccountAddress(state.accounts.length > 0 ? state.accounts[0]?.address : "")
+    }, [state])
 
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
@@ -109,9 +114,6 @@ export default function TaoStake() {
     const onChange = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
     };
-    const handleChange = (value) => {
-        console.log(`selected ${value}`);
-    };
 
     return (
         <div className='vh-100'>
@@ -131,19 +133,19 @@ export default function TaoStake() {
             >
                 <div className="py-3">
                     <Form layout='vertical'>
-                        <Form.Item label="Account" className='mb-1' required   >
-                            <Select style={{ width: "100%" }}>
-                                {state && state.accounts.map((account, i) =>
-                                    <Option key={i} value={account.address}>{account.meta?.name}</Option>
+                        <Form.Item label="Account" className='mb-1 fw-bold' required   >
+                            <Select style={{ width: "100%" }} value={accountAddress} onChange={(selectValue) => setAccountAddress(selectValue)}>
+                                {state.accounts.map((account) =>
+                                    <Option key={account.address} value={account.address}>{account.meta?.name}</Option>
                                 )}
                             </Select>
                         </Form.Item>
-                        <Typography>Available Balance : <span className='text-info fw-bold'>0.001𝞃</span></Typography>
-                        <Form.Item label="Validator" className='fw-bold' required>
+                        <Typography className='mb-3'>Available Balance : <span className='text-info fw-bold'>0.001𝞃</span></Typography>
+                        <Form.Item label="Validator" className='fw-bold mb-0' required>
                             <Input value={validator.name} />
                         </Form.Item>
-                        <Typography>Delegated Stake : <span className='text-info fw-bold'>0.001𝞃</span></Typography>
-                        <Form.Item className='pt-3'>
+                        <Typography className='mb-3'>Delegated Stake : <span className='text-info fw-bold'>0.001𝞃</span></Typography>
+                        <Form.Item>
                             <InputNumber style={{ width: "100%" }} />
                         </Form.Item>
                         <Row gutter={16}>
