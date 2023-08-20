@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Menu, Typography } from 'antd';
+import { Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import { items } from "./SidebarItems"
 import Header from "components/dashboard/Header"
@@ -8,7 +8,6 @@ import { useSidebarContext } from '../../context/SideBarContext';
 import logo from "assets/images/logo1.png"
 import { useThemeContext } from 'context/ThemeContext';
 
-const { Text } = Typography
 const { Content, Sider } = Layout;
 
 export default function Dashboard() {

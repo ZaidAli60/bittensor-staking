@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import "./config/global"
 import { BrowserRouter } from 'react-router-dom';
 import ThemeContext from './context/ThemeContext';
 import SidebarContextProvider from './context/SideBarContext';
-import ValidatorsContext from 'context/ValidatorsContext';
+import ConnectWalletContext from 'context/ConnectWalletContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,9 +14,9 @@ root.render(
     <BrowserRouter>
       <ThemeContext>
         <SidebarContextProvider>
-          <ValidatorsContext>
+          <ConnectWalletContext>
             <App />
-          </ValidatorsContext>
+          </ConnectWalletContext>
         </SidebarContextProvider>
       </ThemeContext>
     </BrowserRouter>

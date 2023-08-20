@@ -4,7 +4,6 @@ import { SiCoinmarketcap } from "react-icons/si"
 import { TbBrandGoogleAnalytics } from "react-icons/tb"
 import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
-// import * as am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'; // Remove .new
 
 const { Title } = Typography;
@@ -139,15 +138,12 @@ export default function Home() {
 
         // Clean up when the component unmounts
         return () => {
-            root.dispose();
-        };
+            root?.dispose();
+        }
     }, []);
 
-
-    //   return <div id="chartdiv" style={{ width: "100%", height: "500px" }} />;
-
     return (
-        <div className=''>
+        <div className='py-3'>
             <Row gutter={16}>
                 <Col xs={24} lg={12}>
                     <div className="card p-3 text-white mb-3" style={{ backgroundColor: "#fdedd4" }}>
@@ -195,7 +191,6 @@ export default function Home() {
                 </Col>
             </Row>
             <div>
-
                 <div id="chartdiv" style={{ width: '100%', height: '500px' }}></div>
             </div>
         </div>
