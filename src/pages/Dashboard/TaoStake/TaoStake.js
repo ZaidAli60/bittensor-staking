@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Button, Col, Form, Input, InputNumber, Modal, Row, Select, Table, Typography, message } from 'antd';
 import { useConnectWallet } from 'context/ConnectWalletContext';
+import { ApiPromise, WsProvider } from '@polkadot/api';
+import { web3FromSource } from '@polkadot/extension-dapp';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -13,6 +15,11 @@ export default function TaoStake() {
     const [modalOpen, setModalOpen] = useState(false);
     const [validator, setValidator] = useState({})
     const [accountAddress, setAccountAddress] = useState("")
+    const [stake, setStake] = useState(0)
+    const [totalBalance, setTotalBalance] = useState(null)
+    const [rao, setRao] = useState(null)
+    const [stakeAmount, setStakeAmount] = useState(null)
+    // console.log('rao', rao)
 
     useEffect(() => {
         setAccountAddress(state.accounts.length > 0 ? state.accounts[0]?.address : "")
@@ -115,6 +122,124 @@ export default function TaoStake() {
         console.log('params', pagination, filters, sorter, extra);
     };
 
+    useEffect(() => {
+        const taoToRao = stake * 1000000000;
+        setRao(taoToRao)
+    }, [stake])
+
+
+    const handleBalance = async () => {
+
+        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const api = await ApiPromise.create({ provider: wsProvider });
+        // The actual address that we will use
+        const ADDR = accountAddress;
+        // Retrieve the last timestamp
+        // const now = await api.query.timestamp.now();
+        // Retrieve the account balance & nonce via the system module
+        const { data: balance } = await api.query.system.account(ADDR);
+        // console.log(` balance of ${balance.free}`);
+        const orginalBalance = (balance.free - 500);
+        const balan = Number(orginalBalance) / 1000000000;
+        setTotalBalance(balan)
+        console.log('balance', Number(balance.free.toString()))
+        // setBalance(Number(balance.free.toString()))
+        // console.log(api.genesisHash.toHex());
+    }
+
+    useEffect(() => {
+        if (state.accounts.length > 0) {
+            handleBalance()
+        }
+    }, [accountAddress])
+
+    const fatchStakeAmount = async () => {
+
+        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const api = await ApiPromise.create({ provider: wsProvider });
+        const res = await api.query.subtensorModule.stake(validator.key, accountAddress);
+        if (res.isEmpty) {
+            return setStakeAmount(0)
+        }
+        else {
+            const amount = res.toString() / 1000000000;
+            setStakeAmount(amount)
+        }
+    }
+
+    useEffect(() => {
+        if (modalOpen) {
+            fatchStakeAmount()
+        }
+    }, [modalOpen])
+
+    const delegateStake = async () => {
+
+        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const api = await ApiPromise.create({ provider: wsProvider });
+
+        if (!api) {
+            console.error('API not initialized');
+            return;
+        }
+        const transferExtrinsic = api.tx.subtensorModule.addStake(validator.key, rao)
+        const selectedAccount = state?.accounts.find((item) => item.address === accountAddress);
+
+        const injector = await web3FromSource(selectedAccount.meta.source);
+
+        transferExtrinsic.signAndSend(accountAddress, { signer: injector.signer }, ({ status }) => {
+            console.log('status', status)
+            // setIsLoading(true)
+            if (status.isInBlock) {
+                console.log(`Completed at block hash #${status.asInBlock.toString()}`);
+                // setFlag(`Completed at block hash #${status.asInBlock.toString()}`)
+            } else {
+                console.log(`Current status: ${status.type}`);
+                // setFlag(`Current status: ${status.type}`)
+            }
+            // setIsLoading(false)
+        }).catch((error) => {
+            console.log(':( transaction failed', error);
+        });
+    };
+
+    const handleUndelegate = async () => {
+
+        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const api = await ApiPromise.create({ provider: wsProvider });
+        console.log('api', api)
+        if (!api) {
+            console.error('API not initialized');
+            return;
+        }
+
+        const undelegateExtrinsic = api.tx.subtensorModule.removeStake(validator.key, rao)
+
+        const selectedAccount = state?.accounts.find((item) => item.address === accountAddress);
+
+        const injector = await web3FromSource(selectedAccount.meta.source);
+
+        undelegateExtrinsic.signAndSend(accountAddress, { signer: injector.signer }, ({ status }) => {
+
+            if (status.isInBlock) {
+                console.log(`Completed at block hash #${status.asInBlock.toString()}`);
+            } else {
+                console.log(`Current status: ${status.type}`);
+            }
+        }).catch((error) => {
+            console.log(':( transaction failed', error);
+        });
+    };
+
+    const handleTotalBalanceMax = () => {
+        const getTotalBalance = totalBalance;
+        setStake(getTotalBalance)
+    }
+    const handleTotalStakeMax = () => {
+        const getStakeAmount = stakeAmount;
+        setStake(getStakeAmount)
+    }
+
     return (
         <div className='vh-100'>
             <div className="py-3">
@@ -140,20 +265,27 @@ export default function TaoStake() {
                                 )}
                             </Select>
                         </Form.Item>
-                        <Typography className='mb-3'>Available Balance : <span className='text-info fw-bold'>0.001𝞃</span></Typography>
-                        <Form.Item label="Validator" className='fw-bold mb-0' required>
+                        <div className='d-flex align-items-baseline'>
+                            <Typography className='mb-3 me-2'>Available Balance : <span className='text-info fw-bold'>{totalBalance}𝞃</span></Typography>
+                            <button className='btn btn-info btn-sm text-white p-0 px-1 m-0' onClick={handleTotalBalanceMax}>Max</button>
+                        </div>
+                        <Form.Item label="Validator" className='fw-bold mb-1' required>
                             <Input value={validator.name} />
                         </Form.Item>
-                        <Typography className='mb-3'>Delegated Stake : <span className='text-info fw-bold'>0.001𝞃</span></Typography>
+                        <div className="d-flex align-items-baseline">
+                            <Typography className='mb-3 me-2'>Delegated Stake : <span className='text-info fw-bold'>{stakeAmount}𝞃</span></Typography>
+                            <button className='btn btn-info btn-sm text-white p-0 px-1 m-0' onClick={handleTotalStakeMax}>Max</button>
+                        </div>
+
                         <Form.Item>
-                            <InputNumber style={{ width: "100%" }} />
+                            <InputNumber style={{ width: "100%" }} name='stake' value={stake} onChange={(value) => setStake(value)} />
                         </Form.Item>
                         <Row gutter={16}>
                             <Col xs={12}>
-                                <Button type='primary' className='text-uppercase' style={{ width: "100%" }}>Delegate</Button>
+                                <Button type='primary' className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || !stake || stake > totalBalance} onClick={delegateStake}>Delegate</Button>
                             </Col>
                             <Col xs={12}>
-                                <Button type='primary' className='text-uppercase' style={{ width: "100%" }}>Undelegate</Button>
+                                <Button type='primary' className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || !stake || stake > stakeAmount} onClick={handleUndelegate}>Undelegate</Button>
                             </Col>
                         </Row>
                     </Form>
