@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
-import { Typography, Input, Row, Col, Dropdown, Tooltip, Button, message, Modal } from 'antd'
-import { BsShieldLockFill, BsFillPersonFill } from 'react-icons/bs'
+import { Typography, Input, Row, Col, Tooltip, Button, Modal, message } from 'antd'
 import { BiMoon } from 'react-icons/bi'
 import { MdOutlineLightMode } from 'react-icons/md'
 import { SearchOutlined } from "@ant-design/icons"
-import { MdNotifications } from 'react-icons/md'
 import { useSidebarContext } from '../../../context/SideBarContext';
-import pic1 from "assets/images/pic.jpg"
 import { useThemeContext } from 'context/ThemeContext'
 import { web3Accounts, web3Enable } from '@polkadot/extension-dapp';
 import { useConnectWallet } from 'context/ConnectWalletContext'
@@ -20,8 +17,7 @@ export default function Navbar() {
     const { theme, toggleTheme } = useThemeContext()
     const { state, dispatch } = useConnectWallet()
     const [isAccounts, setisAccounts] = useState(false)
-    const [modalOpen, setModalOpen] = useState(false);
-
+    const [modalOpen, setModalOpen] = useState(false)
     console.log('state', state)
     const handleConnectWallet = async () => {
         try {
@@ -35,12 +31,26 @@ export default function Navbar() {
                 message.success("Wallet connected successfully!")
             } else {
                 console.log('No accounts found in the extension');
-                message.error("No accounts found in the extension")
+                error()
             }
         } catch (error) {
             console.error('Error connecting to Polkadot extension:', error);
-            message.error("Error connecting to Polkadot extension:")
+            message.error("Error connecting to Polkadot extension")
         }
+    };
+
+    const error = () => {
+        Modal.error({
+            title: 'No accounts found in the extension',
+            content: 'Make sure you have the polkadot{.js} extension installed or you have authorised delegate bittensor staking',
+            centered: true,
+            okButtonProps: {
+                style: {
+                    background: '#0d1321',     // Change the background color
+                    color: 'white',         // Change the text color
+                },
+            },
+        });
     };
 
     const style = { width: `calc(100% - ${siderWidth + 15}px)`, marginLeft: siderWidth, transition: "all 0.2s", zIndex: 1000 }
@@ -78,8 +88,16 @@ export default function Navbar() {
                 onCancel={() => setModalOpen(false)}
                 footer={null}
             >
-
+                <div className="py-2">
+                    {state && state.accounts?.map((account, index) => {
+                        return <div key={index} className="card border- mb-2">
+                            <Title level={5} className='mb-0'>{account.meta?.name}</Title>
+                            <Typography>{account.address}</Typography>
+                        </div>
+                    })}
+                </div>
             </Modal>
+
         </>
     )
 }
