@@ -1,12 +1,13 @@
-import { Button, Table, Typography } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react'
+import { Button, Table, Typography } from 'antd';
 
 const { Title } = Typography;
 
 export default function TaoStake() {
-
     const [validators, setValidators] = useState({});
     const [isProcessing, setIsProcessing] = useState(false)
+
+    console.log('validators', validators)
 
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
@@ -31,12 +32,31 @@ export default function TaoStake() {
         handleFatch()
     }, [handleFatch])
 
-    const dataSource = Object.keys(validators).map((address) => ({
-        key: address,
-        name: validators[address].name,
-        url: validators[address].url,
-        description: validators[address].description,
-    }));
+    const firstValidatorData = {
+        description: "Powered by the Neuron Holders community - shared rewards, additional benefits, infinite possibilities - join and build with us!",
+        name: "FirstTensor.com",
+        signature: "da31e56dd78cde449a1dd9592f0b53eb8c3662674b745a05ff916e80a1be933e86efbccb7f7c9b81d7c0bb14d13fb4a6bf8484c3619224e689de82072b5d9a87",
+        url: "www.firsttensor.com",
+        key: "5DvTpiniW9s3APmHRYn8FroUWyfnLtrsid5Mtn5EwMXHN2ed"
+    };
+
+    const dataSource = [
+        {
+            key: firstValidatorData.key, // You can use any unique identifier for the key
+            description: firstValidatorData.description,
+            name: firstValidatorData.name,
+            signature: firstValidatorData.signature,
+            url: firstValidatorData.url,
+        },
+        ...Object.keys(validators)
+            .filter(address => address !== firstValidatorData.key) // Exclude the specific key
+            .map((address) => ({
+                key: address,
+                name: validators[address].name,
+                url: validators[address].url,
+                description: validators[address].description,
+            })),
+    ];
 
     const columns = [
         {
@@ -82,7 +102,7 @@ export default function TaoStake() {
             <div className="py-3">
                 <div className="card p-3">
                     <Title level={4} className='text-uppercase text-primary mb-3'>Bittensor Validators</Title>
-                    <Table columns={columns} dataSource={dataSource} bordered onChange={onChange} scroll={{ x: true }} loading={isProcessing} />
+                    <Table columns={columns} bordered dataSource={dataSource} onChange={onChange} scroll={{ x: true }} loading={isProcessing} />
                 </div>
             </div>
         </div>
