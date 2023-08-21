@@ -282,10 +282,10 @@ export default function TaoStake() {
                         </Form.Item>
                         <Row gutter={16}>
                             <Col xs={12}>
-                                <Button type='primary' className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || !stake || stake > totalBalance} onClick={delegateStake}>Delegate</Button>
+                                <Button type='primary' className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || stake <= 0 || !stake || stake > totalBalance} onClick={delegateStake}>Delegate</Button>
                             </Col>
                             <Col xs={12}>
-                                <Button type='primary' className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || !stake || stake > stakeAmount} onClick={handleUndelegate}>Undelegate</Button>
+                                <Button type='primary' className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || stake <= 0 || !stake || stake > stakeAmount} onClick={handleUndelegate}>Undelegate</Button>
                             </Col>
                         </Row>
                     </Form>
