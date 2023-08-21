@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Button, Col, Form, Input, InputNumber, Modal, Row, Select, Table, Typography, message } from 'antd';
+import { Alert, Button, Col, Form, Input, InputNumber, Modal, Row, Select, Table, Typography, message } from 'antd';
 import { useConnectWallet } from 'context/ConnectWalletContext';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { web3FromSource } from '@polkadot/extension-dapp';
@@ -19,7 +19,8 @@ export default function TaoStake() {
     const [totalBalance, setTotalBalance] = useState(null)
     const [rao, setRao] = useState(null)
     const [stakeAmount, setStakeAmount] = useState(null)
-    // console.log('rao', rao)
+    const [loading, setLoading] = useState(false);
+    const [status, setStatus] = useState('');
 
     useEffect(() => {
         setAccountAddress(state.accounts.length > 0 ? state.accounts[0]?.address : "")
@@ -142,7 +143,7 @@ export default function TaoStake() {
         const orginalBalance = (balance.free - 500);
         const balan = Number(orginalBalance) / 1000000000;
         setTotalBalance(balan)
-        console.log('balance', Number(balance.free.toString()))
+        // console.log('balance', Number(balance.free.toString()))
         // setBalance(Number(balance.free.toString()))
         // console.log(api.genesisHash.toHex());
     }
@@ -151,6 +152,7 @@ export default function TaoStake() {
         if (state.accounts.length > 0) {
             handleBalance()
         }
+        // eslint-disable-next-line
     }, [accountAddress])
 
     const fatchStakeAmount = async () => {
@@ -171,6 +173,7 @@ export default function TaoStake() {
         if (modalOpen) {
             fatchStakeAmount()
         }
+        // eslint-disable-next-line
     }, [modalOpen])
 
     const delegateStake = async () => {
@@ -187,27 +190,34 @@ export default function TaoStake() {
 
         const injector = await web3FromSource(selectedAccount.meta.source);
 
-        transferExtrinsic.signAndSend(accountAddress, { signer: injector.signer }, ({ status }) => {
-            console.log('status', status)
-            // setIsLoading(true)
-            if (status.isInBlock) {
-                console.log(`Completed at block hash #${status.asInBlock.toString()}`);
-                // setFlag(`Completed at block hash #${status.asInBlock.toString()}`)
-            } else {
-                console.log(`Current status: ${status.type}`);
-                // setFlag(`Current status: ${status.type}`)
-            }
-            // setIsLoading(false)
-        }).catch((error) => {
-            console.log(':( transaction failed', error);
-        });
+        setLoading(true);
+        setStatus('Transaction is being processed...');
+
+        try {
+            await transferExtrinsic.signAndSend(accountAddress, { signer: injector.signer }, ({ status }) => {
+                if (status.isInBlock) {
+                    setStatus(`Status In Block`);
+                } else {
+                    setStatus(`Current status: ${status.type}`);
+                    setStatus(`You have just delegated ${stake}τ from ${validator.name}`);
+                    handleBalance()
+                    fatchStakeAmount()
+                }
+            })
+        } catch (error) {
+            setStatus('Transaction failed');
+            console.error(':( Transaction failed', error);
+        } finally {
+            // Remove loading state
+            setLoading(false);
+        }
     };
 
     const handleUndelegate = async () => {
 
         const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
         const api = await ApiPromise.create({ provider: wsProvider });
-        console.log('api', api)
+
         if (!api) {
             console.error('API not initialized');
             return;
@@ -219,16 +229,27 @@ export default function TaoStake() {
 
         const injector = await web3FromSource(selectedAccount.meta.source);
 
-        undelegateExtrinsic.signAndSend(accountAddress, { signer: injector.signer }, ({ status }) => {
+        setLoading(true);
+        setStatus('Transaction is being processed...');
 
-            if (status.isInBlock) {
-                console.log(`Completed at block hash #${status.asInBlock.toString()}`);
-            } else {
-                console.log(`Current status: ${status.type}`);
-            }
-        }).catch((error) => {
-            console.log(':( transaction failed', error);
-        });
+        try {
+            await undelegateExtrinsic.signAndSend(accountAddress, { signer: injector.signer }, ({ status }) => {
+                if (status.isInBlock) {
+                    setStatus(`Status In Block`);
+                } else {
+                    setStatus(`Current status: ${status.type}`);
+                    setStatus(`You have just Undelegated ${stake}τ from ${validator.name}`);
+                    fatchStakeAmount()
+                    handleBalance()
+                }
+            })
+        } catch (error) {
+            setStatus('Transaction failed');
+            console.error(':( Transaction failed', error);
+        } finally {
+            // Remove loading state
+            setLoading(false);
+        }
     };
 
     const handleTotalBalanceMax = () => {
@@ -257,6 +278,8 @@ export default function TaoStake() {
                 footer={null}
             >
                 <div className="py-3">
+                    {status && <Alert message={`${status}`} type={status === "Transaction failed" ? "error" : "success"} showIcon className='mb-2' />}
+
                     <Form layout='vertical'>
                         <Form.Item label="Account" className='mb-1 fw-bold' required   >
                             <Select style={{ width: "100%" }} value={accountAddress} onChange={(selectValue) => setAccountAddress(selectValue)}>
@@ -282,10 +305,10 @@ export default function TaoStake() {
                         </Form.Item>
                         <Row gutter={16}>
                             <Col xs={12}>
-                                <Button type='primary' className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || stake <= 0 || !stake || stake > totalBalance} onClick={delegateStake}>Delegate</Button>
+                                <Button type='primary' loading={loading} className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || stake <= 0 || !stake || stake > totalBalance} onClick={delegateStake}>Delegate</Button>
                             </Col>
                             <Col xs={12}>
-                                <Button type='primary' className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || stake <= 0 || !stake || stake > stakeAmount} onClick={handleUndelegate}>Undelegate</Button>
+                                <Button type='primary' loading={loading} className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || stake <= 0 || !stake || stake > stakeAmount} onClick={handleUndelegate}>Undelegate</Button>
                             </Col>
                         </Row>
                     </Form>
