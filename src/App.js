@@ -18,6 +18,13 @@ function App() {
       >
         <Routes />
       </ConfigProvider>
+      {/* <div className="wrapper">
+        <svg>
+          <text x="50%" y="50%" dy=".35em" text-anchor="middle">
+            Bittensor Staking
+          </text>
+        </svg>
+      </div> */}
     </div>
   );
 }

@@ -80,7 +80,7 @@ export default function Navbar() {
             <Modal title="Accounts" centered open={modalOpen} onOk={() => setModalOpen(false)} onCancel={() => setModalOpen(false)} footer={null}   >
                 <div className="py-2">
                     {state && state.accounts?.map((account, index) => {
-                        return <div key={index} className="card border- mb-2">
+                        return <div key={index} className="card p-2 border- mb-2">
                             <Title level={5} className='mb-0'>{account.meta?.name}</Title>
                             <Typography>{account.address}</Typography>
                         </div>

@@ -96,20 +96,20 @@ export default function TaoStake() {
             sorter: (a, b) => a.key.localeCompare(b.key),
 
         },
-        {
-            title: 'Total Amount Stake',
-            dataIndex: '',
-            sorter: {
-                compare: (a, b) => a.totalAmountStake - b.totalAmountStake,
-                multiple: 2,
-            },
-        },
-        {
-            title: 'Delegators',
-            dataIndex: '',
-            sorter: (a, b) => a.delegators.localeCompare(b.delegators),
+        // {
+        //     title: 'Total Amount Stake',
+        //     dataIndex: '',
+        //     sorter: {
+        //         compare: (a, b) => a.totalAmountStake - b.totalAmountStake,
+        //         multiple: 2,
+        //     },
+        // },
+        // {
+        //     title: 'Delegators',
+        //     dataIndex: '',
+        //     sorter: (a, b) => a.delegators.localeCompare(b.delegators),
 
-        },
+        // },
         {
             title: 'Action',
             key: 'action',

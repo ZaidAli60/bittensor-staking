@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import ThemeContext from './context/ThemeContext';
 import SidebarContextProvider from './context/SideBarContext';
 import ConnectWalletContext from 'context/ConnectWalletContext';
+import TaoInfoContext from 'context/TaoInfoContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,7 +16,9 @@ root.render(
       <ThemeContext>
         <SidebarContextProvider>
           <ConnectWalletContext>
-            <App />
+            <TaoInfoContext>
+              <App />
+            </TaoInfoContext>
           </ConnectWalletContext>
         </SidebarContextProvider>
       </ThemeContext>
