@@ -281,7 +281,7 @@ export default function TaoStake() {
                     {status && <Alert message={`${status}`} type={status === "Transaction failed" ? "error" : "success"} showIcon className='mb-2' />}
 
                     <Form layout='vertical'>
-                        <Form.Item label="Account" className='mb-1 fw-bold' required   >
+                        <Form.Item label="Choose Account" className='mb-1 fw-bold' required   >
                             <Select style={{ width: "100%" }} value={accountAddress} onChange={(selectValue) => setAccountAddress(selectValue)}>
                                 {state.accounts.map((account) =>
                                     <Option key={account.address} value={account.address}>{account.meta?.name}</Option>

@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
 const TaoInfoProvider = createContext()
 
@@ -17,6 +18,7 @@ export default function TaoInfoContext({ children }) {
             const data = await response.json()
             setTaoInfo(data);
         } catch (error) {
+            message.error("Something went wrong")
             console.error('Error fetching data:', error);
         } finally {
             setIsProcessing(false);

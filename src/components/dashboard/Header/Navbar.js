@@ -39,7 +39,7 @@ export default function Navbar() {
     const error = () => {
         Modal.error({
             title: 'No accounts found in the extension',
-            content: 'Make sure you have the polkadot{.js} extension installed or you have authorised delegate bittensor staking',
+            content: 'Make sure you have the polkadot{.js} extension installed and you have authorised delegate bittensor staking',
             centered: true,
             okButtonProps: {
                 style: {
@@ -73,7 +73,7 @@ export default function Navbar() {
                         !isAccounts ?
                             <Button type="primary" onClick={handleConnectWallet}>Connect Wallet</Button>
                             :
-                            <Button type="primary" onClick={() => setModalOpen(true)}>Connected</Button>
+                            <Button type="primary" onClick={() => setModalOpen(true)}>View Account</Button>
                     }
                 </div>
             </header>
