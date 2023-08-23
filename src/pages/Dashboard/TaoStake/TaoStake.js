@@ -8,7 +8,6 @@ const { Title } = Typography;
 const { Option } = Select;
 
 export default function TaoStake() {
-
     const { state } = useConnectWallet()
     const [validators, setValidators] = useState({});
     const [isProcessing, setIsProcessing] = useState(false)
@@ -96,20 +95,6 @@ export default function TaoStake() {
             sorter: (a, b) => a.key.localeCompare(b.key),
 
         },
-        // {
-        //     title: 'Total Amount Stake',
-        //     dataIndex: '',
-        //     sorter: {
-        //         compare: (a, b) => a.totalAmountStake - b.totalAmountStake,
-        //         multiple: 2,
-        //     },
-        // },
-        // {
-        //     title: 'Delegators',
-        //     dataIndex: '',
-        //     sorter: (a, b) => a.delegators.localeCompare(b.delegators),
-
-        // },
         {
             title: 'Action',
             key: 'action',
@@ -202,6 +187,8 @@ export default function TaoStake() {
                     setStatus(`You have just delegated ${stake}τ from ${validator.name}`);
                     handleBalance()
                     fatchStakeAmount()
+                    setStatus('')
+                    setStake(0)
                 }
             })
         } catch (error) {
@@ -241,6 +228,8 @@ export default function TaoStake() {
                     setStatus(`You have just Undelegated ${stake}τ from ${validator.name}`);
                     fatchStakeAmount()
                     handleBalance()
+                    setStatus('')
+                    setStake(0)
                 }
             })
         } catch (error) {
