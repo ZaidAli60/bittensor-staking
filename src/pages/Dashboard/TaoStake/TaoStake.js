@@ -80,7 +80,7 @@ export default function TaoStake() {
             setValidator(data)
             setModalOpen(true)
         } else {
-            message.error("No accounts available from WalletConnect. Please check your connection.")
+            message.error("No wallet available, please connect your Polkadot wallet first.")
         }
     }
 

@@ -39,7 +39,12 @@ export default function Navbar() {
     const error = () => {
         Modal.error({
             title: 'No accounts found in the extension',
-            content: 'Make sure you have the polkadot{.js} extension installed and you have authorised delegate bittensor staking',
+            content: (
+                <div>
+                    <p>Make sure you have the polkadot.js extension installed and you have authorised delegate bittensor staking</p>
+                    <a href="https://polkadot.js.org/extension/" target="_blank" rel="noopener noreferrer" className='text-primary'>Install Polkadot.js Extension</a>
+                </div>
+            ),
             centered: true,
             okButtonProps: {
                 style: {
