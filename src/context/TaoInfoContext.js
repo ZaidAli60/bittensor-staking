@@ -6,7 +6,7 @@ export default function TaoInfoContext({ children }) {
 
     const [taoInfo, setTaoInfo] = useState(null)
     const [isProcessing, setIsProcessing] = useState(false)
-    console.log('taoInfo', taoInfo)
+
     const handleFetch = useCallback(async () => {
         setIsProcessing(true);
         try {

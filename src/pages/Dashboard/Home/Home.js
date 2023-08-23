@@ -170,7 +170,7 @@ export default function Home() {
                         </div>
                         <div className='align-center justify-content-between'>
                             <Title level={5} className='mb-0 opacity-75'>Volume</Title>
-                            {/* <Typography className='opacity-75 fw-bold'>$ {taoInfo['24h_volume']}</Typography> */}
+                            <Typography className='opacity-75 fw-bold'>$ {taoInfo && taoInfo['24h_volume']}</Typography>
                         </div>
                         <div className='align-center justify-content-between'>
                             <Title level={5} className='mb-0 opacity-75'>Circulating Supply</Title>
@@ -200,7 +200,7 @@ export default function Home() {
                         </div>
                         <div className='align-center justify-content-between'>
                             <Title level={5} className='mb-0 opacity-75'>Active Validators</Title>
-                            <Typography className='opacity-75 fw-bold'>$0</Typography>
+                            <Typography className='opacity-75 fw-bold'>{taoInfo && taoInfo.sub_nets[0]?.active_validators}</Typography>
                         </div>
                         <div className='align-center justify-content-between'>
                             <Title level={5} className='mb-0 opacity-75'>Active Nominators</Title>
