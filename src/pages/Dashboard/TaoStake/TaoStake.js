@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Alert, Button, Col, Form, Input, InputNumber, Modal, Row, Select, Table, Typography, message } from 'antd';
+import { Alert, Button, Col, Form, Input, InputNumber, Modal, Row, Select, Spin, Table, Typography, message } from 'antd';
 import { useConnectWallet } from 'context/ConnectWalletContext';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { web3FromSource } from '@polkadot/extension-dapp';
@@ -20,6 +20,8 @@ export default function TaoStake() {
     const [stakeAmount, setStakeAmount] = useState(null)
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState('');
+    const [allStakeValidators, setAllStakeValidators] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         setAccountAddress(state.accounts.length > 0 ? state.accounts[0]?.address : "")
@@ -147,34 +149,6 @@ export default function TaoStake() {
 
         const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
         const api = await ApiPromise.create({ provider: wsProvider });
-
-
-        // console.log('api', api)
-        // console.log('api', api.queryMulti)
-        // try {
-        //     // const totalStake = await api.query.subtensorModule.delegates("5FcYaMMKcYu1cu4CzDi7iWtZoxmULpQ9oZiTa9AnNLdWW88X");
-        //     // const totalStake = await api.query.subtensorModule.delegates("5DvTpiniW9s3APmHRYn8FroUWyfnLtrsid5Mtn5EwMXHN2ed");
-        //     // const totalStake = await api.query.subtensorModule.totalNetworks();
-        //     // const totalStake = await api.query.subtensorModule.consensus();
-        //     // setTotalStake(totalStake.toString());
-        //     // console.log('totalStake', totalStake.toString())
-
-        //     // const validatorKeys = await api.query?.staking.validators?.keys();
-
-        //     // // Subscribe to the balances for these accounts
-        //     // const unsub = await api.query.balances.account.multi(validatorKeys, (balances) => {
-        //     //     console.log(`The nonce and free balances are: ${balances.map(([nonce, { free }]) => [nonce, free])}`);
-        //     // });
-        //     // const totalStake = await api.query.subtensorModule.totalHotkeyStake("5DvTpiniW9s3APmHRYn8FroUWyfnLtrsid5Mtn5EwMXHN2ed");
-        //     // const delegates = await api.query.subtensorModule.delegates('5FcYaMMKcYu1cu4CzDi7iWtZoxmULpQ9oZiTa9AnNLdWW88X');
-        //     // const data = await api.query.subtensorModule.delegates("5DvTpiniW9s3APmHRYn8FroUWyfnLtrsid5Mtn5EwMXHN2ed")
-        //     const data = await api.query.staking.bonded()
-        //     console.log('data', data.toString())
-        // } catch (error) {
-        //     console.error('Error fetching total stake:', error);
-        // }
-        // console.log('newValue', newValue.toString())
-        // The actual address that we will use
         const ADDR = accountAddress;
         // Retrieve the last timestamp
         // const now = await api.query.timestamp.now();
@@ -187,15 +161,6 @@ export default function TaoStake() {
         // console.log('balance', Number(balance.free.toString()))
         // setBalance(Number(balance.free.toString()))
         // console.log(api.genesisHash.toHex());
-
-        // const validatorKeys = await api.query.staking.validators.keys();
-        // const allDelegates = await api.query.staking.validators();
-        // const prefs = await api.query.staking.validators('EoukLS2Rzh6dZvMQSkqFy4zGvqeo14ron28Ue3yopVc8e3Q');
-
-
-        // const unsub = await api.query.balances.account.multi(validatorKeys, (balances) => {
-        //     console.log(`The nonce and free balances are: ${balances.map(([nonce, { free }]) => [nonce, free])}`);
-        // });
     }
 
     useEffect(() => {
@@ -204,53 +169,6 @@ export default function TaoStake() {
         }
         // eslint-disable-next-line
     }, [accountAddress])
-
-
-    const handleValidatorInfo = async () => {
-
-        const wsProvider = new WsProvider('wss://rpc.polkadot.io');
-        const api = await ApiPromise.create({ provider: wsProvider });
-        console.log('api', api)
-        try {
-            // const data = await api.query
-            // const response = await api.query("bittensor", "getDelegateInfo", {
-            //     delegate_ss58: "5GrwvaF7hfiJug6sBB8b9WjXuM4sS8t443oT68J1ZJuy",
-            // });
-
-
-            // const activeEra = await api.query.staking.activeEra();
-            // const exposures = await api.query.staking.erasStakers.entries(activeEra.unwrap().index);
-
-            // exposures.forEach(([key, exposure]) => {
-            //     console.log('key arguments:', key.args.map((k) => k.toHuman()));
-            //     console.log('     exposure:', exposure.toHuman());
-            // });
-
-            // const data = await api.query.staking.nominators("5FcYaMMKcYu1cu4CzDi7iWtZoxmULpQ9oZiTa9AnNLdWW88X");
-            // const data = await api.query.staking.validators();
-            // console.log('Keys', data.toString())
-            // extract the first key argument [AccountId] as string
-            // const nominatorIds = keys.map(({ args: [nominatorId] }) => nominatorId);
-
-            // console.log('all nominators:', nominatorIds.join(', '));
-
-            // console.log('activeEra', activeEra.toString())
-            // const delegateInfo = await api.query.delegateModule.delegateInfos("5GrwvaF7hfiJug6sBB8b9WjXuM4sS8t443oT68J1ZJuy");
-
-            // console.log('delegateInfo', delegateInfo)
-
-            const keys = await api.query.staking.nominators.keys();
-
-            // extract the first key argument [AccountId] as string
-            const nominatorIds = keys.map(({ args: [nominatorId] }) => nominatorId);
-            console.log('nominatorIds', nominatorIds.length)
-            console.log('all nominators:', nominatorIds.join(', '));
-
-        } catch (error) {
-            console.log('error', error)
-        }
-
-    }
 
     const fatchStakeAmount = async () => {
 
@@ -266,13 +184,12 @@ export default function TaoStake() {
         }
     }
 
-
     useEffect(() => {
         if (modalOpen) {
             fatchStakeAmount()
         }
         // eslint-disable-next-line
-    }, [modalOpen])
+    }, [modalOpen, accountAddress])
 
     const delegateStake = async () => {
 
@@ -363,6 +280,43 @@ export default function TaoStake() {
         setStake(getStakeAmount)
     }
 
+    const fatchAllStakeValidators = async () => {
+        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const api = await ApiPromise.create({ provider: wsProvider });
+        setIsLoading(true)
+
+        const data = Object.keys(validators).map(key => ({
+            key: key,
+            name: validators[key].name,
+        }));
+
+        const stakeAmountValidators = []
+
+        for (const validator of data) { // Corrected variable name from 'object' to 'data'
+            const res = await api.query.subtensorModule.stake(validator.key, accountAddress);
+
+            let stakeAmount = 0;
+            if (!res.isEmpty) {
+                stakeAmount = parseFloat(res.toString()) / 1000000000;
+            }
+            if (stakeAmount > 0) {
+                stakeAmountValidators.push({
+                    name: validator.name,
+                    stakeAmount: stakeAmount,
+                });
+            }
+        }
+        setAllStakeValidators(stakeAmountValidators)
+        setIsLoading(false)
+
+    }
+    useEffect(() => {
+        if (state.accounts.length > 0) {
+            fatchAllStakeValidators()
+        }
+        // eslint-disable-next-line
+    }, [accountAddress, totalBalance])
+
     return (
         <div className='vh-100'>
             <div className="py-1">
@@ -405,7 +359,7 @@ export default function TaoStake() {
                         <Form.Item>
                             <InputNumber style={{ width: "100%" }} name='stake' value={stake} onChange={(value) => setStake(value)} />
                         </Form.Item>
-                        <Row gutter={16}>
+                        <Row gutter={16} className='mb-2'>
                             <Col xs={12}>
                                 <Button type='primary' loading={loading} className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || stake <= 0 || !stake || stake > totalBalance} onClick={delegateStake}>Delegate</Button>
                             </Col>
@@ -413,6 +367,25 @@ export default function TaoStake() {
                                 <Button type='primary' loading={loading} className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || stake <= 0 || !stake || stake > stakeAmount} onClick={handleUndelegate}>Undelegate</Button>
                             </Col>
                         </Row>
+
+                        <div>
+                            <Title level={5}>Delegated Stake</Title>
+                            {
+                                !isLoading ?
+                                    allStakeValidators?.map((validator, i) => {
+                                        return (
+                                            <div key={i} className='d-flex justify-content-between'>
+                                                <p className='mb-1'>{validator.name}</p>
+                                                <p className='mb-1 text-info fw-bold'>{validator.stakeAmount}𝞃</p>
+                                            </div>
+                                        )
+                                    })
+                                    :
+                                    <div className='text-center'>
+                                        <Spin />
+                                    </div>
+                            }
+                        </div>
                     </Form>
                 </div>
             </Modal>
