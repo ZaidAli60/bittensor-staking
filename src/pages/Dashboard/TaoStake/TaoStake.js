@@ -30,7 +30,7 @@ export default function TaoStake() {
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
         try {
-            const url = 'https://raw.githubusercontent.com/opentensor/bittensor-delegates/master/public/delegates.json';
+            const url = process.env.REACT_APP_BETTENSOR_VALIDATORS_END_POINT;
             const response = await fetch(url);
 
             if (!response.ok) {
@@ -147,7 +147,7 @@ export default function TaoStake() {
 
     const handleBalance = async () => {
 
-        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
         const api = await ApiPromise.create({ provider: wsProvider });
         const ADDR = accountAddress;
         // Retrieve the last timestamp
@@ -172,7 +172,7 @@ export default function TaoStake() {
 
     const fatchStakeAmount = async () => {
 
-        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
         const api = await ApiPromise.create({ provider: wsProvider });
         const res = await api.query.subtensorModule.stake(validator.key, accountAddress);
         if (res.isEmpty) {
@@ -193,7 +193,7 @@ export default function TaoStake() {
 
     const delegateStake = async () => {
 
-        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
         const api = await ApiPromise.create({ provider: wsProvider });
 
         if (!api) {
@@ -232,7 +232,7 @@ export default function TaoStake() {
 
     const handleUndelegate = async () => {
 
-        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
         const api = await ApiPromise.create({ provider: wsProvider });
 
         if (!api) {
@@ -281,7 +281,7 @@ export default function TaoStake() {
     }
 
     const fatchAllStakeValidators = async () => {
-        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
         const api = await ApiPromise.create({ provider: wsProvider });
         setIsLoading(true)
 

@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { Typography, Input, Row, Col, Tooltip, Button, Modal, message } from 'antd'
+import { Typography, Row, Col, Tooltip, Button, Modal, message } from 'antd'
 import { BiMoon } from 'react-icons/bi'
 import { MdOutlineLightMode } from 'react-icons/md'
-import { SearchOutlined } from "@ant-design/icons"
 import { useSidebarContext } from '../../../context/SideBarContext';
 import { useThemeContext } from 'context/ThemeContext'
 import { web3Accounts, web3Enable } from '@polkadot/extension-dapp';

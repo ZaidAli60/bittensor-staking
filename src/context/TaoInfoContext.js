@@ -10,7 +10,7 @@ export default function TaoInfoContext({ children }) {
     const handleFetch = useCallback(async () => {
         setIsProcessing(true);
         try {
-            const url = 'http://3.123.33.186:8000/api/get_data';
+            const url = process.env.REACT_APP_BITTENSOR_DATA_API_END_POINT;
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
