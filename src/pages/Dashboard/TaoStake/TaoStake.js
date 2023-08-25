@@ -22,6 +22,8 @@ export default function TaoStake() {
     const [status, setStatus] = useState('');
     const [allStakeValidators, setAllStakeValidators] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [isFinalize, setIsFinalize] = useState(false)
+    const [isFinalize1, setIsFinalize1] = useState(false)
 
     useEffect(() => {
         setAccountAddress(state.accounts.length > 0 ? state.accounts[0]?.address : "")
@@ -204,8 +206,7 @@ export default function TaoStake() {
         const selectedAccount = state?.accounts.find((item) => item.address === accountAddress);
 
         const injector = await web3FromSource(selectedAccount.meta.source);
-
-        setLoading(true);
+        setIsFinalize(true)
         setStatus('Transaction is being processed...');
 
         try {
@@ -214,19 +215,20 @@ export default function TaoStake() {
                     setStatus(`Status In Block`);
                 } else {
                     setStatus(`Current status: ${status.type}`);
-                    setStatus(`You have just delegated ${stake}τ from ${validator.name}`);
-                    handleBalance()
-                    fatchStakeAmount()
-                    setStatus('')
-                    setStake(0)
+                    if (status.type === 'Finalized') {
+                        setStatus(`You have just delegated ${stake}τ from ${validator.name}`);
+                        handleBalance()
+                        fatchStakeAmount()
+                        setStatus('')
+                        setStake(0)
+                        setIsFinalize(false)
+                    }
                 }
             })
         } catch (error) {
             setStatus('Transaction failed');
             console.error(':( Transaction failed', error);
-        } finally {
-            // Remove loading state
-            setLoading(false);
+            setIsFinalize(false);
         }
     };
 
@@ -245,7 +247,7 @@ export default function TaoStake() {
         const selectedAccount = state?.accounts.find((item) => item.address === accountAddress);
 
         const injector = await web3FromSource(selectedAccount.meta.source);
-
+        setIsFinalize1(true)
         setLoading(true);
         setStatus('Transaction is being processed...');
 
@@ -254,20 +256,21 @@ export default function TaoStake() {
                 if (status.isInBlock) {
                     setStatus(`Status In Block`);
                 } else {
-                    setStatus(`Current status: ${status.type}`);
-                    setStatus(`You have just Undelegated ${stake}τ from ${validator.name}`);
-                    fatchStakeAmount()
-                    handleBalance()
-                    setStatus('')
-                    setStake(0)
+                    if (status.type === 'Finalized') {
+                        setStatus(`Current status: ${status.type}`);
+                        setStatus(`You have just Undelegated ${stake}τ from ${validator.name}`);
+                        fatchStakeAmount()
+                        handleBalance()
+                        setStatus('')
+                        setStake(0)
+                        setIsFinalize1(false)
+                    }
                 }
             })
         } catch (error) {
             setStatus('Transaction failed');
             console.error(':( Transaction failed', error);
-        } finally {
-            // Remove loading state
-            setLoading(false);
+            setIsFinalize1(false)
         }
     };
 
@@ -361,10 +364,10 @@ export default function TaoStake() {
                         </Form.Item>
                         <Row gutter={16} className='mb-2'>
                             <Col xs={12}>
-                                <Button type='primary' loading={loading} className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || stake <= 0 || !stake || stake > totalBalance} onClick={delegateStake}>Delegate</Button>
+                                <Button type='primary' loading={isFinalize} className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || stake <= 0 || !stake || stake > totalBalance} onClick={delegateStake}>Delegate</Button>
                             </Col>
                             <Col xs={12}>
-                                <Button type='primary' loading={loading} className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || stake <= 0 || !stake || stake > stakeAmount} onClick={handleUndelegate}>Undelegate</Button>
+                                <Button type='primary' loading={isFinalize1} className='text-uppercase' style={{ width: "100%" }} disabled={stake === 0 || stake <= 0 || !stake || stake > stakeAmount} onClick={handleUndelegate}>Undelegate</Button>
                             </Col>
                         </Row>
 

@@ -10,7 +10,7 @@ const { Title } = Typography;
 
 export default function Navbar() {
     const { siderWidth } = useSidebarContext()
-    const { theme, toggleTheme } = useThemeContext()
+    const { setTheme } = useThemeContext()
     const { state, dispatch } = useConnectWallet()
     const [isAccounts, setisAccounts] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
@@ -66,8 +66,9 @@ export default function Navbar() {
                         </Col>
                     </Row>
                 </div>
-                <div className='icon-container me-4' onClick={toggleTheme} style={{ cursor: 'pointer' }}>
-                    {theme === "dark" ? <Tooltip title="Light theme"> <BiMoon className='text-center fs-5' /> </Tooltip> : <Tooltip title="Dark theme"> <MdOutlineLightMode className="fs-5" /> </Tooltip>}
+                <div className='icon-container me-4 d-flex' style={{ cursor: 'pointer' }}>
+                    <Tooltip title="Light theme"> <MdOutlineLightMode className="fs-5 me-2" onClick={() => setTheme("light")} /> </Tooltip>
+                    <Tooltip title="Dark theme"> <BiMoon className='text-center fs-5' onClick={() => setTheme("dark")} /> </Tooltip>
                 </div>
                 <div>
                     {

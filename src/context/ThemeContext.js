@@ -9,7 +9,7 @@ export default function ThemeContext({ children }) {
         setTheme(theme === 'light' ? 'dark' : 'light');
     };
     return (
-        <ThemeProvider.Provider value={{ theme, toggleTheme, setIsAppLoader, isAppLoader }}>
+        <ThemeProvider.Provider value={{ theme, setTheme, toggleTheme, setIsAppLoader, isAppLoader }}>
             {children}
         </ThemeProvider.Provider>
     )
