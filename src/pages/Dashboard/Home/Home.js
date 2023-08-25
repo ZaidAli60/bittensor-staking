@@ -147,76 +147,81 @@ export default function Home() {
 
     return (
         <div className='py-1'>
-            <Row gutter={16}>
-                <Col xs={24} lg={12}>
-                    <div className="card p-3 text-white mb-3" style={{ backgroundColor: "#fdedd4" }}>
-                        <div className='align-center justify-content-between mb-3'>
-                            <Title level={4} className='text-primary mb-0'>Maket Cap</Title>
-                            <div>
-                                <SiCoinmarketcap className='fs-5 text-primary' />
+            {
+                taoInfo.map((item, i) => {
+                    return <Row key={i} gutter={16}>
+                        <Col xs={24} lg={12}>
+                            <div className="card p-3 text-white mb-3" style={{ backgroundColor: "#fdedd4" }}>
+                                <div className='align-center justify-content-between mb-3'>
+                                    <Title level={4} className='text-primary mb-0'>Maket Cap</Title>
+                                    <div>
+                                        <SiCoinmarketcap className='fs-5 text-primary' />
+                                    </div>
+                                </div>
+                                <div className='align-center justify-content-between'>
+                                    <Title level={5} className='mb-0 opacity-75'>Current price</Title>
+                                    <Typography className='opacity-75 fw-bold'>$ {item?.price}</Typography>
+                                </div>
+                                <div className='align-center justify-content-between'>
+                                    <Title level={5} className='mb-0 opacity-75'>Maket Cap</Title>
+                                    <Typography className='opacity-75 fw-bold'>$ {item?.market_cap}</Typography>
+                                </div>
+                                <div className='align-center justify-content-between'>
+                                    <Title level={5} className='mb-0 opacity-75'>Fully Diluted Market Cap</Title>
+                                    <Typography className='opacity-75 fw-bold'>$0</Typography>
+                                </div>
+                                <div className='align-center justify-content-between'>
+                                    <Title level={5} className='mb-0 opacity-75'>Volume</Title>
+                                    <Typography className='opacity-75 fw-bold'>$ {item && item['24h_volume']}</Typography>
+                                </div>
+                                <div className='align-center justify-content-between'>
+                                    <Title level={5} className='mb-0 opacity-75'>Circulating Supply</Title>
+                                    <Typography className='opacity-75 fw-bold'>{item?.current_supply}𝞃</Typography>
+                                </div>
+                                <div className='align-center justify-content-between'>
+                                    <Title level={5} className='mb-0 opacity-75'>Total Supply</Title>
+                                    <Typography className='opacity-75 fw-bold'>{item?.total_supply}𝞃</Typography>
+                                </div>
                             </div>
-                        </div>
-                        <div className='align-center justify-content-between'>
-                            <Title level={5} className='mb-0 opacity-75'>Current price</Title>
-                            <Typography className='opacity-75 fw-bold'>$ {taoInfo?.price}</Typography>
-                        </div>
-                        <div className='align-center justify-content-between'>
-                            <Title level={5} className='mb-0 opacity-75'>Maket Cap</Title>
-                            <Typography className='opacity-75 fw-bold'>$ {taoInfo?.market_cap}</Typography>
-                        </div>
-                        <div className='align-center justify-content-between'>
-                            <Title level={5} className='mb-0 opacity-75'>Fully Diluted Market Cap</Title>
-                            <Typography className='opacity-75 fw-bold'>$0</Typography>
-                        </div>
-                        <div className='align-center justify-content-between'>
-                            <Title level={5} className='mb-0 opacity-75'>Volume</Title>
-                            <Typography className='opacity-75 fw-bold'>$ {taoInfo && taoInfo['24h_volume']}</Typography>
-                        </div>
-                        <div className='align-center justify-content-between'>
-                            <Title level={5} className='mb-0 opacity-75'>Circulating Supply</Title>
-                            <Typography className='opacity-75 fw-bold'>{taoInfo?.current_supply}𝞃</Typography>
-                        </div>
-                        <div className='align-center justify-content-between'>
-                            <Title level={5} className='mb-0 opacity-75'>Total Supply</Title>
-                            <Typography className='opacity-75 fw-bold'>{taoInfo?.total_supply}𝞃</Typography>
-                        </div>
-                    </div>
-                </Col>
-                <Col xs={24} lg={12}>
-                    <div className="card p-3 text-white" style={{ backgroundColor: "#e1f9f1" }}>
-                        <div className='align-center justify-content-between mb-3'>
-                            <Title level={4} className='text-primary mb-0'>Network Status</Title>
-                            <div>
-                                <TbBrandGoogleAnalytics className='fs-5 text-primary' />
+                        </Col>
+                        <Col xs={24} lg={12}>
+                            <div className="card p-3 text-white" style={{ backgroundColor: "#e1f9f1" }}>
+                                <div className='align-center justify-content-between mb-3'>
+                                    <Title level={4} className='text-primary mb-0'>Network Status</Title>
+                                    <div>
+                                        <TbBrandGoogleAnalytics className='fs-5 text-primary' />
+                                    </div>
+                                </div>
+                                <div className='align-center justify-content-between'>
+                                    <Title level={5} className='mb-0 opacity-75'>Block Number</Title>
+                                    <Typography className='opacity-75 fw-bold'>$ {item?.Block}</Typography>
+                                </div>
+                                <div className='align-center justify-content-between'>
+                                    <Title level={5} className='mb-0 opacity-75'>Total Holders</Title>
+                                    <Typography className='opacity-75 fw-bold'>$0</Typography>
+                                </div>
+                                <div className='align-center justify-content-between'>
+                                    <Title level={5} className='mb-0 opacity-75'>Active Validators</Title>
+                                    <Typography className='opacity-75 fw-bold'>{item && item?.sub_nets[0]?.active_validators}</Typography>
+                                </div>
+                                <div className='align-center justify-content-between'>
+                                    <Title level={5} className='mb-0 opacity-75'>Active Nominators</Title>
+                                    <Typography className='opacity-75 fw-bold'>$0</Typography>
+                                </div>
+                                <div className='align-center justify-content-between'>
+                                    <Title level={5} className='mb-0 opacity-75'>Total Stake</Title>
+                                    <Typography className='opacity-75 fw-bold'>{item?.total_stake}𝞃</Typography>
+                                </div>
+                                <div className='align-center justify-content-between'>
+                                    <Title level={5} className='mb-0 opacity-75'>Supply Staked</Title>
+                                    <Typography className='opacity-75 fw-bold'>{item?.total_supply}𝞃</Typography>
+                                </div>
                             </div>
-                        </div>
-                        <div className='align-center justify-content-between'>
-                            <Title level={5} className='mb-0 opacity-75'>Block Number</Title>
-                            <Typography className='opacity-75 fw-bold'>$ {taoInfo?.Block}</Typography>
-                        </div>
-                        <div className='align-center justify-content-between'>
-                            <Title level={5} className='mb-0 opacity-75'>Total Holders</Title>
-                            <Typography className='opacity-75 fw-bold'>$0</Typography>
-                        </div>
-                        <div className='align-center justify-content-between'>
-                            <Title level={5} className='mb-0 opacity-75'>Active Validators</Title>
-                            <Typography className='opacity-75 fw-bold'>{taoInfo && taoInfo?.sub_nets[0]?.active_validators}</Typography>
-                        </div>
-                        <div className='align-center justify-content-between'>
-                            <Title level={5} className='mb-0 opacity-75'>Active Nominators</Title>
-                            <Typography className='opacity-75 fw-bold'>$0</Typography>
-                        </div>
-                        <div className='align-center justify-content-between'>
-                            <Title level={5} className='mb-0 opacity-75'>Total Stake</Title>
-                            <Typography className='opacity-75 fw-bold'>{taoInfo?.total_stake}𝞃</Typography>
-                        </div>
-                        <div className='align-center justify-content-between'>
-                            <Title level={5} className='mb-0 opacity-75'>Supply Staked</Title>
-                            <Typography className='opacity-75 fw-bold'>{taoInfo?.total_supply}𝞃</Typography>
-                        </div>
-                    </div>
-                </Col>
-            </Row>
+                        </Col>
+                    </Row>
+                })
+            }
+
             <div className='card'>
                 <div id="chartdiv" style={{ width: '100%', height: '500px' }}></div>
             </div>
