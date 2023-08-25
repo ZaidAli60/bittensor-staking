@@ -90,10 +90,40 @@ export default function TaoStake() {
             sorter: (a, b) => a.name.localeCompare(b.name),
         },
         {
-            title: 'Hot Key',
-            dataIndex: 'key',
+            title: 'Info',
             sorter: (a, b) => a.key.localeCompare(b.key),
-
+            render: (_, row) => {
+                const websiteUrl = row.url.startsWith('http') ? row.url : `http://${row.url}`;
+                return (
+                    <div style={{ display: 'flex', flexDirection: 'column' }} >
+                        <Typography style={{ marginBottom: 8 }}>Description: {row.description}</Typography>
+                        <Typography style={{ marginBottom: 8 }}>Hot Key: {row.key}</Typography>
+                        <a href={websiteUrl} target="_blank" rel="noopener noreferrer" className='text-decoration-none'>
+                            Visit Website
+                        </a>
+                    </div >
+                )
+            }
+        },
+        {
+            title: 'Total Stake',
+            dataIndex: '',
+            sorter: (a, b) => a.name.localeCompare(b.name),
+        },
+        {
+            title: 'Nominators',
+            dataIndex: '',
+            sorter: (a, b) => a.name.localeCompare(b.name),
+        },
+        {
+            title: 'APY',
+            dataIndex: '',
+            sorter: (a, b) => a.name.localeCompare(b.name),
+        },
+        {
+            title: 'Benefits',
+            dataIndex: '',
+            sorter: (a, b) => a.name.localeCompare(b.name),
         },
         {
             title: 'Action',
@@ -332,43 +362,6 @@ export default function TaoStake() {
         const getStakeAmount = stakeAmount;
         setStake(getStakeAmount)
     }
-
-    // async function getNominatorsForValidator(validatorAddress) {
-    //     // Initialise the provider to connect to the node
-    //     const provider = new WsProvider('wss://rpc.polkadot.io');
-
-    //     // Create the API and wait until ready
-    //     const api = await ApiPromise.create({ provider });
-    //     console.log('api', api)
-    //     // Fetch the current set of nominators
-    //     const nominators = await api.query.staking.nominators.entries();
-
-    //     let nominatorsForValidator = [];
-    //     console.log('nominatorsForValidator', nominatorsForValidator)
-    //     for (const [key, { value }] of nominators) {
-    //         if (value.targets && value.targets.some(target => target.toString() === validatorAddress)) {
-    //             nominatorsForValidator.push(key.args[0].toString());
-    //         }
-    //     }
-
-    //     return nominatorsForValidator;
-    // }
-    // useEffect(() => {
-    //     getNominatorsForValidator("5DvTpiniW9s3APmHRYn8FroUWyfnLtrsid5Mtn5EwMXHN2ed")
-    // }, [])
-
-    // useEffect(() => {
-
-    // const validatorAddress = '5DvTpiniW9s3APmHRYn8FroUWyfnLtrsid5Mtn5EwMXHN2ed';
-    // getNominatorsForValidator(validatorAddress).then(nominators => {
-    //     console.log(`Nominators for validator ${validatorAddress}:`);
-    //     nominators.forEach(nominator => {
-    //         console.log(nominator);
-    //     });
-    // });
-
-    // }, [])
-
 
     return (
         <div className='vh-100'>
