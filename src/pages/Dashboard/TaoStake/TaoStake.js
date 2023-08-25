@@ -18,7 +18,6 @@ export default function TaoStake() {
     const [totalBalance, setTotalBalance] = useState(null)
     const [rao, setRao] = useState(null)
     const [stakeAmount, setStakeAmount] = useState(null)
-    const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState('');
     const [allStakeValidators, setAllStakeValidators] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -248,7 +247,6 @@ export default function TaoStake() {
 
         const injector = await web3FromSource(selectedAccount.meta.source);
         setIsFinalize1(true)
-        setLoading(true);
         setStatus('Transaction is being processed...');
 
         try {
@@ -374,20 +372,24 @@ export default function TaoStake() {
                         <div>
                             <Title level={5}>Delegated Stake</Title>
                             {
-                                !isLoading ?
-                                    allStakeValidators?.map((validator, i) => {
-                                        return (
+                                isLoading ? (
+                                    <div className='text-center'>
+                                        <Spin />
+                                    </div>
+                                ) : (
+                                    allStakeValidators.length === 0 ? (
+                                        <div>This wallet has not been delegated yet!</div>
+                                    ) : (
+                                        allStakeValidators.map((validator, i) => (
                                             <div key={i} className='d-flex justify-content-between'>
                                                 <p className='mb-1'>{validator.name}</p>
                                                 <p className='mb-1 text-info fw-bold'>{validator.stakeAmount}𝞃</p>
                                             </div>
-                                        )
-                                    })
-                                    :
-                                    <div className='text-center'>
-                                        <Spin />
-                                    </div>
+                                        ))
+                                    )
+                                )
                             }
+
                         </div>
                     </Form>
                 </div>
