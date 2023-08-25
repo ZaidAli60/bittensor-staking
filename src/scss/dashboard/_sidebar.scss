@@ -53,18 +53,58 @@
 }
 
 /* Light Mode */
+// .dashboard.light {
+
+//     .ant-menu-dark .ant-menu-item-selected {
+//         background-color: #323743;
+//         color: white;
+//     }
+
+//     .ant-menu-dark .ant-menu-item-selected:hover {
+//         background-color: #323743;
+//         color: white;
+//     }
+
+//     /* Hovered menu item */
+//     .ant-menu-dark .ant-menu-item:hover {
+//         color: #323743;
+//     }
+
+//     .ant-layout-sider-trigger {
+//         background-color: #fcfcfc !important;
+//         color: black !important;
+//         border-right: 1px dashed rgba(0, 0, 0, 0.2) !important;
+//     }
+// }
+
 .dashboard.light {
 
+    /* Selected menu item */
     .ant-menu-dark .ant-menu-item-selected {
         background-color: #323743;
+        color: white;
     }
 
+    /* Hovered state of selected menu item */
+    .ant-menu-dark .ant-menu-item-selected:hover {
+        background-color: #323743 !important;
+        color: white !important;
+    }
+
+    /* Hovered menu item */
+    .ant-menu-dark .ant-menu-item:hover {
+        background-color: #fcfcfc;
+        color: #323743;
+    }
+
+    /* Trigger */
     .ant-layout-sider-trigger {
         background-color: #fcfcfc !important;
         color: black !important;
         border-right: 1px dashed rgba(0, 0, 0, 0.2) !important;
     }
 }
+
 
 /* Dark Mode */
 .dashboard.dark {
