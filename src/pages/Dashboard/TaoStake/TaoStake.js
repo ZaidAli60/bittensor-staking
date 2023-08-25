@@ -113,11 +113,37 @@ export default function TaoStake() {
         setRao(taoToRao)
     }, [stake])
 
-
     const handleBalance = async () => {
 
         const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
         const api = await ApiPromise.create({ provider: wsProvider });
+
+
+        // console.log('api', api)
+        // console.log('api', api.queryMulti)
+        // try {
+        //     // const totalStake = await api.query.subtensorModule.delegates("5FcYaMMKcYu1cu4CzDi7iWtZoxmULpQ9oZiTa9AnNLdWW88X");
+        //     // const totalStake = await api.query.subtensorModule.delegates("5DvTpiniW9s3APmHRYn8FroUWyfnLtrsid5Mtn5EwMXHN2ed");
+        //     // const totalStake = await api.query.subtensorModule.totalNetworks();
+        //     // const totalStake = await api.query.subtensorModule.consensus();
+        //     // setTotalStake(totalStake.toString());
+        //     // console.log('totalStake', totalStake.toString())
+
+        //     // const validatorKeys = await api.query?.staking.validators?.keys();
+
+        //     // // Subscribe to the balances for these accounts
+        //     // const unsub = await api.query.balances.account.multi(validatorKeys, (balances) => {
+        //     //     console.log(`The nonce and free balances are: ${balances.map(([nonce, { free }]) => [nonce, free])}`);
+        //     // });
+        //     // const totalStake = await api.query.subtensorModule.totalHotkeyStake("5DvTpiniW9s3APmHRYn8FroUWyfnLtrsid5Mtn5EwMXHN2ed");
+        //     // const delegates = await api.query.subtensorModule.delegates('5FcYaMMKcYu1cu4CzDi7iWtZoxmULpQ9oZiTa9AnNLdWW88X');
+        //     // const data = await api.query.subtensorModule.delegates("5DvTpiniW9s3APmHRYn8FroUWyfnLtrsid5Mtn5EwMXHN2ed")
+        //     const data = await api.query.staking.bonded()
+        //     console.log('data', data.toString())
+        // } catch (error) {
+        //     console.error('Error fetching total stake:', error);
+        // }
+        // console.log('newValue', newValue.toString())
         // The actual address that we will use
         const ADDR = accountAddress;
         // Retrieve the last timestamp
@@ -131,6 +157,15 @@ export default function TaoStake() {
         // console.log('balance', Number(balance.free.toString()))
         // setBalance(Number(balance.free.toString()))
         // console.log(api.genesisHash.toHex());
+
+        // const validatorKeys = await api.query.staking.validators.keys();
+        // const allDelegates = await api.query.staking.validators();
+        // const prefs = await api.query.staking.validators('EoukLS2Rzh6dZvMQSkqFy4zGvqeo14ron28Ue3yopVc8e3Q');
+
+
+        // const unsub = await api.query.balances.account.multi(validatorKeys, (balances) => {
+        //     console.log(`The nonce and free balances are: ${balances.map(([nonce, { free }]) => [nonce, free])}`);
+        // });
     }
 
     useEffect(() => {
@@ -139,6 +174,53 @@ export default function TaoStake() {
         }
         // eslint-disable-next-line
     }, [accountAddress])
+
+
+    const handleValidatorInfo = async () => {
+
+        const wsProvider = new WsProvider('wss://rpc.polkadot.io');
+        const api = await ApiPromise.create({ provider: wsProvider });
+        console.log('api', api)
+        try {
+            // const data = await api.query
+            // const response = await api.query("bittensor", "getDelegateInfo", {
+            //     delegate_ss58: "5GrwvaF7hfiJug6sBB8b9WjXuM4sS8t443oT68J1ZJuy",
+            // });
+
+
+            // const activeEra = await api.query.staking.activeEra();
+            // const exposures = await api.query.staking.erasStakers.entries(activeEra.unwrap().index);
+
+            // exposures.forEach(([key, exposure]) => {
+            //     console.log('key arguments:', key.args.map((k) => k.toHuman()));
+            //     console.log('     exposure:', exposure.toHuman());
+            // });
+
+            // const data = await api.query.staking.nominators("5FcYaMMKcYu1cu4CzDi7iWtZoxmULpQ9oZiTa9AnNLdWW88X");
+            // const data = await api.query.staking.validators();
+            // console.log('Keys', data.toString())
+            // extract the first key argument [AccountId] as string
+            // const nominatorIds = keys.map(({ args: [nominatorId] }) => nominatorId);
+
+            // console.log('all nominators:', nominatorIds.join(', '));
+
+            // console.log('activeEra', activeEra.toString())
+            // const delegateInfo = await api.query.delegateModule.delegateInfos("5GrwvaF7hfiJug6sBB8b9WjXuM4sS8t443oT68J1ZJuy");
+
+            // console.log('delegateInfo', delegateInfo)
+
+            const keys = await api.query.staking.nominators.keys();
+
+            // extract the first key argument [AccountId] as string
+            const nominatorIds = keys.map(({ args: [nominatorId] }) => nominatorId);
+            console.log('nominatorIds', nominatorIds.length)
+            console.log('all nominators:', nominatorIds.join(', '));
+
+        } catch (error) {
+            console.log('error', error)
+        }
+
+    }
 
     const fatchStakeAmount = async () => {
 
@@ -153,6 +235,7 @@ export default function TaoStake() {
             setStakeAmount(amount)
         }
     }
+
 
     useEffect(() => {
         if (modalOpen) {
@@ -250,9 +333,46 @@ export default function TaoStake() {
         setStake(getStakeAmount)
     }
 
+    // async function getNominatorsForValidator(validatorAddress) {
+    //     // Initialise the provider to connect to the node
+    //     const provider = new WsProvider('wss://rpc.polkadot.io');
+
+    //     // Create the API and wait until ready
+    //     const api = await ApiPromise.create({ provider });
+    //     console.log('api', api)
+    //     // Fetch the current set of nominators
+    //     const nominators = await api.query.staking.nominators.entries();
+
+    //     let nominatorsForValidator = [];
+    //     console.log('nominatorsForValidator', nominatorsForValidator)
+    //     for (const [key, { value }] of nominators) {
+    //         if (value.targets && value.targets.some(target => target.toString() === validatorAddress)) {
+    //             nominatorsForValidator.push(key.args[0].toString());
+    //         }
+    //     }
+
+    //     return nominatorsForValidator;
+    // }
+    // useEffect(() => {
+    //     getNominatorsForValidator("5DvTpiniW9s3APmHRYn8FroUWyfnLtrsid5Mtn5EwMXHN2ed")
+    // }, [])
+
+    // useEffect(() => {
+
+    // const validatorAddress = '5DvTpiniW9s3APmHRYn8FroUWyfnLtrsid5Mtn5EwMXHN2ed';
+    // getNominatorsForValidator(validatorAddress).then(nominators => {
+    //     console.log(`Nominators for validator ${validatorAddress}:`);
+    //     nominators.forEach(nominator => {
+    //         console.log(nominator);
+    //     });
+    // });
+
+    // }, [])
+
+
     return (
         <div className='vh-100'>
-            <div className="py-3">
+            <div className="py-1">
                 <div className="card p-3">
                     <Title level={4} className='text-uppercase text-primary mb-3'>Bittensor Validators</Title>
                     <Table columns={columns} bordered dataSource={dataSource} onChange={onChange} scroll={{ x: true }} loading={isProcessing} />

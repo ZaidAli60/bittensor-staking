@@ -65,15 +65,12 @@ export default function Navbar() {
                         <Col span={12}>
                             <Title className={`mb-0 text-blue opacity-75`} level={3}>Welcome to Bittensor Staking</Title>
                         </Col>
-                        <Col span={12} className='text-end'>
-                            <Input size="large" className="mw-600px border-0 shadow" placeholder="Search Bitten..." prefix={<SearchOutlined />} />
-                        </Col>
                     </Row>
                 </div>
-                <div className="card align-center flex-row" style={{ maxWidth: 430 }}>
-                    <div className='icon-container btn' onClick={toggleTheme}>
-                        {theme === "dark" ? <Tooltip title="Light theme"> <BiMoon className='text-center fs-5' /> </Tooltip> : <Tooltip title="Dark theme"> <MdOutlineLightMode className="fs-5" /> </Tooltip>}
-                    </div>
+                <div className='icon-container me-4' onClick={toggleTheme} style={{ cursor: 'pointer' }}>
+                    {theme === "dark" ? <Tooltip title="Light theme"> <BiMoon className='text-center fs-5' /> </Tooltip> : <Tooltip title="Dark theme"> <MdOutlineLightMode className="fs-5" /> </Tooltip>}
+                </div>
+                <div>
                     {
                         !isAccounts ?
                             <Button type="primary" onClick={handleConnectWallet}>Connect Wallet</Button>

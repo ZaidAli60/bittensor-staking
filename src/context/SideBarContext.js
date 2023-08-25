@@ -7,7 +7,7 @@ export default function SidebarContextProvider({ children }) {
     const [siderWidth, setSiderWidth] = useState(80)
 
     useEffect(() => {
-        setSiderWidth(isCollapsed ? 80 : 250)
+        setSiderWidth(isCollapsed ? 80 : 280)
     }, [isCollapsed])
 
     return (

@@ -27,7 +27,7 @@ export default function Dashboard() {
     return (
         <Layout hasSider>
             <div >
-                <Sider breakpoint="xl" width={250}
+                <Sider breakpoint="xl" width={280}
                     collapsible
                     collapsed={isCollapsed}
                     onCollapse={val => { setIsCollapsed(val); sessionStorage.setItem("isCollapsed", val) }}
@@ -38,7 +38,7 @@ export default function Dashboard() {
                     {selectedItem && <Menu theme='dark' mode="inline" items={items} defaultSelectedKeys={[selectedItem]} className={`dashboard ${theme}`} />}
                 </Sider>
             </div>
-            <Layout className="site-layout dashboard">
+            <Layout className="site-layout dashboard border-dashed">
                 <Header />
                 <Content className='px-15px pb-15px' style={{ marginLeft: siderWidth, transition: "all 0.2s", marginTop: 109 }}>
                     <Routes />

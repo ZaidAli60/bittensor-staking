@@ -146,7 +146,7 @@ export default function Home() {
     }, []);
 
     return (
-        <div className='py-3'>
+        <div className='py-1'>
             <Row gutter={16}>
                 <Col xs={24} lg={12}>
                     <div className="card p-3 text-white mb-3" style={{ backgroundColor: "#fdedd4" }}>
@@ -217,7 +217,7 @@ export default function Home() {
                     </div>
                 </Col>
             </Row>
-            <div>
+            <div className='card'>
                 <div id="chartdiv" style={{ width: '100%', height: '500px' }}></div>
             </div>
         </div>

@@ -1,5 +1,3 @@
-@import "./scss/bootstrap";
-
 .dashboard.light {
     background-color: #fcfcfc;
     color: black !important;
@@ -10,6 +8,7 @@
     color: #fcfcfc;
 }
 
+@import "./scss/bootstrap";
 
 @import "./scss/mixins";
 @import "./scss/bootstrap";
