@@ -11,7 +11,13 @@ $fira-code-font: 'Fira Code', monospace;
     .shadow {
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
+
+    .custom-btn {
+        font-family: $fira-code-font !important;
+    }
+
 }
+
 
 .ant-drawer {
     z-index: 1100 !important;

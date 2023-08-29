@@ -50,16 +50,17 @@ export default function Navbar() {
                             <Tooltip title="Dark theme"> <BiMoon className='text-center fs-5' onClick={() => setTheme("dark")} /> </Tooltip>
                         </div>
                         <div>
-                            <Button type='primary' className='text-uppercase rounded-5 px-4 '>Connect</Button>
+                            <Button type='primary' className='px-4 custom-btn' shape="round">Connect</Button>
                         </div>
                     </div>
                 </div>
             </nav>
+
             <Drawer
                 title={
                     <div className='d-flex justify-content-between align-items-baseline'>
                         <span>LOGO</span>
-                        <Button type='primary' className="px-4 text-uppercase rounded-5">
+                        <Button type='primary'>
                             Connect
                         </Button>
                     </div>
