@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Col, Row, Table, Typography } from 'antd'
 import { MdOutlinePriceCheck } from "react-icons/md"
 import { SiCoinmarketcap } from "react-icons/si"
@@ -11,6 +11,32 @@ const { Title } = Typography
 export default function Home() {
     const { theme } = useThemeContext()
     const { taoInfo } = useTaoInfoContext()
+    const [validators, setValidators] = useState([])
+    const [isProcessing, setIsProcessing] = useState(false)
+    console.log('validators', validators)
+
+    const handleFatch = useCallback(async () => {
+        setIsProcessing(true)
+        try {
+            const url = 'http://3.123.33.186:8000/api/delegates/';
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setValidators(data)
+            setIsProcessing(false)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setIsProcessing(false)
+            return null;
+        }
+    }, [])
+
+    useEffect(() => {
+        handleFatch()
+    }, [handleFatch])
 
     const columns = [
         {
@@ -116,7 +142,7 @@ export default function Home() {
                         <Col lg={16}>
                             <div className={`${theme === "dark" ? "card p-3 bg-secondary border-0" : "card p-3"}`}>
                                 <Title level={4} className={` ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Bittensor Validators</Title>
-                                <Table columns={columns} bordered dataSource='' onChange={onChange} scroll={{ x: true }} className={`${theme === "dark" ? "dark-table" : ""}`} />
+                                <Table columns={columns} bordered dataSource={validators} onChange={onChange} scroll={{ x: true }} className={`${theme === "dark" ? "dark-table" : ""}`} />
                             </div>
                         </Col>
                     </Row>
