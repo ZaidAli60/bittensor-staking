@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
-import { Typography, Row, Col, Tooltip, Button, Modal, message } from 'antd'
+import { Typography, Row, Col, Tooltip, Button, Modal, message, Menu } from 'antd'
 import { BiMoon } from 'react-icons/bi'
 import { MdOutlineLightMode } from 'react-icons/md'
 import { useSidebarContext } from '../../../context/SideBarContext';
 import { useThemeContext } from 'context/ThemeContext'
 import { web3Accounts, web3Enable } from '@polkadot/extension-dapp';
 import { useConnectWallet } from 'context/ConnectWalletContext'
+import { Header } from 'antd/es/layout/layout';
 const { Title } = Typography;
 
 export default function Navbar() {
     const { siderWidth } = useSidebarContext()
-    const { setTheme } = useThemeContext()
+    const { theme, setTheme } = useThemeContext()
     const { state, dispatch } = useConnectWallet()
     const [isAccounts, setisAccounts] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
@@ -56,13 +57,22 @@ export default function Navbar() {
 
     const style = { width: `calc(100% - ${siderWidth + 15}px)`, marginLeft: siderWidth, transition: "all 0.2s", zIndex: 1000 }
 
+    const menuItems = [
+        { label: "Home" },
+        { label: "Contact" },
+        { label: "Services" },
+    ]
+
     return (
         <>
-            <header className="dashboard-header position-fixed flex-between dashboard" style={style}>
+            <Header className="d-flex px-2 px-md-4 px-lg-5">
+                <Menu theme="dark" className='w-100 d-flex justify-content-end' mode="horizontal" items={menuItems} />
+            </Header>
+            {/* <header className={`dashboard-header position-fixed flex-between dashboard ${theme}`} style={style}>
                 <div className='flex-grow-1 me-3'>
                     <Row gutter={16} className='align-items-center'>
                         <Col span={12}>
-                            <Title className={`mb-0 text-blue opacity-75`} level={3}>Welcome to Bittensor Staking</Title>
+                            <Title className={`mb-0 ${theme === "dark" ? "text-white" : "text-blue"}`} level={3}>Welcome to Bittensor Staking</Title>
                         </Col>
                     </Row>
                 </div>
@@ -78,8 +88,8 @@ export default function Navbar() {
                             <Button type="primary" onClick={() => setModalOpen(true)}>View Account</Button>
                     }
                 </div>
-            </header>
-            <Modal title="Accounts" centered open={modalOpen} onOk={() => setModalOpen(false)} onCancel={() => setModalOpen(false)} footer={null}   >
+            </header> */}
+            {/* <Modal title="Accounts" centered open={modalOpen} onOk={() => setModalOpen(false)} onCancel={() => setModalOpen(false)} footer={null}   >
                 <div className="py-2">
                     {state && state.accounts?.map((account, index) => {
                         return <div key={index} className="card p-2 border- mb-2">
@@ -88,7 +98,7 @@ export default function Navbar() {
                         </div>
                     })}
                 </div>
-            </Modal>
+            </Modal> */}
         </>
     )
 }

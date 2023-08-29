@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap');
+
+/* Define a variable for the Fira Code font */
+$fira-code-font: 'Fira Code', monospace;
+
+/* Apply the font family to the custom-navbar class */
+.custom-navbar {
+    font-family: $fira-code-font;
+    transition: box-shadow 0.3s ease-in-out;
+
+    .shadow {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.ant-drawer {
+    z-index: 1100 !important;
+}

@@ -6,11 +6,13 @@ import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'; // Remove .new
 import { useTaoInfoContext } from 'context/TaoInfoContext';
+import { useThemeContext } from 'context/ThemeContext';
 
 const { Title } = Typography;
 
 export default function Home() {
 
+    const { theme } = useThemeContext()
     const { taoInfo } = useTaoInfoContext()
 
     useEffect(() => {
@@ -146,75 +148,75 @@ export default function Home() {
     }, []);
 
     return (
-        <div className='py-1'>
+        <div className={`py-1 dashboard ${theme}`}>
             {
-                taoInfo.map((item, i) => {
-                    return <Row key={i} gutter={16}>
+                taoInfo?.map((item, i) => {
+                    return <Row key={i} gutter={16} className='mb-3'>
                         <Col xs={24} lg={12}>
-                            <div className="card p-3 text-white mb-3" style={{ backgroundColor: "#fdedd4" }}>
+                            <div className={`${theme === "dark" ? "card p-3 mb-3 dashboard bg-secondary border-0" : "card p-3 mb-3 dashboard"}`} style={{ backgroundColor: "#fdedd4" }}>
                                 <div className='align-center justify-content-between mb-3'>
-                                    <Title level={4} className='text-primary mb-0'>Maket Cap</Title>
+                                    <Title level={4} className={`${theme === "dark" ? "text-white" : "text-primary"} mb-0`}>Maket Cap</Title>
                                     <div>
-                                        <SiCoinmarketcap className='fs-5 text-primary' />
+                                        <SiCoinmarketcap className={`fs-5 ${theme === "dark" ? "text-white" : "text-primary"}`} />
                                     </div>
                                 </div>
                                 <div className='align-center justify-content-between'>
-                                    <Title level={5} className='mb-0 opacity-75'>Current price</Title>
-                                    <Typography className='opacity-75 fw-bold'>$ {item?.price}</Typography>
+                                    <Title level={5} className={` mb-0 opacity-75 ${theme === "dark" ? "text-white" : ""}`}>Current price</Title>
+                                    <Typography className={`opacity-75 fw-bold ${theme === "dark" ? "text-white" : ""}`}>$ {item?.price}</Typography>
                                 </div>
                                 <div className='align-center justify-content-between'>
-                                    <Title level={5} className='mb-0 opacity-75'>Maket Cap</Title>
-                                    <Typography className='opacity-75 fw-bold'>$ {item?.market_cap}</Typography>
+                                    <Title level={5} className={`mb-0 opacity-75 ${theme === "dark" ? "text-white" : ""}`}>Maket Cap</Title>
+                                    <Typography className={`opacity-75 fw-bold ${theme === "dark" ? "text-white" : ""}`}>$ {item?.market_cap}</Typography>
                                 </div>
                                 <div className='align-center justify-content-between'>
-                                    <Title level={5} className='mb-0 opacity-75'>Fully Diluted Market Cap</Title>
-                                    <Typography className='opacity-75 fw-bold'>$0</Typography>
+                                    <Title level={5} className={`mb-0 opacity-75 ${theme === "dark" ? "text-white" : ""}`}>Fully Diluted Market Cap</Title>
+                                    <Typography className={`opacity-75 fw-bold ${theme === "dark" ? "text-white" : ""}`}>$0</Typography>
                                 </div>
                                 <div className='align-center justify-content-between'>
-                                    <Title level={5} className='mb-0 opacity-75'>Volume</Title>
-                                    <Typography className='opacity-75 fw-bold'>$ {item && item['24h_volume']}</Typography>
+                                    <Title level={5} className={`mb-0 opacity-75 ${theme === "dark" ? "text-white" : ""}`}>Volume</Title>
+                                    <Typography className={`opacity-75 fw-bold ${theme === "dark" ? "text-white" : ""}`}>$ {item && item['24h_volume']}</Typography>
                                 </div>
                                 <div className='align-center justify-content-between'>
-                                    <Title level={5} className='mb-0 opacity-75'>Circulating Supply</Title>
-                                    <Typography className='opacity-75 fw-bold'>{item?.current_supply}𝞃</Typography>
+                                    <Title level={5} className={`mb-0 opacity-75 ${theme === "dark" ? "text-white" : ""}`}>Circulating Supply</Title>
+                                    <Typography className={`opacity-75 fw-bold ${theme === "dark" ? "text-white" : ""}`}>{item?.current_supply}𝞃</Typography>
                                 </div>
                                 <div className='align-center justify-content-between'>
-                                    <Title level={5} className='mb-0 opacity-75'>Total Supply</Title>
-                                    <Typography className='opacity-75 fw-bold'>{item?.total_supply}𝞃</Typography>
+                                    <Title level={5} className={`mb-0 opacity-75 ${theme === "dark" ? "text-white" : ""}`}>Total Supply</Title>
+                                    <Typography className={`opacity-75 fw-bold ${theme === "dark" ? "text-white" : ""}`}>{item?.total_supply}𝞃</Typography>
                                 </div>
                             </div>
                         </Col>
                         <Col xs={24} lg={12}>
-                            <div className="card p-3 text-white" style={{ backgroundColor: "#e1f9f1" }}>
+                            <div className={`${theme === "dark" ? "card p-3 mb-3 dashboard bg-secondary border-0" : "card p-3 mb-3 dashboard"}`} style={{ backgroundColor: "#e1f9f1" }}>
                                 <div className='align-center justify-content-between mb-3'>
-                                    <Title level={4} className='text-primary mb-0'>Network Status</Title>
+                                    <Title level={4} className={`${theme === "dark" ? "text-white" : "text-primary"} mb-0`}>Network Status</Title>
                                     <div>
-                                        <TbBrandGoogleAnalytics className='fs-5 text-primary' />
+                                        <TbBrandGoogleAnalytics className={`fs-5 ${theme === "dark" ? "text-white" : "text-primary"}`} />
                                     </div>
                                 </div>
                                 <div className='align-center justify-content-between'>
-                                    <Title level={5} className='mb-0 opacity-75'>Block Number</Title>
-                                    <Typography className='opacity-75 fw-bold'>$ {item?.Block}</Typography>
+                                    <Title level={5} className={`mb-0 opacity-75 ${theme === "dark" ? "text-white" : ""}`}>Block Number</Title>
+                                    <Typography className={`opacity-75 fw-bold ${theme === "dark" ? "text-white" : ""}`}>$ {item?.Block}</Typography>
                                 </div>
                                 <div className='align-center justify-content-between'>
-                                    <Title level={5} className='mb-0 opacity-75'>Total Holders</Title>
-                                    <Typography className='opacity-75 fw-bold'>$0</Typography>
+                                    <Title level={5} className={`mb-0 opacity-75 ${theme === "dark" ? "text-white" : ""}`}>Total Holders</Title>
+                                    <Typography className={`opacity-75 fw-bold ${theme === "dark" ? "text-white" : ""}`}>$0</Typography>
                                 </div>
                                 <div className='align-center justify-content-between'>
-                                    <Title level={5} className='mb-0 opacity-75'>Active Validators</Title>
-                                    <Typography className='opacity-75 fw-bold'>{item && item?.sub_nets[0]?.active_validators}</Typography>
+                                    <Title level={5} className={`mb-0 opacity-75 ${theme === "dark" ? "text-white" : ""}`}>Active Validators</Title>
+                                    <Typography className={`opacity-75 fw-bold ${theme === "dark" ? "text-white" : ""}`}>{item && item?.sub_nets[0]?.active_validators}</Typography>
                                 </div>
                                 <div className='align-center justify-content-between'>
-                                    <Title level={5} className='mb-0 opacity-75'>Active Nominators</Title>
-                                    <Typography className='opacity-75 fw-bold'>$0</Typography>
+                                    <Title level={5} className={`mb-0 opacity-75 ${theme === "dark" ? "text-white" : ""}`}>Active Nominators</Title>
+                                    <Typography className={`opacity-75 fw-bold ${theme === "dark" ? "text-white" : ""}`}>$0</Typography>
                                 </div>
                                 <div className='align-center justify-content-between'>
-                                    <Title level={5} className='mb-0 opacity-75'>Total Stake</Title>
-                                    <Typography className='opacity-75 fw-bold'>{item?.total_stake}𝞃</Typography>
+                                    <Title level={5} className={`mb-0 opacity-75 ${theme === "dark" ? "text-white" : ""}`}>Total Stake</Title>
+                                    <Typography className={`opacity-75 fw-bold ${theme === "dark" ? "text-white" : ""}`}>{item?.total_stake}𝞃</Typography>
                                 </div>
                                 <div className='align-center justify-content-between'>
-                                    <Title level={5} className='mb-0 opacity-75'>Supply Staked</Title>
-                                    <Typography className='opacity-75 fw-bold'>{item?.total_supply}𝞃</Typography>
+                                    <Title level={5} className={`mb-0 opacity-75 ${theme === "dark" ? "text-white" : ""}`}>Supply Staked</Title>
+                                    <Typography className={`opacity-75 fw-bold ${theme === "dark" ? "text-white" : ""}`}>{item?.total_supply}𝞃</Typography>
                                 </div>
                             </div>
                         </Col>
@@ -222,7 +224,7 @@ export default function Home() {
                 })
             }
 
-            <div className='card'>
+            <div className={`${theme === "dark" ? "card p-3 mb-3 dashboard bg-secondary border-0" : "card p-3 mb-3 dashboard"}`}>
                 <div id="chartdiv" style={{ width: '100%', height: '500px' }}></div>
             </div>
         </div>

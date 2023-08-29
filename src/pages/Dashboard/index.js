@@ -25,25 +25,27 @@ export default function Dashboard() {
     }, [])
 
     return (
-        <Layout hasSider>
-            <div >
-                <Sider breakpoint="xl" width={280}
-                    collapsible
-                    collapsed={isCollapsed}
-                    onCollapse={val => { setIsCollapsed(val); sessionStorage.setItem("isCollapsed", val) }}
-                    className={`overflow-auto position-fixed scroll-hidden dashboard ${theme}`}
-                    style={{ zIndex: 100, height: "calc(100vh - 30px)" }}
-                >
-                    <Link to="/"><img src={logo} alt={window.appName} className='img-fluid d-block my-5 mx-auto' style={{ width: isCollapsed ? 64 : 135, transition: "all 0.2s" }} /></Link>
-                    {selectedItem && <Menu theme='dark' mode="inline" items={items} defaultSelectedKeys={[selectedItem]} className={`dashboard ${theme}`} />}
-                </Sider>
-            </div>
-            <Layout className="site-layout dashboard border-dashed">
-                <Header />
-                <Content className='px-15px pb-15px' style={{ marginLeft: siderWidth, transition: "all 0.2s", marginTop: 109 }}>
-                    <Routes />
-                </ Content >
+        <>
+            <Header />
+            <Layout hasSider >
+                <div >
+                    <Sider breakpoint="xl" width={280}
+                        collapsible
+                        collapsed={isCollapsed}
+                        onCollapse={val => { setIsCollapsed(val); sessionStorage.setItem("isCollapsed", val) }}
+                        className={`overflow-auto position-fixed scroll-hidden dashboard ${theme}`}
+                        style={{ zIndex: 100, height: "calc(100vh - 30px)" }}
+                    >
+                        <Link to="/"><img src={logo} alt={window.appName} className='img-fluid d-block my-5 mx-auto' style={{ width: isCollapsed ? 64 : 135, transition: "all 0.2s" }} /></Link>
+                        {selectedItem && <Menu theme='dark' mode="inline" items={items} defaultSelectedKeys={[selectedItem]} className={`dashboard ${theme}`} />}
+                    </Sider>
+                </div>
+                <Layout className={`dashboard ${theme}`}>
+                    <Content className='px-15px pb-15px' style={{ marginLeft: siderWidth, transition: "all 0.2s", marginTop: 109 }}>
+                        <Routes />
+                    </ Content >
+                </Layout>
             </Layout>
-        </Layout>
+        </>
     )
 }

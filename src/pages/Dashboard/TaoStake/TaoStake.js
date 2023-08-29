@@ -3,13 +3,15 @@ import { Alert, Button, Col, Form, Input, InputNumber, Modal, Row, Select, Spin,
 import { useConnectWallet } from 'context/ConnectWalletContext';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { web3FromSource } from '@polkadot/extension-dapp';
+import { useThemeContext } from 'context/ThemeContext';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 const { Option } = Select;
 
 export default function TaoStake() {
+    const { theme } = useThemeContext()
     const { state } = useConnectWallet()
-    const [validators, setValidators] = useState({});
+    const [validators, setValidators] = useState([]);
     const [isProcessing, setIsProcessing] = useState(false)
     const [modalOpen, setModalOpen] = useState(false);
     const [validator, setValidator] = useState({})
@@ -23,33 +25,33 @@ export default function TaoStake() {
     const [isLoading, setIsLoading] = useState(false)
     const [isFinalize, setIsFinalize] = useState(false)
     const [isFinalize1, setIsFinalize1] = useState(false)
-
+    console.log('validators', validators)
     useEffect(() => {
         setAccountAddress(state.accounts.length > 0 ? state.accounts[0]?.address : "")
     }, [state])
 
-    const handleFatch = useCallback(async () => {
-        setIsProcessing(true)
-        try {
-            const url = 'https://raw.githubusercontent.com/opentensor/bittensor-delegates/master/public/delegates.json';
-            const response = await fetch(url);
+    // const handleFatch = useCallback(async () => {
+    //     setIsProcessing(true)
+    //     try {
+    //         const url = 'http://3.123.33.186:8000/api/delegates/';
+    //         const response = await fetch(url);
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            setValidators(data)
-            setIsProcessing(false)
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            setIsProcessing(false)
-            return null;
-        }
-    }, [])
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+    //         const data = await response.json();
+    //         setValidators(data)
+    //         setIsProcessing(false)
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error);
+    //         setIsProcessing(false)
+    //         return null;
+    //     }
+    // }, [])
 
-    useEffect(() => {
-        handleFatch()
-    }, [handleFatch])
+    // useEffect(() => {
+    //     handleFatch()
+    // }, [handleFatch])
 
     const firstValidatorData = {
         description: "Powered by the Neuron Holders community - shared rewards, additional benefits, infinite possibilities - join and build with us!",
@@ -91,6 +93,9 @@ export default function TaoStake() {
             title: 'Name',
             dataIndex: 'name',
             sorter: (a, b) => a.name.localeCompare(b.name),
+            // render: (_, row) => {
+            //     return (<Text>{row?.fields.name}</Text>)
+            // }
         },
         {
             title: 'Info',
@@ -99,7 +104,7 @@ export default function TaoStake() {
                 const websiteUrl = row.url.startsWith('http') ? row.url : `http://${row.url}`;
                 return (
                     <div style={{ display: 'flex', flexDirection: 'column' }} >
-                        <Typography style={{ marginBottom: 8 }}>Description: {row.description}</Typography>
+                        <Typography className={`${theme === "dark" ? "text-white " : ""}`} style={{ marginBottom: 8 }}>Description: {row.description}</Typography>
                         <Typography style={{ marginBottom: 8 }}>Hot Key: {row.key}</Typography>
                         <a href={websiteUrl} target="_blank" rel="noopener noreferrer" className='text-decoration-none'>
                             Visit Website
@@ -112,6 +117,9 @@ export default function TaoStake() {
             title: 'Total Stake',
             dataIndex: '',
             sorter: (a, b) => a.name.localeCompare(b.name),
+            render: () => {
+                return (<Text>Data</Text>)
+            }
         },
         {
             title: 'Nominators',
@@ -321,9 +329,9 @@ export default function TaoStake() {
     return (
         <div className='vh-100'>
             <div className="py-1">
-                <div className="card p-3">
-                    <Title level={4} className='text-uppercase text-primary mb-3'>Bittensor Validators</Title>
-                    <Table columns={columns} bordered dataSource={dataSource} onChange={onChange} scroll={{ x: true }} loading={isProcessing} />
+                <div className={`${theme === "dark" ? "card p-3 bg-secondary border-0" : "card p-3"}`}>
+                    <Title level={4} className={` ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Bittensor Validators</Title>
+                    <Table columns={columns} bordered dataSource={dataSource} onChange={onChange} scroll={{ x: true }} loading={isProcessing} className={`${theme === "dark" ? "dark-table" : ""}`} />
                 </div>
             </div>
             <Modal

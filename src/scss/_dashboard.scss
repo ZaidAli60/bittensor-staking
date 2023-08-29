@@ -187,7 +187,6 @@ $body-light: #fcfcfc;
 
 .card {
     border-color: rgba(238, 238, 238, 0.5) !important;
-    box-shadow: 14px 17px 50px 4px rgba(112, 144, 176, 0.1);
     border-radius: 10px;
 }
 
@@ -195,7 +194,38 @@ $body-light: #fcfcfc;
     border-color: #ded2f980;
 }
 
-.fixed-row {
-    background-color: $body-light;
-    padding-bottom: 20px;
+.dark-table {
+    .ant-table {
+        background-color: #171e2e;
+    }
+
+    .ant-table-cell:hover {
+        background-color: #171e2e !important;
+    }
+
+    .ant-table-column-sorter {
+        color: white;
+    }
+
+    .ant-table-thead>tr>th {
+        background-color: #171e2e;
+        color: white !important;
+    }
+
+    .ant-table-cell {
+        color: white !important;
+    }
+
+    .ant-table-cell-row-hover {
+        background-color: #171e2e !important;
+        color: white !important;
+    }
+
+    .ant-table-expanded-row-fixed {
+        background-color: #171e2e !important;
+    }
+
+    .ant-empty-description {
+        color: white;
+    }
 }
