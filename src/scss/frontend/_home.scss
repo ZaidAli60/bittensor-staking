@@ -47,10 +47,6 @@ $fira-code-font: 'Fira Code', monospace;
 
         }
 
-        .input-placeholder::placeholder {
-            color: rgba(255, 255, 255, 0.623);
-        }
-
         .ant-select-selector {
             width: 100% !important;
             height: 50px !important;
@@ -93,19 +89,57 @@ $fira-code-font: 'Fira Code', monospace;
         }
 
         .input-with-button input {
-            // padding-right: 36px;
             padding: 10px;
-            /* Adjust the padding as needed */
             border-top-right-radius: 6;
             border-bottom-right-radius: 6;
         }
 
         .input-with-button button {
             position: absolute;
-            // left: 135;
             right: 8px;
             border-top-left-radius: 6;
             border-bottom-left-radius: 6;
+        }
+
+        .dark-dropdown {
+            .ant-select-selector {
+                background-color: #171e2e;
+
+                .ant-select-selection-item {
+                    color: white !important;
+                }
+            }
+
+            .ant-select-open {
+                .ant-select-selection-item {
+                    color: white !important;
+                }
+            }
+
+            .ant-select-arrow {
+                color: white;
+            }
+
+
+        }
+
+        .select-placeholder::placeholder {
+            // background-color: aqua !important;
+            color: rgba(255, 255, 255, 0.623) !important;
+        }
+
+        .input-placeholder::placeholder {
+            color: rgba(255, 255, 255, 0.623);
+        }
+
+        .input-label {
+            .ant-row {
+                .ant-col {
+                    label {
+                        color: white !important;
+                    }
+                }
+            }
         }
 
     }

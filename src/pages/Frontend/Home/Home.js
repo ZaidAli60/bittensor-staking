@@ -201,37 +201,36 @@ export default function Home() {
                                     </div>
                                     <div className='mb-2'>
                                         <Form layout="vertical">
-                                            <Form.Item label="Validators" className="fw-bold fontFamily" name="Validators">
+                                            <Form.Item label="Validators" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} name="Validators">
                                                 <Select
+                                                    className={`fontFamily ${theme === "dark" && "dark-dropdown select-placeholder"}`}
                                                     style={{ width: "100%" }}
                                                     placeholder="Select a validators"
-                                                    // onChange={onGenderChange}
-                                                    allowClear
+                                                    defaultValue="Firsttensor"
+                                                    options={options}
                                                 >
-                                                    <Option value="male">male</Option>
-                                                    <Option value="female">female</Option>
-                                                    <Option value="other">other</Option>
+
                                                 </Select>
                                             </Form.Item>
-                                            <Form.Item label="Amount" className="fw-bold fontFamily" name="Amount">
+                                            <Form.Item label="Amount" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} name="Amount">
                                                 <div className="input-with-button" style={{ width: "100%" }}>
-                                                    <Input placeholder="Amount" type='number' />
+                                                    <Input placeholder="Amount" type='number' className={`${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
                                                     <button className='btn btn-sm btn-primary text-white fontFamily'>MAX</button>
                                                 </div>
                                             </Form.Item>
                                         </Form>
                                     </div>
-                                    <div className={`p-3 mb-2 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
+                                    <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                         <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>My Balance :</Text>
                                     </div>
-                                    <div className='mb-2'>
+                                    <div className='mb-3'>
                                         <div className="d-flex justify-content-between">
-                                            <Text className='fontFamily'>Available Amount</Text>
-                                            <Text className='fontFamily'>422 TAO</Text>
+                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Available Amount</Text>
+                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>422 TAO</Text>
                                         </div>
                                         <div className="d-flex justify-content-between">
-                                            <Text className='fontFamily'>Available Amount</Text>
-                                            <Text className='fontFamily'>422 TAO</Text>
+                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Available Amount</Text>
+                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>422 TAO</Text>
                                         </div>
                                     </div>
 
