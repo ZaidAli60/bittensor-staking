@@ -1,20 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Button, Col, Form, Input, Row, Select, Space, Table, Typography } from 'antd'
+import { Button, Col, Form, Input, Row, Select, Space, Table, Tooltip, Typography } from 'antd'
 import { MdOutlinePriceCheck } from "react-icons/md"
 import { SiCoinmarketcap } from "react-icons/si"
 import { TbAnalyze, TbBrandGoogleAnalytics } from "react-icons/tb"
 import { useThemeContext } from 'context/ThemeContext'
 import { useTaoInfoContext } from 'context/TaoInfoContext'
+import { InfoCircleOutlined } from "@ant-design/icons"
 
 const { Title, Text } = Typography
-const { Option } = Select;
+// const { Option } = Select;
 
 export default function Home() {
     const { theme } = useThemeContext()
     const { taoInfo } = useTaoInfoContext()
     const [validators, setValidators] = useState([])
     const [isProcessing, setIsProcessing] = useState(false)
-    console.log('validators', validators)
+    // console.log('validators', validators)
 
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
@@ -39,6 +40,13 @@ export default function Home() {
         handleFatch()
     }, [handleFatch])
 
+    const dataWithKeys = validators?.map((record) => ({
+        ...record,
+        key: record.hot_key.toString(), // Using the index as the key, but you should use a unique identifier
+    }));
+
+    // console.log('dataWithKeys', dataWithKeys)
+
     const columns = [
         {
             title: 'Name',
@@ -49,20 +57,32 @@ export default function Home() {
         {
             title: 'APY',
             sorter: (a, b) => a.key.localeCompare(b.key),
+            render: (_, row) => {
+                return <Text>{row?.apy.toFixed(2)}%</Text>
+            }
         },
         {
             title: 'Comission',
-            dataIndex: '',
             sorter: (a, b) => a.name.localeCompare(b.name),
+            render: (_, row) => {
+                return (<Tooltip title="Tooltip with custom icon">
+                    <span className='d-flex justify-content-between'>
+                        0 % <InfoCircleOutlined className='d-flex flex-end' />
+                    </span>
+                </Tooltip>)
+            }
         },
         {
             title: 'Total Staked',
-            dataIndex: '',
+            dataIndex: 'total_stake',
             sorter: (a, b) => a.name.localeCompare(b.name),
+            render: (_, row) => {
+                return <Text>{row?.total_stake.toFixed(2)} TAO</Text>
+            }
         },
         {
             title: 'Nominators',
-            dataIndex: '',
+            dataIndex: 'nominators',
             sorter: (a, b) => a.name.localeCompare(b.name),
         }
 
@@ -154,7 +174,18 @@ export default function Home() {
                         <Col xs={24} md={24} lg={16}>
                             <div className={`fontFamily ${theme === "dark" ? "card p-3 bg-secondary border-0" : "card p-3 shadow"} h-100`}>
                                 <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Bittensor Validators</Title>
-                                <Table columns={columns} bordered dataSource={validators} onChange={onChange} scroll={{ x: true }} className={`${theme === "dark" ? "dark-table" : ""}`} />
+                                <Table columns={columns} bordered dataSource={dataWithKeys} loading={isProcessing} onChange={onChange} scroll={{ x: true }} className={`${theme === "dark" ? "dark-table" : ""}`}
+                                    expandable={{
+                                        expandedRowRender: (record) => (
+                                            <div className='px-5'>
+                                                <Text>DESCRIPTION: {record.description}</Text> <br />
+                                                <Text>HOTKEY: {record.hot_key}</Text> <br />
+                                                <Text>WEBSITE: {record.url}</Text>
+                                            </div>
+                                        ),
+                                        rowExpandable: (record) => record.name !== 'Not Expandable',
+                                    }}
+                                />
                             </div>
                         </Col>
                         <Col xs={24} md={24} lg={8}>
