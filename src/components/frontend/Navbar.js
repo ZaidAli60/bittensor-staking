@@ -5,11 +5,23 @@ import { items } from "pages/Dashboard/SidebarItems"
 import { useThemeContext } from 'context/ThemeContext';
 import { BiMoon } from 'react-icons/bi'
 import { MdOutlineLightMode } from 'react-icons/md'
+import { LiaBarsSolid } from 'react-icons/lia'
 
 export default function Navbar() {
     const { theme, setTheme } = useThemeContext()
+    const [selectedItem, setSelectedItem] = useState("");
     const [drawerVisible, setDrawerVisible] = useState(false);
     const [isNavbarShadowed, setIsNavbarShadowed] = useState(false);
+
+
+    useEffect(() => {
+        let keys = window.location.pathname.split("/")
+        if (keys.length === 2 || (keys.length === 3 && !keys[2])) {
+            setSelectedItem("home")
+        } else {
+            setSelectedItem(keys[2])
+        }
+    }, [])
 
     const toggleDrawer = () => {
         setDrawerVisible(!drawerVisible);
@@ -34,9 +46,16 @@ export default function Navbar() {
         <>
             <nav className={`navbar navbar-expand-lg py-3 custom-navbar sticky-top dashboard ${theme} ${isNavbarShadowed ? "shadow" : ""} `}>
                 <div className="container-fluid">
-                    <a className="navbar-brand me-5" href="#">LOGO</a>
-                    <button className="navbar-toggler" type="button" onClick={toggleDrawer} data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
+                    <img src={`${theme === "dark" ? window.logoLight : window.logoDark} `} className='img-fluid me-5' alt="Bittensor Staking" />
+                    <button className="navbar-toggler rounded-5 py-2 px-2" type="button" onClick={toggleDrawer} data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        {/* <span ></span> */}
+                        {
+                            theme === "dark" ?
+                                <LiaBarsSolid className="navbar-toggler-icon text-white" />
+                                :
+                                <LiaBarsSolid className="navbar-toggler-icon" />
+
+                        }
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav me-auto ">
@@ -58,9 +77,9 @@ export default function Navbar() {
 
             <Drawer
                 title={
-                    <div className='d-flex justify-content-between align-items-baseline'>
-                        <span>LOGO</span>
-                        <Button type='primary'>
+                    <div className='d-flex justify-content-between'>
+                        <img src={`${theme === "dark" ? window.logoLight : window.logoDark}`} alt="Bittensor Staking" />
+                        <Button type='primary' className='px-4 custom-btn' shape="round">
                             Connect
                         </Button>
                     </div>
@@ -69,10 +88,10 @@ export default function Navbar() {
                 onClose={toggleDrawer}
                 visible={drawerVisible}
                 bodyStyle={{ padding: 0 }}
-                className='custome-drawer'
+                className={`custome-drawer dashboard ${theme}`}
             >
                 <div className='py-4'>
-                    <Menu theme='light' mode="inline" items={items} />
+                    {selectedItem && <Menu theme='dark' mode="inline" items={items} defaultSelectedKeys={[selectedItem]} className={`dashboard ${theme}`} />}
                 </div>
             </Drawer>
         </>

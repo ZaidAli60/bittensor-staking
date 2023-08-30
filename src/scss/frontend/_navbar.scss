@@ -18,6 +18,12 @@ $fira-code-font: 'Fira Code', monospace;
 
 }
 
+.dashboard.dark {
+    .ant-drawer-close {
+        color: white !important;
+    }
+
+}
 
 .ant-drawer {
     z-index: 1100 !important;

@@ -78,7 +78,7 @@ export default function Home() {
                     taoInfo?.map((item, i) => {
                         return <Row key={i} gutter={[16, 16]} className='mb-4'>
                             <Col xs={24} sm={12} md={12} lg={6}>
-                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : ""}`}>
+                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"}`}>
                                     <div className='d-flex mb-2'>
                                         <MdOutlinePriceCheck className='fs-5 me-2' />
                                         <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`} style={{ fontSize: "13px" }}>Current Price</Title>
@@ -92,7 +92,7 @@ export default function Home() {
                                 </div>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={6}>
-                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : ""}`}>
+                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"}`}>
                                     <div className='d-flex mb-2'>
                                         <SiCoinmarketcap className='fs-5 me-2' />
                                         <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`} style={{ fontSize: "13px" }}>Market Cap</Title>
@@ -106,7 +106,7 @@ export default function Home() {
                                 </div>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={6}>
-                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : ""}`}>
+                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"}`}>
                                     <div className='d-flex mb-2'>
                                         <TbAnalyze className='fs-5 me-2' />
                                         <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`} style={{ fontSize: "13px" }}>Circulating Supply</Title>
@@ -120,7 +120,7 @@ export default function Home() {
                                 </div>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={6}>
-                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : ""}`}>
+                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"}`}>
                                     <div className='d-flex  mb-2'>
                                         <TbBrandGoogleAnalytics className='fs-5 me-2' />
                                         <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`} style={{ fontSize: "13px" }}>Supply Staked</Title>
@@ -140,7 +140,7 @@ export default function Home() {
                 <div className="py-3">
                     <Row gutter={[16, 16]}>
                         <Col lg={16}>
-                            <div className={`${theme === "dark" ? "card p-3 bg-secondary border-0" : "card p-3"}`}>
+                            <div className={`${theme === "dark" ? "card p-3 bg-secondary border-0" : "card p-3 shadow"}`}>
                                 <Title level={4} className={` ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Bittensor Validators</Title>
                                 <Table columns={columns} bordered dataSource={validators} onChange={onChange} scroll={{ x: true }} className={`${theme === "dark" ? "dark-table" : ""}`} />
                             </div>
