@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Col, Row, Table, Typography } from 'antd'
+import { Button, Col, Input, Row, Select, Space, Table, Typography } from 'antd'
 import { MdOutlinePriceCheck } from "react-icons/md"
 import { SiCoinmarketcap } from "react-icons/si"
 import { TbAnalyze, TbBrandGoogleAnalytics } from "react-icons/tb"
 import { useThemeContext } from 'context/ThemeContext'
 import { useTaoInfoContext } from 'context/TaoInfoContext'
 
-const { Title } = Typography
+const { Title, Text } = Typography
 
 export default function Home() {
     const { theme } = useThemeContext()
@@ -71,9 +71,20 @@ export default function Home() {
         console.log('params', pagination, filters, sorter, extra);
     };
 
+    const options = [
+        {
+            value: 'zhejiang',
+            label: 'Zhejiang',
+        },
+        {
+            value: 'jiangsu',
+            label: 'Jiangsu',
+        },
+    ];
+
     return (
         <div className={`home dashboard ${theme} vh-100`}>
-            <div className=" container-fluid  py-4">
+            <div className=" container-fluid  py-5">
                 {
                     taoInfo?.map((item, i) => {
                         return <Row key={i} gutter={[16, 16]} className='mb-4'>
@@ -137,12 +148,46 @@ export default function Home() {
                     })
                 }
 
-                <div className="py-3">
+                <div className="py-3 staking-calculator">
                     <Row gutter={[16, 16]}>
                         <Col lg={16}>
-                            <div className={`${theme === "dark" ? "card p-3 bg-secondary border-0" : "card p-3 shadow"}`}>
-                                <Title level={4} className={` ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Bittensor Validators</Title>
+                            <div className={`fontFamily ${theme === "dark" ? "card p-3 bg-secondary border-0" : "card p-3 shadow"}`}>
+                                <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Bittensor Validators</Title>
                                 <Table columns={columns} bordered dataSource={validators} onChange={onChange} scroll={{ x: true }} className={`${theme === "dark" ? "dark-table" : ""}`} />
+                            </div>
+                        </Col>
+                        <Col lg={8}>
+                            <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"}`}>
+                                <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Staking Calculator</Title>
+                                <div className='card border-0 p-3 mb-3' style={{ backgroundColor: "#b5e61d" }}>
+                                    <div className='d-flex justify-content-between'>
+                                        <Text className='fontFamily'>Current APY</Text>
+                                        <Text className='fontFamily'>27.24%</Text>
+                                    </div>
+                                </div>
+                                <div style={{ width: "100%" }} className='mb-3'>
+                                    <Space >
+                                        <Space.Compact >
+                                            <Select defaultValue="Zhejiang" options={options} style={{ width: "50%" }} />
+                                            <Input type='number' defaultValue="" placeholder='TAO Amount' className="rtl-input" />
+                                        </Space.Compact>
+                                    </Space>
+                                </div>
+                                <div className="card p-3 mb-3">
+                                    <div className="d-flex justify-content-between">
+                                        <Text className='fontFamily'>Monthly Rewards</Text>
+                                        <Text className='fontFamily'>0.000</Text>
+                                    </div>
+                                </div>
+                                <div className="card p-3 mb-3">
+                                    <div className="d-flex justify-content-between">
+                                        <Text className='fontFamily'>Yearly Rewards</Text>
+                                        <Text className='fontFamily'>0.000</Text>
+                                    </div>
+                                </div>
+                                <div >
+                                    <Button type='primary' className='w-100 fontFamily' size='large'>Calculate</Button>
+                                </div>
                             </div>
                         </Col>
                     </Row>

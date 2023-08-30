@@ -8,4 +8,42 @@ $fira-code-font: 'Fira Code', monospace;
     .fontFamily {
         font-family: $fira-code-font;
     }
+
+    .staking-calculator {
+
+        .ant-space {
+            width: 100% !important;
+        }
+
+        .ant-space-item {
+            width: 100% !important;
+        }
+
+        .ant-space-compact {
+            width: 100% !important;
+        }
+
+        .ant-select-selector {
+            width: 100% !important;
+            height: 50px !important;
+            padding: 10px !important;
+        }
+
+        .ant-input {
+            width: 100% !important;
+        }
+
+        .ant-input {
+            border-top-left-radius: 0px !important;
+            border-bottom-left-radius: 0px !important;
+            border-top-right-radius: 6px !important;
+            border-bottom-right-radius: 6px !important;
+        }
+
+        .rtl-input {
+            direction: rtl;
+            text-align: right;
+            /* For left-aligned text within the input */
+        }
+    }
 }
