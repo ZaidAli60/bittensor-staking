@@ -9,17 +9,15 @@ import Balance from 'pages/Frontend/Balance'
 
 export default function Index() {
     return (
-        <>
-            <Layout>
-                <Navbar />
-                <Content>
-                    <Routes>
-                        <Route index element={<Home />} />
-                        <Route path='/balance' element={<Balance />} />
-                        <Route path='*' element={<NotFound />} />
-                    </Routes>
-                </Content>
-            </Layout>
-        </>
+        <Layout>
+            <Navbar />
+            <Content>
+                <Routes>
+                    <Route index element={<Home />} />
+                    <Route path='/balance' element={<Balance />} />
+                    <Route path='*' element={<NotFound />} />
+                </Routes>
+            </Content>
+        </Layout>
     )
 }

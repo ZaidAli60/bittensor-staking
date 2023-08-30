@@ -83,13 +83,13 @@ export default function Home() {
     ];
 
     return (
-        <div className={`home dashboard ${theme} vh-100`}>
+        <div className={`home dashboard ${theme} min-vh-100`}>
             <div className=" container-fluid  py-5">
                 {
                     taoInfo?.map((item, i) => {
                         return <Row key={i} gutter={[16, 16]} className='mb-4'>
                             <Col xs={24} sm={12} md={12} lg={6}>
-                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"}`}>
+                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
                                     <div className='d-flex mb-2'>
                                         <MdOutlinePriceCheck className='fs-5 me-2' />
                                         <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`} style={{ fontSize: "13px" }}>Current Price</Title>
@@ -103,7 +103,7 @@ export default function Home() {
                                 </div>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={6}>
-                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"}`}>
+                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
                                     <div className='d-flex mb-2'>
                                         <SiCoinmarketcap className='fs-5 me-2' />
                                         <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`} style={{ fontSize: "13px" }}>Market Cap</Title>
@@ -117,7 +117,7 @@ export default function Home() {
                                 </div>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={6}>
-                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"}`}>
+                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
                                     <div className='d-flex mb-2'>
                                         <TbAnalyze className='fs-5 me-2' />
                                         <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`} style={{ fontSize: "13px" }}>Circulating Supply</Title>
@@ -131,7 +131,7 @@ export default function Home() {
                                 </div>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={6}>
-                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"}`}>
+                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
                                     <div className='d-flex  mb-2'>
                                         <TbBrandGoogleAnalytics className='fs-5 me-2' />
                                         <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`} style={{ fontSize: "13px" }}>Supply Staked</Title>
@@ -150,14 +150,14 @@ export default function Home() {
 
                 <div className="py-3 staking-calculator">
                     <Row gutter={[16, 16]}>
-                        <Col lg={16}>
-                            <div className={`fontFamily ${theme === "dark" ? "card p-3 bg-secondary border-0" : "card p-3 shadow"}`}>
+                        <Col xs={24} md={24} lg={16}>
+                            <div className={`fontFamily ${theme === "dark" ? "card p-3 bg-secondary border-0" : "card p-3 shadow"} h-100`}>
                                 <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Bittensor Validators</Title>
                                 <Table columns={columns} bordered dataSource={validators} onChange={onChange} scroll={{ x: true }} className={`${theme === "dark" ? "dark-table" : ""}`} />
                             </div>
                         </Col>
-                        <Col lg={8}>
-                            <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"}`}>
+                        <Col xs={24} md={24} lg={8}>
+                            <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
                                 <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Staking Calculator</Title>
                                 <div className='card border-0 p-3 mb-3' style={{ backgroundColor: "#b5e61d" }}>
                                     <div className='d-flex justify-content-between'>
@@ -166,23 +166,23 @@ export default function Home() {
                                     </div>
                                 </div>
                                 <div style={{ width: "100%" }} className='mb-3'>
-                                    <Space >
+                                    <Space>
                                         <Space.Compact >
-                                            <Select defaultValue="Zhejiang" options={options} style={{ width: "50%" }} />
-                                            <Input type='number' defaultValue="" placeholder='TAO Amount' className="rtl-input" />
+                                            <Select defaultValue="Zhejiang" options={options} style={{ width: "50%" }} className={`dashboard ${theme} ${theme === "dark" && "dark-dropdown"}`} />
+                                            <Input type='number' defaultValue="" placeholder='TAO Amount' className={`rtl-input ${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
                                         </Space.Compact>
                                     </Space>
                                 </div>
-                                <div className="card p-3 mb-3">
+                                <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                     <div className="d-flex justify-content-between">
-                                        <Text className='fontFamily'>Monthly Rewards</Text>
-                                        <Text className='fontFamily'>0.000</Text>
+                                        <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Monthly Rewards</Text>
+                                        <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>0.000</Text>
                                     </div>
                                 </div>
-                                <div className="card p-3 mb-3">
+                                <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                     <div className="d-flex justify-content-between">
-                                        <Text className='fontFamily'>Yearly Rewards</Text>
-                                        <Text className='fontFamily'>0.000</Text>
+                                        <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Yearly Rewards</Text>
+                                        <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>0.000</Text>
                                     </div>
                                 </div>
                                 <div >

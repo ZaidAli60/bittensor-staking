@@ -23,6 +23,35 @@ $fira-code-font: 'Fira Code', monospace;
             width: 100% !important;
         }
 
+        .ant-select {
+            width: 50%;
+        }
+
+        .dark-dropdown {
+            .ant-select-selector {
+                background-color: #171e2e;
+
+                .ant-select-selection-item {
+                    color: white !important;
+                }
+            }
+
+            .ant-select-open {
+                .ant-select-selection-item {
+                    color: white !important;
+                }
+            }
+
+            .ant-select-arrow {
+                color: white;
+            }
+
+        }
+
+        .input-placeholder::placeholder {
+            color: rgba(255, 255, 255, 0.623);
+        }
+
         .ant-select-selector {
             width: 100% !important;
             height: 50px !important;

@@ -4,14 +4,14 @@ import { ConfigProvider } from 'antd';
 import { useThemeContext } from './context/ThemeContext';
 
 function App() {
-  const { isAppLoader, setIsAppLoader } = useThemeContext();
+  const { isAppLoader, setIsAppLoader, theme } = useThemeContext()
 
   setTimeout(() => {
     setIsAppLoader(false)
   }, 6000);
 
   return (
-    <div className="App">
+    <div className={`App dashboard ${theme} min-vh-100`}>
       {
         !isAppLoader ?
           <ConfigProvider
