@@ -69,7 +69,7 @@ export default function Navbar() {
                             <Tooltip title="Dark theme"> <BiMoon className='text-center fs-5' onClick={() => setTheme("dark")} /> </Tooltip>
                         </div>
                         <div>
-                            <Button type='primary' className='px-4 custom-btn' shape="round">Connect</Button>
+                            <Button type='primary' className='px-4 custom-btn' size='large' shape="round">Connect</Button>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ export default function Navbar() {
                 title={
                     <div className='d-flex justify-content-between'>
                         <img src={`${theme === "dark" ? window.logoLight : window.logoDark}`} alt="Bittensor Staking" />
-                        <Button type='primary' className='px-4 custom-btn' shape="round">
+                        <Button type='primary' className='px-4 custom-btn' size='large' shape="round">
                             Connect
                         </Button>
                     </div>
