@@ -3,7 +3,6 @@
 /* Define a variable for the Fira Code font */
 $fira-code-font: 'Fira Code', monospace;
 
-
 .home {
     .fontFamily {
         font-family: $fira-code-font;
@@ -74,5 +73,40 @@ $fira-code-font: 'Fira Code', monospace;
             text-align: right;
             /* For left-aligned text within the input */
         }
+    }
+
+    .stake-tao {
+        .ant-select-selector {
+            width: 100%;
+            height: 50px;
+            padding: 10px;
+        }
+
+        .input-with-button {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .ant-input {
+            height: 50px;
+        }
+
+        .input-with-button input {
+            // padding-right: 36px;
+            padding: 10px;
+            /* Adjust the padding as needed */
+            border-top-right-radius: 6;
+            border-bottom-right-radius: 6;
+        }
+
+        .input-with-button button {
+            position: absolute;
+            // left: 135;
+            right: 8px;
+            border-top-left-radius: 6;
+            border-bottom-left-radius: 6;
+        }
+
     }
 }

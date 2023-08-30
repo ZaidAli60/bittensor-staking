@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Button, Col, Input, Row, Select, Space, Table, Typography } from 'antd'
+import { Button, Col, Form, Input, Row, Select, Space, Table, Typography } from 'antd'
 import { MdOutlinePriceCheck } from "react-icons/md"
 import { SiCoinmarketcap } from "react-icons/si"
 import { TbAnalyze, TbBrandGoogleAnalytics } from "react-icons/tb"
@@ -7,6 +7,7 @@ import { useThemeContext } from 'context/ThemeContext'
 import { useTaoInfoContext } from 'context/TaoInfoContext'
 
 const { Title, Text } = Typography
+const { Option } = Select;
 
 export default function Home() {
     const { theme } = useThemeContext()
@@ -73,8 +74,8 @@ export default function Home() {
 
     const options = [
         {
-            value: 'zhejiang',
-            label: 'Zhejiang',
+            value: 'Firsttensor',
+            label: 'Firsttensor',
         },
         {
             value: 'jiangsu',
@@ -148,7 +149,7 @@ export default function Home() {
                     })
                 }
 
-                <div className="py-3 staking-calculator">
+                <div className="py-3 ">
                     <Row gutter={[16, 16]}>
                         <Col xs={24} md={24} lg={16}>
                             <div className={`fontFamily ${theme === "dark" ? "card p-3 bg-secondary border-0" : "card p-3 shadow"} h-100`}>
@@ -157,38 +158,88 @@ export default function Home() {
                             </div>
                         </Col>
                         <Col xs={24} md={24} lg={8}>
-                            <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
-                                <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Staking Calculator</Title>
-                                <div className='card border-0 p-3 mb-3' style={{ backgroundColor: "#b5e61d" }}>
-                                    <div className='d-flex justify-content-between'>
-                                        <Text className='fontFamily'>Current APY</Text>
-                                        <Text className='fontFamily'>27.24%</Text>
+                            <Col className='mb-3 staking-calculator'>
+                                <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
+                                    <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Staking Calculator</Title>
+                                    <div className='card border-0 p-3 mb-3' style={{ backgroundColor: "#b5e61d" }}>
+                                        <div className='d-flex justify-content-between'>
+                                            <Text className='fontFamily'>Current APY</Text>
+                                            <Text className='fontFamily'>27.24%</Text>
+                                        </div>
+                                    </div>
+                                    <div style={{ width: "100%" }} className='mb-3'>
+                                        <Space>
+                                            <Space.Compact >
+                                                <Select defaultValue="Zhejiang" options={options} style={{ width: "50%" }} className={`dashboard ${theme} ${theme === "dark" && "dark-dropdown"}`} />
+                                                <Input type='number' defaultValue="" placeholder='TAO Amount' className={`rtl-input ${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
+                                            </Space.Compact>
+                                        </Space>
+                                    </div>
+                                    <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
+                                        <div className="d-flex justify-content-between">
+                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Monthly Rewards</Text>
+                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>0.000</Text>
+                                        </div>
+                                    </div>
+                                    <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
+                                        <div className="d-flex justify-content-between">
+                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Yearly Rewards</Text>
+                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>0.000</Text>
+                                        </div>
+                                    </div>
+                                    <div >
+                                        <Button type='primary' className='w-100 fontFamily text-uppercase' size='large'>Calculate</Button>
                                     </div>
                                 </div>
-                                <div style={{ width: "100%" }} className='mb-3'>
-                                    <Space>
-                                        <Space.Compact >
-                                            <Select defaultValue="Zhejiang" options={options} style={{ width: "50%" }} className={`dashboard ${theme} ${theme === "dark" && "dark-dropdown"}`} />
-                                            <Input type='number' defaultValue="" placeholder='TAO Amount' className={`rtl-input ${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
-                                        </Space.Compact>
-                                    </Space>
-                                </div>
-                                <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
-                                    <div className="d-flex justify-content-between">
-                                        <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Monthly Rewards</Text>
-                                        <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>0.000</Text>
+                            </Col>
+                            <Col className='stake-tao'>
+                                <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
+                                    <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Stake Tao</Title>
+                                    <div className='d-flex justify-content-between mb-3'>
+                                        <Button type='primary' className='text-uppercase fontFamily'>Delegate</Button>
+                                        <Button type='primary' className='text-uppercase fontFamily'>UnDelegate</Button>
+                                    </div>
+                                    <div className='mb-2'>
+                                        <Form layout="vertical">
+                                            <Form.Item label="Validators" className="fw-bold fontFamily" name="Validators">
+                                                <Select
+                                                    style={{ width: "100%" }}
+                                                    placeholder="Select a validators"
+                                                    // onChange={onGenderChange}
+                                                    allowClear
+                                                >
+                                                    <Option value="male">male</Option>
+                                                    <Option value="female">female</Option>
+                                                    <Option value="other">other</Option>
+                                                </Select>
+                                            </Form.Item>
+                                            <Form.Item label="Amount" className="fw-bold fontFamily" name="Amount">
+                                                <div className="input-with-button" style={{ width: "100%" }}>
+                                                    <Input placeholder="Amount" type='number' />
+                                                    <button className='btn btn-sm btn-primary text-white fontFamily'>MAX</button>
+                                                </div>
+                                            </Form.Item>
+                                        </Form>
+                                    </div>
+                                    <div className={`p-3 mb-2 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
+                                        <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>My Balance :</Text>
+                                    </div>
+                                    <div className='mb-2'>
+                                        <div className="d-flex justify-content-between">
+                                            <Text className='fontFamily'>Available Amount</Text>
+                                            <Text className='fontFamily'>422 TAO</Text>
+                                        </div>
+                                        <div className="d-flex justify-content-between">
+                                            <Text className='fontFamily'>Available Amount</Text>
+                                            <Text className='fontFamily'>422 TAO</Text>
+                                        </div>
+                                    </div>
+
+                                    <div >
+                                        <Button type='primary' className='w-100 fontFamily text-uppercase' size='large'>Delegate</Button>
                                     </div>
                                 </div>
-                                <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
-                                    <div className="d-flex justify-content-between">
-                                        <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Yearly Rewards</Text>
-                                        <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>0.000</Text>
-                                    </div>
-                                </div>
-                                <div >
-                                    <Button type='primary' className='w-100 fontFamily' size='large'>Calculate</Button>
-                                </div>
-                            </div>
+                            </Col>
                         </Col>
                     </Row>
                 </div>

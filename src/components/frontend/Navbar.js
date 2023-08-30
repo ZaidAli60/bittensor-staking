@@ -51,9 +51,9 @@ export default function Navbar() {
                         {/* <span ></span> */}
                         {
                             theme === "dark" ?
-                                <LiaBarsSolid className="navbar-toggler-icon text-white" />
+                                <LiaBarsSolid className="navbar-toggler-icon text-white" style={{ fontSize: "14px" }} />
                                 :
-                                <LiaBarsSolid className="navbar-toggler-icon" />
+                                <LiaBarsSolid className="navbar-toggler-icon" style={{ fontSize: "14px" }} />
 
                         }
                     </button>
