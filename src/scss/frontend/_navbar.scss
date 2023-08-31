@@ -18,6 +18,47 @@ $fira-code-font: 'Fira Code', monospace;
 
 }
 
+.ant-modal-root {
+    .ant-modal-mask {
+        z-index: 1100;
+    }
+
+    .ant-modal-wrap {
+        z-index: 1100;
+    }
+}
+
+.account-modal {
+    .ant-modal {
+        border-radius: 6px !important;
+    }
+
+    .ant-modal-content {
+        background-color: #171e2e !important;
+        color: white;
+
+        .ant-modal-close-x {
+            color: white;
+        }
+
+        .ant-modal-header {
+            .ant-modal-title {
+                background-color: #171e2e;
+                color: white;
+            }
+
+        }
+    }
+
+
+}
+
+// }
+// }
+// }
+
+// }
+
 .dashboard.dark {
     .ant-drawer-close {
         color: white !important;

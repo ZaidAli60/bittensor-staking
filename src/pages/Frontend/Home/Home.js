@@ -293,7 +293,7 @@ export default function Home() {
                                             <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>422 TAO</Text>
                                         </div>
                                         <div className="d-flex justify-content-between">
-                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Available Amount</Text>
+                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Your Current Stake</Text>
                                             <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>422 TAO</Text>
                                         </div>
                                     </div>
