@@ -7,15 +7,27 @@ import { useThemeContext } from 'context/ThemeContext'
 import { useTaoInfoContext } from 'context/TaoInfoContext'
 import { InfoCircleOutlined } from "@ant-design/icons"
 
-const { Title, Text } = Typography
-// const { Option } = Select;
+const { Title, Text } = Typography;
+const { Option } = Select;
 
 export default function Home() {
     const { theme } = useThemeContext()
     const { taoInfo } = useTaoInfoContext()
     const [validators, setValidators] = useState([])
     const [isProcessing, setIsProcessing] = useState(false)
-    console.log('validators', validators)
+    const [currentAPY, setCurrentAPY] = useState({})
+    const [taoAmount, setTaoAmount] = useState(0)
+    const [yearReward, setYearReward] = useState(0)
+    const [monthlyReward, setMonthlyReward] = useState(0)
+
+    useEffect(() => {
+        setCurrentAPY(validators.length > 0 ? validators[0] : {})
+    }, [validators])
+
+    const handleCurrentAPY = (value) => {
+        const currentapyvalue = validators.find(validator => validator.name === value);
+        setCurrentAPY(currentapyvalue);
+    }
 
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
@@ -44,8 +56,6 @@ export default function Home() {
         ...record,
         key: record.details?.hot_key.toString(), // Using the index as the key, but you should use a unique identifier
     }));
-
-    // console.log('dataWithKeys', dataWithKeys)
 
     const columns = [
         {
@@ -90,18 +100,35 @@ export default function Home() {
 
     const onChange = (pagination, filters, sorter, extra) => {
         // console.log('params', pagination, filters, sorter, extra);
-    };
+    }
 
-    const options = [
-        {
-            value: 'Firsttensor',
-            label: 'Firsttensor',
-        },
-        {
-            value: 'jiangsu',
-            label: 'Jiangsu',
-        },
-    ];
+    const handleStakeCalculator = () => {
+
+        if (!currentAPY) {
+            console.error('No APY data available.');
+            return;
+        }
+
+        const apy = currentAPY.apy.toFixed(2);
+        const commission = currentAPY.commission;
+
+        if (isNaN(apy) || isNaN(commission)) {
+            console.error('Invalid APY or commission values.');
+            return;
+        }
+
+        const calculateWithAPY = Number(taoAmount) * (apy / 100)
+        const calculateWithcommsion = apy * (commission / 100)
+
+        const yearRewards = calculateWithAPY - calculateWithcommsion
+        setYearReward(yearRewards)
+        const monthlyReward = (yearRewards / 12)
+        setMonthlyReward(monthlyReward)
+
+    }
+
+
+
 
     return (
         <div className={`home dashboard ${theme} min-vh-100`}>
@@ -195,31 +222,35 @@ export default function Home() {
                                     <div className='card border-0 p-3 mb-3' style={{ backgroundColor: "#b5e61d" }}>
                                         <div className='d-flex justify-content-between'>
                                             <Text className='fontFamily'>Current APY</Text>
-                                            <Text className='fontFamily'>27.24%</Text>
+                                            <Text className='fontFamily'>{currentAPY.apy?.toFixed(2)}%</Text>
                                         </div>
                                     </div>
                                     <div style={{ width: "100%" }} className='mb-3'>
                                         <Space>
                                             <Space.Compact >
-                                                <Select defaultValue="Zhejiang" options={options} style={{ width: "50%" }} className={`dashboard ${theme} ${theme === "dark" && "dark-dropdown"}`} />
-                                                <Input type='number' defaultValue="" placeholder='TAO Amount' className={`rtl-input ${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
+                                                <Select value={currentAPY?.name} onChange={(value) => handleCurrentAPY(value)} style={{ width: "50%" }} className={`dashboard ${theme} ${theme === "dark" && "dark-dropdown"}`} >
+                                                    {validators?.map((validator) => (
+                                                        <Option key={validator.name} value={validator.name}> {validator.name}</Option>
+                                                    ))}
+                                                </Select>
+                                                <Input type='number' onChange={(e) => setTaoAmount(e.target.value)} placeholder='TAO Amount' className={`rtl-input ${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
                                             </Space.Compact>
                                         </Space>
                                     </div>
                                     <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                         <div className="d-flex justify-content-between">
                                             <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Monthly Rewards</Text>
-                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>0.000</Text>
+                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>{monthlyReward.toFixed(2)}</Text>
                                         </div>
                                     </div>
                                     <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                         <div className="d-flex justify-content-between">
                                             <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Yearly Rewards</Text>
-                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>0.000</Text>
+                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>{yearReward.toFixed(2)}</Text>
                                         </div>
                                     </div>
                                     <div >
-                                        <Button type='primary' className='w-100 fontFamily text-uppercase' size='large'>Calculate</Button>
+                                        <Button type='primary' className='w-100 fontFamily text-uppercase' size='large' onClick={handleStakeCalculator}>Calculate</Button>
                                     </div>
                                 </div>
                             </Col>
@@ -238,9 +269,11 @@ export default function Home() {
                                                     style={{ width: "100%" }}
                                                     placeholder="Select a validators"
                                                     defaultValue="Firsttensor"
-                                                    options={options}
-                                                >
 
+                                                >
+                                                    {validators?.map((validator) => (
+                                                        <Option key={validator.details?.hot_key} value={validator.apy}>{validator.name}</Option>
+                                                    ))}
                                                 </Select>
                                             </Form.Item>
                                             <Form.Item label="Amount" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} name="Amount">
@@ -274,6 +307,6 @@ export default function Home() {
                     </Row>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
