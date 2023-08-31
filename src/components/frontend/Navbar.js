@@ -7,6 +7,7 @@ import { BiMoon } from 'react-icons/bi'
 import { MdOutlineLightMode } from 'react-icons/md'
 import { LiaBarsSolid } from 'react-icons/lia'
 
+
 export default function Navbar() {
     const { theme, setTheme } = useThemeContext()
     const [selectedItem, setSelectedItem] = useState("");
@@ -44,11 +45,10 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className={`navbar navbar-expand-lg py-3 custom-navbar sticky-top dashboard ${theme} ${isNavbarShadowed ? "shadow" : ""} `}>
+            {/* <nav className={`navbar navbar-expand-lg py-3 custom-navbar sticky-top dashboard ${theme} ${isNavbarShadowed ? "shadow" : ""} `}>
                 <div className="container-fluid">
                     <img src={`${theme === "dark" ? window.logoLight : window.logoDark} `} className='img-fluid me-5' alt="Bittensor Staking" />
                     <button className="navbar-toggler rounded-5 py-2 px-2" type="button" onClick={toggleDrawer} data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                        {/* <span ></span> */}
                         {
                             theme === "dark" ?
                                 <LiaBarsSolid className="navbar-toggler-icon text-white" style={{ fontSize: "14px" }} />
@@ -72,6 +72,36 @@ export default function Navbar() {
                             <Button type='primary' className='px-4 custom-btn' size='large' shape="round">Connect</Button>
                         </div>
                     </div>
+                </div>
+            </nav> */}
+
+            <nav className={`navbar navbar-expand-lg py-3 custom-navbar sticky-top dashboard ${theme} ${isNavbarShadowed ? "shadow" : ""}`}>
+                <div className="container-fluid">
+                    <img src={`${theme === "dark" ? window.logoLight : window.logoDark}`} className='img-fluid me-5' alt="Bittensor Staking" />
+
+                    <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div className="navbar-nav me-auto">
+                            <Link to="/" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`}>Home</Link>
+                            <Link to="/balance" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} href="#">Balance</Link>
+                            <Link to="/vote" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} href="#">Vote</Link>
+                            <Link to="/" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} href="#">Buy Tao</Link>
+                        </div>
+                    </div>
+
+                    <div className='icon-container me-3 d-flex' style={{ cursor: 'pointer' }}>
+                        <Tooltip title="Light theme"> <MdOutlineLightMode className="fs-5 me-2" onClick={() => setTheme("light")} /> </Tooltip>
+                        <Tooltip title="Dark theme"> <BiMoon className='text-center fs-5' onClick={() => setTheme("dark")} /> </Tooltip>
+                    </div>
+                    <div className="d-none d-lg-block">
+                        <Button type='primary' className={`px-4 custom-btn`} size="large" shape="round">Connect</Button>
+                    </div>
+                    <button className="navbar-toggler rounded-5 py-2 px-2" type="button" onClick={toggleDrawer} data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        {theme === "dark" ?
+                            <LiaBarsSolid className="navbar-toggler-icon text-white" style={{ fontSize: "14px" }} />
+                            :
+                            <LiaBarsSolid className="navbar-toggler-icon" style={{ fontSize: "14px" }} />
+                        }
+                    </button>
                 </div>
             </nav>
 

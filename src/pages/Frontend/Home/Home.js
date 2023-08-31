@@ -52,13 +52,13 @@ export default function Home() {
             title: 'Name',
             dataIndex: 'name',
             sorter: (a, b) => a.name.localeCompare(b.name),
-
+            fixed: 'left',
         },
         {
             title: 'APY',
             sorter: (a, b) => a.key.localeCompare(b.key),
             render: (_, row) => {
-                return <Text>{row?.apy.toFixed(2)}%</Text>
+                return <Text className={`${theme === "dark" && "text-white"}`}>{row.apy?.toFixed(2)}%</Text>
             }
         },
         {
@@ -77,7 +77,7 @@ export default function Home() {
             dataIndex: 'total_stake',
             sorter: (a, b) => a.name.localeCompare(b.name),
             render: (_, row) => {
-                return <Text>{row?.total_stake.toFixed(2)} TAO</Text>
+                return <Text className={`${theme === "dark" && "text-white"}`}>{row.total_stake?.toFixed(2)} TAO</Text>
             }
         },
         {
@@ -89,7 +89,7 @@ export default function Home() {
     ];
 
     const onChange = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
+        // console.log('params', pagination, filters, sorter, extra);
     };
 
     const options = [
@@ -174,13 +174,13 @@ export default function Home() {
                         <Col xs={24} md={24} lg={16}>
                             <div className={`fontFamily ${theme === "dark" ? "card p-3 bg-secondary border-0" : "card p-3 shadow"} h-100`}>
                                 <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Bittensor Validators</Title>
-                                <Table columns={columns} bordered dataSource={dataWithKeys} loading={isProcessing} onChange={onChange} scroll={{ x: true }} className={`${theme === "dark" ? "dark-table" : ""}`}
+                                <Table columns={columns} bordered dataSource={dataWithKeys} loading={isProcessing} onChange={onChange} scroll={{ x: true }} className={`${theme === "dark" ? "dark-table" : "light-table"}`}
                                     expandable={{
                                         expandedRowRender: (record) => (
                                             <div className='px-5'>
-                                                <Text>DESCRIPTION: {record.description}</Text> <br />
-                                                <Text>HOTKEY: {record.hot_key}</Text> <br />
-                                                <Text>WEBSITE: {record.url}</Text>
+                                                <Text className={`${theme === "dark" && "text-white"}`}>DESCRIPTION: {record.description}</Text> <br />
+                                                <Text className={`${theme === "dark" && "text-white"}`}>HOTKEY: {record.hot_key}</Text> <br />
+                                                <Text className={`${theme === "dark" && "text-white"}`}>WEBSITE: {record.url}</Text>
                                             </div>
                                         ),
                                         rowExpandable: (record) => record.name !== 'Not Expandable',

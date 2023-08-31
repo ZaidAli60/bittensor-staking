@@ -193,39 +193,3 @@ $body-light: #fcfcfc;
 .card.bg-transparent {
     border-color: #ded2f980;
 }
-
-.dark-table {
-    .ant-table {
-        background-color: #171e2e;
-    }
-
-    .ant-table-cell:hover {
-        background-color: #171e2e !important;
-    }
-
-    .ant-table-column-sorter {
-        color: white;
-    }
-
-    .ant-table-thead>tr>th {
-        background-color: #171e2e;
-        color: white !important;
-    }
-
-    .ant-table-cell {
-        color: white !important;
-    }
-
-    .ant-table-cell-row-hover {
-        background-color: #171e2e !important;
-        color: white !important;
-    }
-
-    .ant-table-expanded-row-fixed {
-        background-color: #171e2e !important;
-    }
-
-    .ant-empty-description {
-        color: white;
-    }
-}

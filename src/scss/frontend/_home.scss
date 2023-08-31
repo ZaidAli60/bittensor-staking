@@ -8,6 +8,81 @@ $fira-code-font: 'Fira Code', monospace;
         font-family: $fira-code-font;
     }
 
+    .light-table {
+        .ant-table {
+            .ant-table-tbody {
+                .ant-table-cell {
+                    .ant-table-row-expand-icon {
+                        background-color: white;
+                        color: black;
+                    }
+                }
+            }
+        }
+    }
+
+    .dark-table {
+        .ant-table {
+            background-color: #171e2e;
+
+            .ant-table-thead {
+                .ant-table-cell {
+                    background-color: #171e2e !important;
+                }
+
+                .ant-table-cell:hover {
+                    background-color: #171e2e !important;
+                }
+
+            }
+
+            .ant-table-tbody {
+                .ant-table-cell {
+                    .ant-table-row-expand-icon {
+                        background-color: #171e2e;
+                        color: white;
+                    }
+                }
+
+                .ant-table-column-sort {
+                    background-color: #171e2e;
+                    color: white;
+                }
+
+                .ant-table-cell-fix-left {
+                    background-color: #171e2e;
+                    color: white;
+                }
+            }
+        }
+
+        .ant-table-column-sorter {
+            color: white;
+        }
+
+        .ant-table-thead>tr>th {
+            background-color: #171e2e;
+            color: white !important;
+        }
+
+        .ant-table-cell {
+            color: white !important;
+        }
+
+        .ant-table-cell-row-hover {
+            background-color: #171e2e !important;
+            color: white !important;
+        }
+
+        .ant-table-expanded-row-fixed {
+            background-color: #171e2e !important;
+        }
+
+        .ant-empty-description {
+            color: white;
+        }
+    }
+
     .staking-calculator {
 
         .ant-space {
@@ -44,7 +119,6 @@ $fira-code-font: 'Fira Code', monospace;
             .ant-select-arrow {
                 color: white;
             }
-
         }
 
         .ant-select-selector {
@@ -62,6 +136,10 @@ $fira-code-font: 'Fira Code', monospace;
             border-bottom-left-radius: 0px !important;
             border-top-right-radius: 6px !important;
             border-bottom-right-radius: 6px !important;
+        }
+
+        .input-placeholder::placeholder {
+            color: rgba(255, 255, 255, 0.623);
         }
 
         .rtl-input {
@@ -120,16 +198,15 @@ $fira-code-font: 'Fira Code', monospace;
                 color: white;
             }
 
+        }
 
+        .input-placeholder::placeholder {
+            color: rgba(255, 255, 255, 0.623);
         }
 
         .select-placeholder::placeholder {
             // background-color: aqua !important;
             color: rgba(255, 255, 255, 0.623) !important;
-        }
-
-        .input-placeholder::placeholder {
-            color: rgba(255, 255, 255, 0.623);
         }
 
         .input-label {
@@ -141,6 +218,5 @@ $fira-code-font: 'Fira Code', monospace;
                 }
             }
         }
-
     }
 }
