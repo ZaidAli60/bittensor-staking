@@ -7,6 +7,7 @@ $fira-code-font: 'Fira Code', monospace;
 .custom-navbar {
     font-family: $fira-code-font;
     transition: box-shadow 0.3s ease-in-out;
+    z-index: 900 !important;
 
     .shadow {
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

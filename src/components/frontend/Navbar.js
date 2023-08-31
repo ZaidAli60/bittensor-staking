@@ -19,7 +19,6 @@ export default function Navbar() {
     const { state, dispatch } = useConnectWallet()
     const [isAccounts, setisAccounts] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
-    console.log('theme', theme)
 
     useEffect(() => {
         let keys = window.location.pathname.split("/")
