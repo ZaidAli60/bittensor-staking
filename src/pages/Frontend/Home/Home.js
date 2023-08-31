@@ -6,27 +6,53 @@ import { TbAnalyze, TbBrandGoogleAnalytics } from "react-icons/tb"
 import { useThemeContext } from 'context/ThemeContext'
 import { useTaoInfoContext } from 'context/TaoInfoContext'
 import { InfoCircleOutlined } from "@ant-design/icons"
+import { useConnectWallet } from 'context/ConnectWalletContext'
+import { ApiPromise, WsProvider } from '@polkadot/api'
 
 const { Title, Text } = Typography;
 const { Option } = Select;
 
 export default function Home() {
     const { theme } = useThemeContext()
+    const { state } = useConnectWallet()
     const { taoInfo } = useTaoInfoContext()
-    const [validators, setValidators] = useState([])
+    const [documents, setDocuments] = useState([])
     const [isProcessing, setIsProcessing] = useState(false)
     const [currentAPY, setCurrentAPY] = useState({})
     const [taoAmount, setTaoAmount] = useState(0)
     const [yearReward, setYearReward] = useState(0)
     const [monthlyReward, setMonthlyReward] = useState(0)
+    const [account, setAccount] = useState({})
+    const [validator, setValidator] = useState({})
+    const [amount, setAmount] = useState(0)
+    const [totalBalance, setTotalBalance] = useState(null)
+    console.log('totalBalance', totalBalance)
 
     useEffect(() => {
-        setCurrentAPY(validators.length > 0 ? validators[0] : {})
-    }, [validators])
+        setAccount(state.accounts.length > 0 ? state.accounts[0] : "")
+    }, [state])
+
+    useEffect(() => {
+        setCurrentAPY(documents.length > 0 ? documents[0] : {})
+    }, [documents])
+
+    useEffect(() => {
+        setValidator(documents.length > 0 ? documents[0] : {})
+    }, [documents])
 
     const handleCurrentAPY = (value) => {
-        const currentapyvalue = validators.find(validator => validator.name === value);
+        const currentapyvalue = documents.find(validator => validator.name === value);
         setCurrentAPY(currentapyvalue);
+    }
+
+    const handleAccounts = (value) => {
+        const userAccounts = state.accounts.find(account => account.address === value)
+        setAccount(userAccounts)
+    }
+
+    const handleValidators = (value) => {
+        const selectValidator = documents.find(item => item.name === value)
+        setValidator(selectValidator)
     }
 
     const handleFatch = useCallback(async () => {
@@ -39,7 +65,7 @@ export default function Home() {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            setValidators(data)
+            setDocuments(data)
             setIsProcessing(false)
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -52,7 +78,7 @@ export default function Home() {
         handleFatch()
     }, [handleFatch])
 
-    const dataWithKeys = validators?.map((record) => ({
+    const dataWithKeys = documents && documents?.map((record) => ({
         ...record,
         key: record.details?.hot_key.toString(), // Using the index as the key, but you should use a unique identifier
     }));
@@ -77,7 +103,7 @@ export default function Home() {
             render: (_, row) => {
                 return (<Tooltip title={row.tooltip}>
                     <span className='d-flex justify-content-between'>
-                        {row.commission} % <InfoCircleOutlined className='d-flex flex-end' />
+                        {row.commission * 100} % <InfoCircleOutlined className='d-flex flex-end' />
                     </span>
                 </Tooltip>)
             }
@@ -127,6 +153,30 @@ export default function Home() {
 
     }
 
+    const handleBalance = async () => {
+
+        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const api = await ApiPromise.create({ provider: wsProvider });
+        const ADDR = account?.address;
+        // Retrieve the last timestamp
+        // const now = await api.query.timestamp.now();
+        // Retrieve the account balance & nonce via the system module
+        const { data: balance } = await api.query.system.account(ADDR);
+        // console.log(` balance of ${balance.free}`);
+        const orginalBalance = (balance.free - 500);
+        const balan = Number(orginalBalance) / 1000000000;
+        setTotalBalance(balan)
+        // console.log('balance', Number(balance.free.toString()))
+        // setBalance(Number(balance.free.toString()))
+        // console.log(api.genesisHash.toHex());
+    }
+
+    useEffect(() => {
+        if (state.accounts.length > 0) {
+            handleBalance()
+        }
+        // eslint-disable-next-line
+    }, [account])
 
 
 
@@ -229,7 +279,7 @@ export default function Home() {
                                         <Space>
                                             <Space.Compact >
                                                 <Select value={currentAPY?.name} onChange={(value) => handleCurrentAPY(value)} style={{ width: "50%" }} className={`dashboard ${theme} ${theme === "dark" && "dark-dropdown"}`} >
-                                                    {validators?.map((validator) => (
+                                                    {documents && documents?.map((validator) => (
                                                         <Option key={validator.name} value={validator.name}> {validator.name}</Option>
                                                     ))}
                                                 </Select>
@@ -263,29 +313,45 @@ export default function Home() {
                                     </div>
                                     <div className='mb-2'>
                                         <Form layout="vertical">
-                                            <Form.Item label="Validators" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} name="Validators">
+                                            <Form.Item label="Choose Account" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`}>
+                                                <Select
+                                                    className={`fontFamily ${theme === "dark" && "dark-dropdown select-placeholder"}`}
+                                                    style={{ width: "100%" }}
+                                                    placeholder="Choose Account"
+                                                    value={account.meta?.name}
+                                                    onChange={(value) => handleAccounts(value)}
+                                                >
+                                                    {state?.accounts.map((account) =>
+                                                        <Option key={account.address} value={account.address}>{account.meta?.name}</Option>
+                                                    )}
+                                                </Select>
+                                            </Form.Item>
+                                            <Form.Item label="Validators" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} >
                                                 <Select
                                                     className={`fontFamily ${theme === "dark" && "dark-dropdown select-placeholder"}`}
                                                     style={{ width: "100%" }}
                                                     placeholder="Select a validators"
-                                                    defaultValue="Firsttensor"
-
+                                                    value={validator.name}
+                                                    onChange={(value) => handleValidators(value)}
                                                 >
-                                                    {validators?.map((validator) => (
-                                                        <Option key={validator.details?.hot_key} value={validator.apy}>{validator.name}</Option>
+                                                    {documents && documents?.map((validator) => (
+                                                        <Option key={validator.name} value={validator.name}>{validator.name}</Option>
                                                     ))}
                                                 </Select>
                                             </Form.Item>
                                             <Form.Item label="Amount" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} name="Amount">
                                                 <div className="input-with-button" style={{ width: "100%" }}>
-                                                    <Input placeholder="Amount" type='number' className={`${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
+                                                    <Input placeholder="Amount" onChange={(e) => setAmount(e.target.value)} type='number' className={`${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
                                                     <button className='btn btn-sm btn-primary text-white fontFamily'>MAX</button>
                                                 </div>
                                             </Form.Item>
                                         </Form>
                                     </div>
-                                    <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
-                                        <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>My Balance :</Text>
+                                    <div className={`p-3 mb-3  ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
+                                        <div className="d-flex justify-content-between">
+                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>My Balance :</Text>
+                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{totalBalance} TAO</Text>
+                                        </div>
                                     </div>
                                     <div className='mb-3'>
                                         <div className="d-flex justify-content-between">
