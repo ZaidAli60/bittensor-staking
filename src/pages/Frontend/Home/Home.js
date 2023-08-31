@@ -15,7 +15,7 @@ export default function Home() {
     const { taoInfo } = useTaoInfoContext()
     const [validators, setValidators] = useState([])
     const [isProcessing, setIsProcessing] = useState(false)
-    // console.log('validators', validators)
+    console.log('validators', validators)
 
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
