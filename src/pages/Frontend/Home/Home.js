@@ -42,7 +42,7 @@ export default function Home() {
 
     const dataWithKeys = validators?.map((record) => ({
         ...record,
-        key: record.hot_key.toString(), // Using the index as the key, but you should use a unique identifier
+        key: record.details?.hot_key.toString(), // Using the index as the key, but you should use a unique identifier
     }));
 
     // console.log('dataWithKeys', dataWithKeys)
@@ -51,23 +51,23 @@ export default function Home() {
         {
             title: 'Name',
             dataIndex: 'name',
-            sorter: (a, b) => a.name.localeCompare(b.name),
+            sorter: (a, b) => a.name.length - b.name.length,
             fixed: 'left',
         },
         {
             title: 'APY',
-            sorter: (a, b) => a.key.localeCompare(b.key),
+            sorter: (a, b) => a.apy - b.apy,
             render: (_, row) => {
                 return <Text className={`${theme === "dark" && "text-white"}`}>{row.apy?.toFixed(2)}%</Text>
             }
         },
         {
-            title: 'Comission',
-            sorter: (a, b) => a.name.localeCompare(b.name),
+            title: 'Commission',
+            sorter: (a, b) => a.commission - b.commission,
             render: (_, row) => {
-                return (<Tooltip title="Tooltip with custom icon">
+                return (<Tooltip title={row.tooltip}>
                     <span className='d-flex justify-content-between'>
-                        0 % <InfoCircleOutlined className='d-flex flex-end' />
+                        {row.commission} % <InfoCircleOutlined className='d-flex flex-end' />
                     </span>
                 </Tooltip>)
             }
@@ -75,7 +75,7 @@ export default function Home() {
         {
             title: 'Total Staked',
             dataIndex: 'total_stake',
-            sorter: (a, b) => a.name.localeCompare(b.name),
+            sorter: (a, b) => a.total_stake - b.total_stake,
             render: (_, row) => {
                 return <Text className={`${theme === "dark" && "text-white"}`}>{row.total_stake?.toFixed(2)} TAO</Text>
             }
@@ -83,7 +83,7 @@ export default function Home() {
         {
             title: 'Nominators',
             dataIndex: 'nominators',
-            sorter: (a, b) => a.name.localeCompare(b.name),
+            sorter: (a, b) => a.nominators - b.nominators,
         }
 
     ];
@@ -178,9 +178,9 @@ export default function Home() {
                                     expandable={{
                                         expandedRowRender: (record) => (
                                             <div className='px-5'>
-                                                <Text className={`${theme === "dark" && "text-white"}`}>DESCRIPTION: {record.description}</Text> <br />
-                                                <Text className={`${theme === "dark" && "text-white"}`}>HOTKEY: {record.hot_key}</Text> <br />
-                                                <Text className={`${theme === "dark" && "text-white"}`}>WEBSITE: {record.url}</Text>
+                                                <Text className={`${theme === "dark" && "text-white"}`}>DESCRIPTION: {record.details?.description}</Text> <br />
+                                                <Text className={`${theme === "dark" && "text-white"}`}>HOTKEY: {record.details?.hot_key}</Text> <br />
+                                                <Text className={`${theme === "dark" && "text-white"}`}>WEBSITE: {record.details?.url}</Text>
                                             </div>
                                         ),
                                         rowExpandable: (record) => record.name !== 'Not Expandable',
