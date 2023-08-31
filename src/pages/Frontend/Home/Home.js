@@ -154,13 +154,13 @@ export default function Home() {
                                 <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
                                     <div className='d-flex mb-2'>
                                         <SiCoinmarketcap className='fs-5 me-2' />
-                                        <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`} style={{ fontSize: "13px" }}>Market Cap</Title>
+                                        <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Market Cap</Title>
                                     </div>
                                     <div>
-                                        <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>${item?.market_cap}</Title>
+                                        <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>${item?.market_cap}</Title>
                                     </div>
                                     <div>
-                                        <Typography className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>24h_Change: ${item && item['24h_change']}</Typography>
+                                        <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>24h_Change: ${item && item['24h_change']}</Typography>
                                     </div>
                                 </div>
                             </Col>
@@ -168,13 +168,13 @@ export default function Home() {
                                 <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
                                     <div className='d-flex mb-2'>
                                         <TbAnalyze className='fs-5 me-2' />
-                                        <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`} style={{ fontSize: "13px" }}>Circulating Supply</Title>
+                                        <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Circulating Supply</Title>
                                     </div>
                                     <div>
-                                        <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>{item?.current_supply} TAO</Title>
+                                        <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>{item?.current_supply} TAO</Title>
                                     </div>
                                     <div>
-                                        <Typography className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Total Supply: ${item?.total_supply}</Typography>
+                                        <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>Total Supply: ${item?.total_supply}</Typography>
                                     </div>
                                 </div>
                             </Col>
@@ -182,13 +182,13 @@ export default function Home() {
                                 <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
                                     <div className='d-flex  mb-2'>
                                         <TbBrandGoogleAnalytics className='fs-5 me-2' />
-                                        <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`} style={{ fontSize: "13px" }}>Supply Staked</Title>
+                                        <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Supply Staked</Title>
                                     </div>
                                     <div>
-                                        <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>{item?.delegated_supply} TAO</Title>
+                                        <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>{item?.delegated_supply} TAO</Title>
                                     </div>
                                     <div>
-                                        <Typography className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Percentage Staked: {item?.staking_apy}</Typography>
+                                        <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>Percentage Staked: {item?.staking_apy}</Typography>
                                     </div>
                                 </div>
                             </Col>
@@ -216,7 +216,7 @@ export default function Home() {
                             </div>
                         </Col>
                         <Col xs={24} md={24} lg={8}>
-                            <Col className='mb-3 staking-calculator'>
+                            <div className='mb-3 staking-calculator'>
                                 <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
                                     <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Staking Calculator</Title>
                                     <div className='card border-0 p-3 mb-3' style={{ backgroundColor: "#b5e61d" }}>
@@ -239,22 +239,22 @@ export default function Home() {
                                     </div>
                                     <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                         <div className="d-flex justify-content-between">
-                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Monthly Rewards</Text>
-                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>{monthlyReward.toFixed(2)}</Text>
+                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Monthly Rewards</Text>
+                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{monthlyReward.toFixed(2)}</Text>
                                         </div>
                                     </div>
                                     <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                         <div className="d-flex justify-content-between">
-                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Yearly Rewards</Text>
-                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>{yearReward.toFixed(2)}</Text>
+                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Yearly Rewards</Text>
+                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{yearReward.toFixed(2)}</Text>
                                         </div>
                                     </div>
                                     <div >
                                         <Button type='primary' className='w-100 fontFamily text-uppercase' size='large' onClick={handleStakeCalculator}>Calculate</Button>
                                     </div>
                                 </div>
-                            </Col>
-                            <Col className='stake-tao'>
+                            </div>
+                            <div className='stake-tao'>
                                 <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
                                     <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Stake Tao</Title>
                                     <div className='d-flex justify-content-between mb-3'>
@@ -285,16 +285,16 @@ export default function Home() {
                                         </Form>
                                     </div>
                                     <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
-                                        <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>My Balance :</Text>
+                                        <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>My Balance :</Text>
                                     </div>
                                     <div className='mb-3'>
                                         <div className="d-flex justify-content-between">
-                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Available Amount</Text>
-                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>422 TAO</Text>
+                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Available Amount</Text>
+                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>422 TAO</Text>
                                         </div>
                                         <div className="d-flex justify-content-between">
-                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Available Amount</Text>
-                                            <Text className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>422 TAO</Text>
+                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Available Amount</Text>
+                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>422 TAO</Text>
                                         </div>
                                     </div>
 
@@ -302,7 +302,7 @@ export default function Home() {
                                         <Button type='primary' className='w-100 fontFamily text-uppercase' size='large'>Delegate</Button>
                                     </div>
                                 </div>
-                            </Col>
+                            </div>
                         </Col>
                     </Row>
                 </div>
