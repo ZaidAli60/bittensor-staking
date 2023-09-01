@@ -3,6 +3,7 @@ import { Alert, Button, Col, Form, Input, Row, Select, Space, Table, Tooltip, Ty
 import { MdOutlinePriceCheck } from "react-icons/md"
 import { SiCoinmarketcap } from "react-icons/si"
 import { TbAnalyze, TbBrandGoogleAnalytics } from "react-icons/tb"
+import { HiMiniArrowLongDown, HiMiniArrowLongUp } from "react-icons/hi2"
 import { useThemeContext } from 'context/ThemeContext'
 import { useTaoInfoContext } from 'context/TaoInfoContext'
 import { InfoCircleOutlined } from "@ant-design/icons"
@@ -32,7 +33,6 @@ export default function Home() {
     const [status, setStatus] = useState('');
     const [isFinalize, setIsFinalize] = useState(false)
     const [isFinalize1, setIsFinalize1] = useState(false)
-    // console.log('totalBalance', totalBalance)
 
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
@@ -166,7 +166,7 @@ export default function Home() {
 
     const handleBalance = async () => {
 
-        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
         const api = await ApiPromise.create({ provider: wsProvider });
 
         if (!api) {
@@ -200,7 +200,7 @@ export default function Home() {
 
     const fetchStakeAmount = async () => {
         try {
-            const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+            const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
             const api = await ApiPromise.create({ provider: wsProvider });
 
             // Check if the arguments are valid AccountId32 values
@@ -236,7 +236,7 @@ export default function Home() {
             message.error('No wallet available, please connect your Polkadot wallet first.')
             return;
         }
-        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
         const api = await ApiPromise.create({ provider: wsProvider });
 
         if (!api) {
@@ -279,7 +279,7 @@ export default function Home() {
             message.error('No wallet available, please connect your Polkadot wallet first.')
             return;
         }
-        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
         const api = await ApiPromise.create({ provider: wsProvider });
 
         if (!api) {
@@ -325,6 +325,7 @@ export default function Home() {
             <div className=" container-fluid  py-5">
                 {
                     taoInfo?.map((item, i) => {
+                        const volume_24h = Number(item['24h_volume'])
                         return <Row key={i} gutter={[16, 16]} className='mb-4'>
                             <Col xs={24} sm={12} md={12} lg={6}>
                                 <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
@@ -336,7 +337,7 @@ export default function Home() {
                                         <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>$ {item?.price}</Title>
                                     </div>
                                     <div>
-                                        <Typography className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>24h_Volume: ${item && item['24h_volume']}</Typography>
+                                        <Typography className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>24h_Volume: ${volume_24h.toFixed(2)}</Typography>
                                     </div>
                                 </div>
                             </Col>
@@ -350,7 +351,15 @@ export default function Home() {
                                         <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>${item?.market_cap}</Title>
                                     </div>
                                     <div>
-                                        <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>24h_Change: ${item && item['24h_change']}</Typography>
+                                        <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>
+                                            24h_Change: {item && item['24h_change'] < 0 ? (
+                                                <span className='fw-bold' style={{ color: 'red' }}>
+                                                    <HiMiniArrowLongDown /> {item['24h_change']}
+                                                </span>
+                                            ) : (
+                                                <span className='fw-bold' style={{ color: "#22b14c" }}> <HiMiniArrowLongUp /> {item['24h_change']}</span>
+                                            )}
+                                        </Typography>
                                     </div>
                                 </div>
                             </Col>
