@@ -140,7 +140,12 @@ export default function Home() {
     }
 
     const handleStakeCalculator = () => {
-
+        if (!currentAPY.apy) {
+            return message.error("Please select a validator")
+        }
+        if (taoAmount <= 0) {
+            return message.error("Please enter tao amount")
+        }
         if (!currentAPY) {
             console.error('No APY data available.');
             return;
