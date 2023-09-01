@@ -210,7 +210,7 @@ export default function Home() {
 
             // Check if the arguments are valid AccountId32 values
             if (!validator?.details?.hot_key || !account?.address) {
-                console.error('Invalid AccountId32 values');
+                console.log('Invalid AccountId32 values');
                 return;
             }
 
@@ -236,6 +236,8 @@ export default function Home() {
 
 
     const delegateStake = async () => {
+
+        if (!validator.name) { return message.error('Please select a validator') }
 
         if (!state.accounts.length > 0) {
             message.error('No wallet available, please connect your Polkadot wallet first.')
