@@ -168,7 +168,16 @@ export default function Home() {
 
         const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
         const api = await ApiPromise.create({ provider: wsProvider });
+
+        if (!api) {
+            console.error('API not initialized');
+            return;
+        }
         const ADDR = account?.address;
+        if (!ADDR) {
+            console.error('ADDR not initialized');
+            return
+        }
         // Retrieve the last timestamp
         // const now = await api.query.timestamp.now();
         // Retrieve the account balance & nonce via the system module
@@ -189,26 +198,37 @@ export default function Home() {
         // eslint-disable-next-line
     }, [account])
 
-    const fatchStakeAmount = async () => {
+    const fetchStakeAmount = async () => {
+        try {
+            const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+            const api = await ApiPromise.create({ provider: wsProvider });
 
-        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
-        const api = await ApiPromise.create({ provider: wsProvider });
-        const res = await api.query.subtensorModule.stake(validator?.details.hot_key, account.address);
-        if (res.isEmpty) {
-            return setStakeAmount(0)
+            // Check if the arguments are valid AccountId32 values
+            if (!validator?.details?.hot_key || !account?.address) {
+                console.error('Invalid AccountId32 values');
+                return;
+            }
+
+            const res = await api.query.subtensorModule.stake(validator.details.hot_key, account.address);
+
+            if (res.isEmpty) {
+                setStakeAmount(0);
+            } else {
+                const amount = res.toString() / 1000000000;
+                setStakeAmount(amount);
+            }
+        } catch (error) {
+            console.error('Error fetching stake amount:', error);
         }
-        else {
-            const amount = res.toString() / 1000000000;
-            setStakeAmount(amount)
-        }
-    }
+    };
 
     useEffect(() => {
         if (state.accounts.length > 0) {
-            fatchStakeAmount()
+            fetchStakeAmount();
         }
         // eslint-disable-next-line
-    }, [validator, account.address])
+    }, [validator, account.address]);
+
 
     const delegateStake = async () => {
 
@@ -223,7 +243,7 @@ export default function Home() {
             console.error('API not initialized');
             return;
         }
-        const transferExtrinsic = api.tx.subtensorModule.addStake(validator.details.hot_key, rao)
+        const transferExtrinsic = api.tx.subtensorModule.addStake(validator?.details.hot_key, rao)
         const selectedAccount = state?.accounts.find((item) => item.address === account.address);
 
         const injector = await web3FromSource(selectedAccount.meta.source);
@@ -239,7 +259,7 @@ export default function Home() {
                     // setStatus(`You have just delegated ${amount}τ from ${validator.name}`);
                     if (status.type === 'Finalized') {
                         handleBalance()
-                        fatchStakeAmount()
+                        fetchStakeAmount()
                         setAmount(0)
                         setStatus(`Current status: ${status.type}`);
                         setIsFinalize(false)
@@ -266,7 +286,7 @@ export default function Home() {
             console.error('API not initialized');
             return;
         }
-        const undelegateExtrinsic = api.tx.subtensorModule.removeStake(validator.details.hot_key, rao)
+        const undelegateExtrinsic = api.tx.subtensorModule.removeStake(validator?.details.hot_key, rao)
         const selectedAccount = state?.accounts.find((item) => item.address === account.address);
 
         const injector = await web3FromSource(selectedAccount.meta.source);
@@ -281,7 +301,7 @@ export default function Home() {
                     setStatus(`Current status: ${status.type}`);
                     if (status.type === 'Finalized') {
                         handleBalance()
-                        fatchStakeAmount()
+                        fetchStakeAmount()
                         setAmount(0)
                         setIsFinalize1(false)
                         setStatus(`Current status: ${status.type}`);

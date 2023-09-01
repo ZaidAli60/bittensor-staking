@@ -198,11 +198,12 @@ $fira-code-font: 'Fira Code', monospace;
                 color: white;
             }
 
+            .ant-select-selection-placeholder {
+                color: rgba(255, 255, 255, 0.623)
+            }
+
         }
 
-        .ant-select-selection-placeholder {
-            color: rgba(255, 255, 255, 0.623)
-        }
 
         .input-placeholder::placeholder {
             color: rgba(255, 255, 255, 0.623);
