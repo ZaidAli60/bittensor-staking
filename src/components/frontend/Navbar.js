@@ -138,7 +138,7 @@ export default function Navbar() {
                 }
                 placement="left"
                 onClose={toggleDrawer}
-                visible={drawerVisible}
+                open={drawerVisible}
                 bodyStyle={{ padding: 0 }}
                 className={`custome-drawer dashboard ${theme}`}
             >
