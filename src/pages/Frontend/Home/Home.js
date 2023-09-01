@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Button, Col, Form, Input, Row, Select, Space, Table, Tooltip, Typography } from 'antd'
+import { Alert, Button, Col, Form, Input, Row, Select, Space, Table, Tooltip, Typography, message } from 'antd'
 import { MdOutlinePriceCheck } from "react-icons/md"
 import { SiCoinmarketcap } from "react-icons/si"
 import { TbAnalyze, TbBrandGoogleAnalytics } from "react-icons/tb"
@@ -8,6 +8,7 @@ import { useTaoInfoContext } from 'context/TaoInfoContext'
 import { InfoCircleOutlined } from "@ant-design/icons"
 import { useConnectWallet } from 'context/ConnectWalletContext'
 import { ApiPromise, WsProvider } from '@polkadot/api'
+import { web3FromSource } from '@polkadot/extension-dapp'
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -26,7 +27,35 @@ export default function Home() {
     const [validator, setValidator] = useState({})
     const [amount, setAmount] = useState(0)
     const [totalBalance, setTotalBalance] = useState(null)
-    console.log('totalBalance', totalBalance)
+    const [rao, setRao] = useState(null)
+    const [stakeAmount, setStakeAmount] = useState(null)
+    const [status, setStatus] = useState('');
+    const [isFinalize, setIsFinalize] = useState(false)
+    const [isFinalize1, setIsFinalize1] = useState(false)
+    // console.log('totalBalance', totalBalance)
+
+    const handleFatch = useCallback(async () => {
+        setIsProcessing(true)
+        try {
+            const url = 'http://3.123.33.186:8000/api/delegates/';
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setDocuments(data)
+            setIsProcessing(false)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setIsProcessing(false)
+            return null;
+        }
+    }, [])
+
+    useEffect(() => {
+        handleFatch()
+    }, [handleFatch])
 
     useEffect(() => {
         setAccount(state.accounts.length > 0 ? state.accounts[0] : "")
@@ -55,28 +84,10 @@ export default function Home() {
         setValidator(selectValidator)
     }
 
-    const handleFatch = useCallback(async () => {
-        setIsProcessing(true)
-        try {
-            const url = 'http://3.123.33.186:8000/api/delegates/';
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            setDocuments(data)
-            setIsProcessing(false)
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            setIsProcessing(false)
-            return null;
-        }
-    }, [])
-
     useEffect(() => {
-        handleFatch()
-    }, [handleFatch])
+        const taoToRao = amount * 1000000000;
+        setRao(taoToRao)
+    }, [amount])
 
     const dataWithKeys = documents && documents?.map((record) => ({
         ...record,
@@ -178,7 +189,116 @@ export default function Home() {
         // eslint-disable-next-line
     }, [account])
 
+    const fatchStakeAmount = async () => {
 
+        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const api = await ApiPromise.create({ provider: wsProvider });
+        const res = await api.query.subtensorModule.stake(validator?.details.hot_key, account.address);
+        if (res.isEmpty) {
+            return setStakeAmount(0)
+        }
+        else {
+            const amount = res.toString() / 1000000000;
+            setStakeAmount(amount)
+        }
+    }
+
+    useEffect(() => {
+        if (state.accounts.length > 0) {
+            fatchStakeAmount()
+        }
+        // eslint-disable-next-line
+    }, [validator, account.address])
+
+    const delegateStake = async () => {
+
+        if (!state.accounts.length > 0) {
+            message.error('No wallet available, please connect your Polkadot wallet first.')
+            return;
+        }
+        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const api = await ApiPromise.create({ provider: wsProvider });
+
+        if (!api) {
+            console.error('API not initialized');
+            return;
+        }
+        const transferExtrinsic = api.tx.subtensorModule.addStake(validator.details.hot_key, rao)
+        const selectedAccount = state?.accounts.find((item) => item.address === account.address);
+
+        const injector = await web3FromSource(selectedAccount.meta.source);
+        setIsFinalize(true)
+        setStatus('Transaction is being processed...');
+
+        try {
+            await transferExtrinsic.signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
+                if (status.isInBlock) {
+                    setStatus(`Status In Block`);
+                } else {
+                    setStatus(`Current status: ${status.type}`);
+                    // setStatus(`You have just delegated ${amount}τ from ${validator.name}`);
+                    if (status.type === 'Finalized') {
+                        handleBalance()
+                        fatchStakeAmount()
+                        setAmount(0)
+                        setStatus(`Current status: ${status.type}`);
+                        setIsFinalize(false)
+                    }
+                }
+            })
+        } catch (error) {
+            setStatus('Transaction failed');
+            console.error(':( Transaction failed', error);
+            setIsFinalize(false);
+        }
+    };
+
+    const handleUndelegate = async () => {
+
+        if (!state.accounts.length > 0) {
+            message.error('No wallet available, please connect your Polkadot wallet first.')
+            return;
+        }
+        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const api = await ApiPromise.create({ provider: wsProvider });
+
+        if (!api) {
+            console.error('API not initialized');
+            return;
+        }
+        const undelegateExtrinsic = api.tx.subtensorModule.removeStake(validator.details.hot_key, rao)
+        const selectedAccount = state?.accounts.find((item) => item.address === account.address);
+
+        const injector = await web3FromSource(selectedAccount.meta.source);
+        setIsFinalize1(true)
+        setStatus('Transaction is being processed...');
+
+        try {
+            await undelegateExtrinsic.signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
+                if (status.isInBlock) {
+                    setStatus(`Status In Block`);
+                } else {
+                    setStatus(`Current status: ${status.type}`);
+                    if (status.type === 'Finalized') {
+                        handleBalance()
+                        fatchStakeAmount()
+                        setAmount(0)
+                        setIsFinalize1(false)
+                        setStatus(`Current status: ${status.type}`);
+                    }
+                }
+            })
+        } catch (error) {
+            setStatus('Transaction failed');
+            console.error(':( Transaction failed', error);
+            setIsFinalize1(false);
+        }
+    };
+
+    const handleTotalBalanceMax = () => {
+        const getTotalBalance = totalBalance;
+        setAmount(getTotalBalance)
+    }
 
     return (
         <div className={`home dashboard ${theme} min-vh-100`}>
@@ -306,10 +426,11 @@ export default function Home() {
                             </div>
                             <div className='stake-tao'>
                                 <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
+                                    {status && <Alert message={`${status}`} type={status === "Transaction failed" ? "error" : "success"} showIcon className='mb-2' />}
                                     <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Stake Tao</Title>
                                     <div className='d-flex justify-content-between mb-3'>
-                                        <Button type='primary' className='text-uppercase fontFamily'>Delegate</Button>
-                                        <Button type='primary' className='text-uppercase fontFamily'>UnDelegate</Button>
+                                        <Button type='primary' className='text-uppercase fontFamily' loading={isFinalize} disabled={amount === 0 || amount <= 0 || !amount || amount > totalBalance} onClick={delegateStake}>Delegate</Button>
+                                        <Button type='primary' className='text-uppercase fontFamily' loading={isFinalize1} disabled={amount === 0 || amount <= 0 || !amount || amount > stakeAmount} onClick={handleUndelegate}>UnDelegate</Button>
                                     </div>
                                     <div className='mb-2'>
                                         <Form layout="vertical">
@@ -341,8 +462,8 @@ export default function Home() {
                                             </Form.Item>
                                             <Form.Item label="Amount" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} name="Amount">
                                                 <div className="input-with-button" style={{ width: "100%" }}>
-                                                    <Input placeholder="Amount" onChange={(e) => setAmount(e.target.value)} type='number' className={`${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
-                                                    <button className='btn btn-sm btn-primary text-white fontFamily'>MAX</button>
+                                                    <Input placeholder="Amount" name='amount' value={amount} onChange={(e) => setAmount(e.target.value)} type='number' className={`${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
+                                                    <button className='btn btn-sm btn-primary text-white fontFamily' onClick={handleTotalBalanceMax}>MAX</button>
                                                 </div>
                                             </Form.Item>
                                         </Form>
@@ -356,16 +477,16 @@ export default function Home() {
                                     <div className='mb-3'>
                                         <div className="d-flex justify-content-between">
                                             <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Available Amount</Text>
-                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>422 TAO</Text>
+                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>0 TAO</Text>
                                         </div>
                                         <div className="d-flex justify-content-between">
                                             <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Your Current Stake</Text>
-                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>422 TAO</Text>
+                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{stakeAmount} TAO</Text>
                                         </div>
                                     </div>
 
                                     <div >
-                                        <Button type='primary' className='w-100 fontFamily text-uppercase' size='large'>Delegate</Button>
+                                        <Button type='primary' className='w-100 fontFamily text-uppercase' size='large' loading={isFinalize} disabled={amount === 0 || amount <= 0 || !amount || amount > totalBalance} onClick={delegateStake}>Delegate</Button>
                                     </div>
                                 </div>
                             </div>
