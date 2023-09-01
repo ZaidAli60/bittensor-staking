@@ -429,8 +429,8 @@ export default function Home() {
                                     {status && <Alert message={`${status}`} type={status === "Transaction failed" ? "error" : "success"} showIcon className='mb-2' />}
                                     <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Stake Tao</Title>
                                     <div className='d-flex justify-content-between mb-3'>
-                                        <Button type='primary' className='text-uppercase fontFamily' loading={isFinalize} disabled={amount === 0 || amount <= 0 || !amount || amount > totalBalance} onClick={delegateStake}>Delegate</Button>
-                                        <Button type='primary' className='text-uppercase fontFamily' loading={isFinalize1} disabled={amount === 0 || amount <= 0 || !amount || amount > stakeAmount} onClick={handleUndelegate}>UnDelegate</Button>
+                                        <Button type='primary' className={`text-uppercase fontFamily ${theme === "dark" && "text-white opacity-75"}`} loading={isFinalize} disabled={amount === 0 || amount <= 0 || !amount || amount > totalBalance} onClick={delegateStake}>Delegate</Button>
+                                        <Button type='primary' className={`text-uppercase fontFamily ${theme === "dark" && "text-white opacity-75"}`} loading={isFinalize1} disabled={amount === 0 || amount <= 0 || !amount || amount > stakeAmount} onClick={handleUndelegate}>UnDelegate</Button>
                                     </div>
                                     <div className='mb-2'>
                                         <Form layout="vertical">
@@ -486,7 +486,7 @@ export default function Home() {
                                     </div>
 
                                     <div >
-                                        <Button type='primary' className='w-100 fontFamily text-uppercase' size='large' loading={isFinalize} disabled={amount === 0 || amount <= 0 || !amount || amount > totalBalance} onClick={delegateStake}>Delegate</Button>
+                                        <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white opacity-75"}`} size='large' loading={isFinalize} disabled={amount === 0 || amount <= 0 || !amount || amount > totalBalance} onClick={delegateStake}>Delegate</Button>
                                     </div>
                                 </div>
                             </div>
