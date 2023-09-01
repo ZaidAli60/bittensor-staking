@@ -37,7 +37,7 @@ export default function Home() {
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
         try {
-            const url = 'http://3.123.33.186:8000/api/delegates/';
+            const url = process.env.REACT_APP_BETTENSOR_VALIDATORS_END_POINT;
             const response = await fetch(url);
 
             if (!response.ok) {
