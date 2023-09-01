@@ -208,7 +208,6 @@ export default function Home() {
             const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
             const api = await ApiPromise.create({ provider: wsProvider });
 
-            // Check if the arguments are valid AccountId32 values
             if (!validator?.details?.hot_key || !account?.address) {
                 console.log('Invalid AccountId32 values');
                 return;
