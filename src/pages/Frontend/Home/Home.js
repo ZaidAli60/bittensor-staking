@@ -39,7 +39,6 @@ export default function Home() {
         try {
             const url = process.env.REACT_APP_BETTENSOR_VALIDATORS_END_POINT;
             const response = await fetch(url);
-
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
