@@ -3,13 +3,12 @@ const ThemeProvider = createContext();
 
 export default function ThemeContext({ children }) {
     const [theme, setTheme] = useState('light');
-    const [isAppLoader, setIsAppLoader] = useState(true)
 
     const toggleTheme = () => {
         setTheme(theme === 'light' ? 'dark' : 'light');
     };
     return (
-        <ThemeProvider.Provider value={{ theme, setTheme, toggleTheme, setIsAppLoader, isAppLoader }}>
+        <ThemeProvider.Provider value={{ theme, setTheme, toggleTheme }}>
             {children}
         </ThemeProvider.Provider>
     )

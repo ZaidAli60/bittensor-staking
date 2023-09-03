@@ -6,22 +6,25 @@ export default function TaoInfoContext({ children }) {
 
     const [taoInfo, setTaoInfo] = useState(null)
     const [isProcessing, setIsProcessing] = useState(false)
+    const [isAppLoading, setIsAppLoading] = useState(true)
 
     const handleFetch = useCallback(async () => {
+        setIsAppLoading(true)
         setIsProcessing(true);
         try {
             const url = process.env.REACT_APP_BITTENSOR_DATA_API_END_POINT;
-            // const url = 'https://taostats.io/data.json';
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json()
             setTaoInfo(data);
+            setIsAppLoading(false)
         } catch (error) {
             message.error("Something went wrong")
             console.error('Error fetching data:', error);
         } finally {
+            setIsAppLoading(false)
             setIsProcessing(false);
         }
     }, []);
@@ -31,7 +34,7 @@ export default function TaoInfoContext({ children }) {
     }, [handleFetch]);
 
     return (
-        <TaoInfoProvider.Provider value={{ isProcessing, taoInfo }}>
+        <TaoInfoProvider.Provider value={{ isProcessing, taoInfo, isAppLoading }}>
             {children}
         </TaoInfoProvider.Provider>
     )

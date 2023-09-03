@@ -2,18 +2,16 @@ import './App.scss';
 import Routes from './pages/Routes';
 import { ConfigProvider } from 'antd';
 import { useThemeContext } from './context/ThemeContext';
+import { useTaoInfoContext } from 'context/TaoInfoContext';
 
 function App() {
-  const { isAppLoader, setIsAppLoader, theme } = useThemeContext()
-
-  setTimeout(() => {
-    setIsAppLoader(false)
-  }, 6000);
+  const { isAppLoading } = useTaoInfoContext()
+  const { theme } = useThemeContext()
 
   return (
     <div className={`App dashboard ${theme} min-vh-100`}>
       {
-        !isAppLoader ?
+        !isAppLoading ?
           <ConfigProvider
             theme={{
               token: {
