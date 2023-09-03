@@ -10,9 +10,7 @@
 
 @import "./scss/bootstrap";
 @import "./scss//frontend/navbar";
-@import "./scss/mixins";
 @import "./scss/bootstrap";
-// @import "./scss/libraries";
 @import "./scss/dashboard";
 @import "./scss/screen-loader";
 @import "./scss/buttons";
@@ -28,20 +26,6 @@
 
 main {
     flex: 1 0 auto;
-}
-
-.flex-center {
-    @include flex-center();
-}
-
-.align-center {
-    @include align-center();
-}
-
-.flex-between {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 @media (min-width: 1300px) {
