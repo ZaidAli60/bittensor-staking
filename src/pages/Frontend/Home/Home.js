@@ -47,6 +47,7 @@ export default function Home() {
             setIsProcessing(false)
         } catch (error) {
             console.error('Error fetching data:', error);
+            message.error('Failed to fetch data. Please try again later.')
             setIsProcessing(false)
             return null;
         }
@@ -327,7 +328,7 @@ export default function Home() {
 
     return (
         <div className={`home dashboard ${theme} min-vh-100`}>
-            <div className="container  py-5">
+            <div className="container px-lg-5 py-5">
                 {
                     taoInfo?.map((item, i) => {
                         const volume_24h = Number(item['24h_volume'])
