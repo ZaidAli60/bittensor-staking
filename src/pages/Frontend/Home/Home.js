@@ -327,10 +327,14 @@ export default function Home() {
 
     return (
         <div className={`home dashboard ${theme} min-vh-100`}>
-            <div className=" container-fluid  py-5">
+            <div className="container  py-5">
                 {
                     taoInfo?.map((item, i) => {
                         const volume_24h = Number(item['24h_volume'])
+                        const supplyStake = item?.delegated_supply
+                        const circulateSupply = item?.current_supply
+                        const getPercentageStake = (supplyStake / circulateSupply) * 100
+
                         return <Row key={i} gutter={[16, 16]} className='mb-4'>
                             <Col xs={24} sm={12} md={12} lg={6}>
                                 <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
@@ -339,10 +343,11 @@ export default function Home() {
                                         <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`} style={{ fontSize: "13px" }}>Current Price</Title>
                                     </div>
                                     <div>
+
                                         <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>$ {item?.price}</Title>
                                     </div>
                                     <div>
-                                        <Typography className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>24h_Volume: ${volume_24h.toFixed(2)}</Typography>
+                                        <Typography className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>24h Volume: ${volume_24h.toFixed(2)}</Typography>
                                     </div>
                                 </div>
                             </Col>
@@ -353,11 +358,14 @@ export default function Home() {
                                         <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Market Cap</Title>
                                     </div>
                                     <div>
-                                        <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>${item?.market_cap}</Title>
+
+                                        <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
+                                            $ {parseFloat(item?.market_cap).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                        </Title>
                                     </div>
                                     <div>
                                         <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>
-                                            24h_Change: {item && item['24h_change'] < 0 ? (
+                                            24h Change: {item && item['24h_change'] < 0 ? (
                                                 <span className='fw-bold' style={{ color: 'red' }}>
                                                     <HiMiniArrowLongDown /> {item['24h_change']}
                                                 </span>
@@ -375,10 +383,12 @@ export default function Home() {
                                         <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Circulating Supply</Title>
                                     </div>
                                     <div>
-                                        <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>{item?.current_supply} TAO</Title>
+                                        <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
+                                            {parseFloat(item?.current_supply).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TAO
+                                        </Title>
                                     </div>
                                     <div>
-                                        <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>Total Supply: ${item?.total_supply}</Typography>
+                                        <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>Total Supply: {parseFloat(item?.total_supply).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TAO</Typography>
                                     </div>
                                 </div>
                             </Col>
@@ -389,10 +399,10 @@ export default function Home() {
                                         <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Supply Staked</Title>
                                     </div>
                                     <div>
-                                        <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>{item?.delegated_supply} TAO</Title>
+                                        <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>{parseFloat(item?.delegated_supply).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TAO</Title>
                                     </div>
                                     <div>
-                                        <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>Percentage Staked: {item?.staking_apy}</Typography>
+                                        <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>Percentage Staked: {getPercentageStake.toFixed(1)} %</Typography>
                                     </div>
                                 </div>
                             </Col>
