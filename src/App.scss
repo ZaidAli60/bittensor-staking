@@ -28,9 +28,28 @@ main {
     flex: 1 0 auto;
 }
 
-@media (min-width: 1300px) {
+// @media screen and (min-width: 1900px) {
+//     .container-fluid {
+//         max-width: 1700px;
+//     }
+// }
 
-    .container {
-        max-width: 1580px;
-    }
-}
+// @media screen and (min-width: 1950px) {
+//     .container-fluid {
+//         max-width: 1600px;
+//     }
+// }
+
+// .container-fluid {
+//     width: 100%;
+//     margin-right: auto;
+//     margin-left: auto;
+
+// }
+
+// @media (min-width: 1300px) {
+
+//     .container {
+//         max-width: 1580px;
+//     }
+// }

@@ -328,217 +328,226 @@ export default function Home() {
 
     return (
         <div className={`home dashboard ${theme} min-vh-100`}>
-            <div className="container px-lg-5 py-5">
-                {
-                    taoInfo?.map((item, i) => {
-                        const volume_24h = Number(item['24h_volume'])
-                        const supplyStake = item?.delegated_supply
-                        const circulateSupply = item?.current_supply
-                        const getPercentageStake = (supplyStake / circulateSupply) * 100
+            <div className="container-fluid px-xxl-5 px-lg-4 py-5">
+                <div className="px-xxl-5 ">
+                    {
+                        taoInfo?.map((item, i) => {
+                            const volume_24h = Number(item['24h_volume'])
+                            const supplyStake = item?.delegated_supply
+                            const circulateSupply = item?.current_supply
+                            const getPercentageStake = (supplyStake / circulateSupply) * 100
+                            const volume_24hInMillon = (volume_24h / 1000000)
+                            // const formattedTotalSupply = item.total_supply.replace(/,/g, '.');
 
-                        return <Row key={i} gutter={[16, 16]} className='mb-4'>
-                            <Col xs={24} sm={12} md={12} lg={6}>
-                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
-                                    <div className='d-flex mb-2'>
-                                        <MdOutlinePriceCheck className='fs-5 me-2' />
-                                        <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`} style={{ fontSize: "13px" }}>Current Price</Title>
-                                    </div>
-                                    <div>
 
-                                        <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>$ {item?.price}</Title>
+                            return <Row key={i} gutter={[16, 16]} className='mb-4'>
+                                <Col xs={24} sm={12} md={12} lg={6}>
+                                    <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
+                                        <div className='d-flex mb-2'>
+                                            <MdOutlinePriceCheck className='fs-5 me-2' />
+                                            <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`} style={{ fontSize: "13px" }}>Current Price</Title>
+                                        </div>
+                                        <div>
+
+                                            <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>$ {item?.price}</Title>
+                                        </div>
+                                        <div>
+                                            <Typography className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>24h Volume: {volume_24hInMillon.toFixed(3)}m</Typography>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <Typography className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>24h Volume: ${volume_24h.toFixed(2)}</Typography>
+                                </Col>
+                                <Col xs={24} sm={12} md={12} lg={6}>
+                                    <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
+                                        <div className='d-flex mb-2'>
+                                            <SiCoinmarketcap className='fs-5 me-2' />
+                                            <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Market Cap</Title>
+                                        </div>
+                                        <div>
+
+                                            <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
+                                                $ {parseFloat(item?.market_cap).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                            </Title>
+                                        </div>
+                                        <div>
+                                            <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>
+                                                24h Change: {item && item['24h_change'] < 0 ? (
+                                                    <span className='fw-bold' style={{ color: 'red' }}>
+                                                        <HiMiniArrowLongDown /> {item['24h_change']}
+                                                    </span>
+                                                ) : (
+                                                    <span className='fw-bold' style={{ color: "#22b14c" }}> <HiMiniArrowLongUp /> {item['24h_change']}</span>
+                                                )}
+                                            </Typography>
+                                        </div>
                                     </div>
+                                </Col>
+                                <Col xs={24} sm={12} md={12} lg={6}>
+                                    <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
+                                        <div className='d-flex mb-2'>
+                                            <TbAnalyze className='fs-5 me-2' />
+                                            <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Circulating Supply</Title>
+                                        </div>
+                                        <div>
+                                            <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
+                                                {parseFloat(item?.current_supply).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TAO
+                                            </Title>
+                                        </div>
+                                        <div>
+                                            {/* <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>Total Supply: {parseFloat(item?.total_supply).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TAO</Typography> */}
+                                            <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>
+                                                Total Supply: {parseFloat(item?.total_supply.replace('.', '.')).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TAO
+                                            </Typography>
+
+                                        </div>
+                                    </div>
+                                </Col>
+                                <Col xs={24} sm={12} md={12} lg={6}>
+                                    <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
+                                        <div className='d-flex  mb-2'>
+                                            <TbBrandGoogleAnalytics className='fs-5 me-2' />
+                                            <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Supply Staked</Title>
+                                        </div>
+                                        <div>
+                                            <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>{parseFloat(item?.delegated_supply).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TAO</Title>
+                                        </div>
+                                        <div>
+                                            <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>Percentage Staked: {getPercentageStake.toFixed(1)} %</Typography>
+                                        </div>
+                                    </div>
+                                </Col>
+                            </Row>
+                        })
+                    }
+
+                    <div className="py-3 ">
+                        <Row gutter={[16, 16]}>
+                            <Col xs={24} md={24} lg={18}>
+                                <div className={`fontFamily ${theme === "dark" ? "card p-3 bg-secondary border-0" : "card p-3 shadow"} h-100`}>
+                                    <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Bittensor Validators</Title>
+                                    <Table columns={columns} bordered dataSource={dataWithKeys} loading={isProcessing} onChange={onChange} scroll={{ x: true }} className={`${theme === "dark" ? "dark-table" : "light-table"}`}
+                                        expandable={{
+                                            expandedRowRender: (record) => (
+                                                <div className='px-5'>
+                                                    <Text className={`${theme === "dark" && "text-white"}`}>DESCRIPTION: {record.details?.description}</Text> <br />
+                                                    <Text className={`${theme === "dark" && "text-white"}`}>HOTKEY: {record.details?.hot_key}</Text> <br />
+                                                    <Text className={`${theme === "dark" && "text-white"}`}>WEBSITE: {record.details?.url}</Text>
+                                                </div>
+                                            ),
+                                            rowExpandable: (record) => record.name !== 'Not Expandable',
+                                        }}
+                                    />
                                 </div>
                             </Col>
-                            <Col xs={24} sm={12} md={12} lg={6}>
-                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
-                                    <div className='d-flex mb-2'>
-                                        <SiCoinmarketcap className='fs-5 me-2' />
-                                        <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Market Cap</Title>
+                            <Col xs={24} md={24} lg={6}>
+                                <div className='mb-3 staking-calculator'>
+                                    <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
+                                        <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Staking Calculator</Title>
+                                        <div className='card border-0 p-3 mb-3' style={{ backgroundColor: "#b5e61d" }}>
+                                            <div className='d-flex justify-content-between'>
+                                                <Text className='fontFamily'>Current APY</Text>
+                                                <Text className='fontFamily'>{currentAPY.apy?.toFixed(2)}%</Text>
+                                            </div>
+                                        </div>
+                                        <div style={{ width: "100%" }} className='mb-3'>
+                                            <Space>
+                                                <Space.Compact >
+                                                    <Select value={currentAPY?.name} onChange={(value) => handleCurrentAPY(value)} style={{ width: "50%" }} className={`dashboard ${theme} ${theme === "dark" && "dark-dropdown"}`} >
+                                                        {documents && documents?.map((validator) => (
+                                                            <Option key={validator.name} value={validator.name}> {validator.name}</Option>
+                                                        ))}
+                                                    </Select>
+                                                    <Input type='number' onChange={(e) => setTaoAmount(e.target.value)} placeholder='TAO Amount' className={`rtl-input ${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
+                                                </Space.Compact>
+                                            </Space>
+                                        </div>
+                                        <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
+                                            <div className="d-flex justify-content-between">
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Monthly Rewards</Text>
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{monthlyReward.toFixed(2)}</Text>
+                                            </div>
+                                        </div>
+                                        <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
+                                            <div className="d-flex justify-content-between">
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Yearly Rewards</Text>
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{yearReward.toFixed(2)}</Text>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <Button type='primary' className='w-100 fontFamily text-uppercase' size='large' onClick={handleStakeCalculator}>Calculate</Button>
+                                        </div>
                                     </div>
-                                    <div>
+                                </div>
+                                <div className='stake-tao'>
+                                    <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
+                                        {status && <Alert message={`${status}`} type={status === "Transaction failed" ? "error" : "success"} showIcon className='mb-2' />}
+                                        <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Stake Tao</Title>
+                                        <div className='d-flex justify-content-between mb-3'>
+                                            <Button type='primary' className={`text-uppercase fontFamily ${theme === "dark" && "text-white opacity-75"}`} loading={isFinalize} disabled={amount === 0 || amount <= 0 || !amount || amount > totalBalance} onClick={delegateStake}>Delegate</Button>
+                                            <Button type='primary' className={`text-uppercase fontFamily ${theme === "dark" && "text-white opacity-75"}`} loading={isFinalize1} disabled={amount === 0 || amount <= 0 || !amount || amount > stakeAmount} onClick={handleUndelegate}>UnDelegate</Button>
+                                        </div>
+                                        <div className='mb-2'>
+                                            <Form layout="vertical">
+                                                <Form.Item label="Choose Account" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`}>
+                                                    <Select
+                                                        className={`fontFamily ${theme === "dark" && "dark-dropdown select-placeholder"}`}
+                                                        style={{ width: "100%" }}
+                                                        placeholder="Choose Account"
+                                                        value={account.meta?.name}
+                                                        onChange={(value) => handleAccounts(value)}
+                                                    >
+                                                        {state?.accounts.map((account) =>
+                                                            <Option key={account.address} value={account.address}>{account.meta?.name}</Option>
+                                                        )}
+                                                    </Select>
+                                                </Form.Item>
+                                                <Form.Item label="Validators" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} >
+                                                    <Select
+                                                        className={`fontFamily ${theme === "dark" && "dark-dropdown select-placeholder"}`}
+                                                        style={{ width: "100%" }}
+                                                        placeholder="Select a validators"
+                                                        value={validator.name}
+                                                        onChange={(value) => handleValidators(value)}
+                                                    >
+                                                        {documents && documents?.map((validator) => (
+                                                            <Option key={validator.name} value={validator.name}>{validator.name}</Option>
+                                                        ))}
+                                                    </Select>
+                                                </Form.Item>
+                                                <Form.Item label="Amount" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} name="Amount">
+                                                    <div className="input-with-button" style={{ width: "100%" }}>
+                                                        <Input placeholder="Amount" name='amount' value={amount} onChange={(e) => setAmount(e.target.value)} type='number' className={`${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
+                                                        <button className='btn btn-sm btn-primary text-white fontFamily' onClick={handleTotalBalanceMax}>MAX</button>
+                                                    </div>
+                                                </Form.Item>
+                                            </Form>
+                                        </div>
+                                        <div className={`p-3 mb-3  ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
+                                            <div className="d-flex justify-content-between">
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>My Balance :</Text>
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{totalBalance} TAO</Text>
+                                            </div>
+                                        </div>
+                                        <div className='mb-3'>
+                                            <div className="d-flex justify-content-between">
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Available Amount</Text>
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>0 TAO</Text>
+                                            </div>
+                                            <div className="d-flex justify-content-between">
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Your Current Stake</Text>
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{stakeAmount} TAO</Text>
+                                            </div>
+                                        </div>
 
-                                        <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
-                                            $ {parseFloat(item?.market_cap).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                                        </Title>
-                                    </div>
-                                    <div>
-                                        <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>
-                                            24h Change: {item && item['24h_change'] < 0 ? (
-                                                <span className='fw-bold' style={{ color: 'red' }}>
-                                                    <HiMiniArrowLongDown /> {item['24h_change']}
-                                                </span>
-                                            ) : (
-                                                <span className='fw-bold' style={{ color: "#22b14c" }}> <HiMiniArrowLongUp /> {item['24h_change']}</span>
-                                            )}
-                                        </Typography>
-                                    </div>
-                                </div>
-                            </Col>
-                            <Col xs={24} sm={12} md={12} lg={6}>
-                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
-                                    <div className='d-flex mb-2'>
-                                        <TbAnalyze className='fs-5 me-2' />
-                                        <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Circulating Supply</Title>
-                                    </div>
-                                    <div>
-                                        <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
-                                            {parseFloat(item?.current_supply).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TAO
-                                        </Title>
-                                    </div>
-                                    <div>
-                                        <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>Total Supply: {parseFloat(item?.total_supply).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TAO</Typography>
-                                    </div>
-                                </div>
-                            </Col>
-                            <Col xs={24} sm={12} md={12} lg={6}>
-                                <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
-                                    <div className='d-flex  mb-2'>
-                                        <TbBrandGoogleAnalytics className='fs-5 me-2' />
-                                        <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Supply Staked</Title>
-                                    </div>
-                                    <div>
-                                        <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>{parseFloat(item?.delegated_supply).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TAO</Title>
-                                    </div>
-                                    <div>
-                                        <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>Percentage Staked: {getPercentageStake.toFixed(1)} %</Typography>
+                                        <div >
+                                            <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white opacity-75"}`} size='large' loading={isFinalize} disabled={amount === 0 || amount <= 0 || !amount || amount > totalBalance} onClick={delegateStake}>Delegate</Button>
+                                        </div>
                                     </div>
                                 </div>
                             </Col>
                         </Row>
-                    })
-                }
-
-                <div className="py-3 ">
-                    <Row gutter={[16, 16]}>
-                        <Col xs={24} md={24} lg={16}>
-                            <div className={`fontFamily ${theme === "dark" ? "card p-3 bg-secondary border-0" : "card p-3 shadow"} h-100`}>
-                                <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Bittensor Validators</Title>
-                                <Table columns={columns} bordered dataSource={dataWithKeys} loading={isProcessing} onChange={onChange} scroll={{ x: true }} className={`${theme === "dark" ? "dark-table" : "light-table"}`}
-                                    expandable={{
-                                        expandedRowRender: (record) => (
-                                            <div className='px-5'>
-                                                <Text className={`${theme === "dark" && "text-white"}`}>DESCRIPTION: {record.details?.description}</Text> <br />
-                                                <Text className={`${theme === "dark" && "text-white"}`}>HOTKEY: {record.details?.hot_key}</Text> <br />
-                                                <Text className={`${theme === "dark" && "text-white"}`}>WEBSITE: {record.details?.url}</Text>
-                                            </div>
-                                        ),
-                                        rowExpandable: (record) => record.name !== 'Not Expandable',
-                                    }}
-                                />
-                            </div>
-                        </Col>
-                        <Col xs={24} md={24} lg={8}>
-                            <div className='mb-3 staking-calculator'>
-                                <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
-                                    <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Staking Calculator</Title>
-                                    <div className='card border-0 p-3 mb-3' style={{ backgroundColor: "#b5e61d" }}>
-                                        <div className='d-flex justify-content-between'>
-                                            <Text className='fontFamily'>Current APY</Text>
-                                            <Text className='fontFamily'>{currentAPY.apy?.toFixed(2)}%</Text>
-                                        </div>
-                                    </div>
-                                    <div style={{ width: "100%" }} className='mb-3'>
-                                        <Space>
-                                            <Space.Compact >
-                                                <Select value={currentAPY?.name} onChange={(value) => handleCurrentAPY(value)} style={{ width: "50%" }} className={`dashboard ${theme} ${theme === "dark" && "dark-dropdown"}`} >
-                                                    {documents && documents?.map((validator) => (
-                                                        <Option key={validator.name} value={validator.name}> {validator.name}</Option>
-                                                    ))}
-                                                </Select>
-                                                <Input type='number' onChange={(e) => setTaoAmount(e.target.value)} placeholder='TAO Amount' className={`rtl-input ${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
-                                            </Space.Compact>
-                                        </Space>
-                                    </div>
-                                    <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
-                                        <div className="d-flex justify-content-between">
-                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Monthly Rewards</Text>
-                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{monthlyReward.toFixed(2)}</Text>
-                                        </div>
-                                    </div>
-                                    <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
-                                        <div className="d-flex justify-content-between">
-                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Yearly Rewards</Text>
-                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{yearReward.toFixed(2)}</Text>
-                                        </div>
-                                    </div>
-                                    <div >
-                                        <Button type='primary' className='w-100 fontFamily text-uppercase' size='large' onClick={handleStakeCalculator}>Calculate</Button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='stake-tao'>
-                                <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
-                                    {status && <Alert message={`${status}`} type={status === "Transaction failed" ? "error" : "success"} showIcon className='mb-2' />}
-                                    <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Stake Tao</Title>
-                                    <div className='d-flex justify-content-between mb-3'>
-                                        <Button type='primary' className={`text-uppercase fontFamily ${theme === "dark" && "text-white opacity-75"}`} loading={isFinalize} disabled={amount === 0 || amount <= 0 || !amount || amount > totalBalance} onClick={delegateStake}>Delegate</Button>
-                                        <Button type='primary' className={`text-uppercase fontFamily ${theme === "dark" && "text-white opacity-75"}`} loading={isFinalize1} disabled={amount === 0 || amount <= 0 || !amount || amount > stakeAmount} onClick={handleUndelegate}>UnDelegate</Button>
-                                    </div>
-                                    <div className='mb-2'>
-                                        <Form layout="vertical">
-                                            <Form.Item label="Choose Account" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`}>
-                                                <Select
-                                                    className={`fontFamily ${theme === "dark" && "dark-dropdown select-placeholder"}`}
-                                                    style={{ width: "100%" }}
-                                                    placeholder="Choose Account"
-                                                    value={account.meta?.name}
-                                                    onChange={(value) => handleAccounts(value)}
-                                                >
-                                                    {state?.accounts.map((account) =>
-                                                        <Option key={account.address} value={account.address}>{account.meta?.name}</Option>
-                                                    )}
-                                                </Select>
-                                            </Form.Item>
-                                            <Form.Item label="Validators" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} >
-                                                <Select
-                                                    className={`fontFamily ${theme === "dark" && "dark-dropdown select-placeholder"}`}
-                                                    style={{ width: "100%" }}
-                                                    placeholder="Select a validators"
-                                                    value={validator.name}
-                                                    onChange={(value) => handleValidators(value)}
-                                                >
-                                                    {documents && documents?.map((validator) => (
-                                                        <Option key={validator.name} value={validator.name}>{validator.name}</Option>
-                                                    ))}
-                                                </Select>
-                                            </Form.Item>
-                                            <Form.Item label="Amount" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} name="Amount">
-                                                <div className="input-with-button" style={{ width: "100%" }}>
-                                                    <Input placeholder="Amount" name='amount' value={amount} onChange={(e) => setAmount(e.target.value)} type='number' className={`${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
-                                                    <button className='btn btn-sm btn-primary text-white fontFamily' onClick={handleTotalBalanceMax}>MAX</button>
-                                                </div>
-                                            </Form.Item>
-                                        </Form>
-                                    </div>
-                                    <div className={`p-3 mb-3  ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
-                                        <div className="d-flex justify-content-between">
-                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>My Balance :</Text>
-                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{totalBalance} TAO</Text>
-                                        </div>
-                                    </div>
-                                    <div className='mb-3'>
-                                        <div className="d-flex justify-content-between">
-                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Available Amount</Text>
-                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>0 TAO</Text>
-                                        </div>
-                                        <div className="d-flex justify-content-between">
-                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Your Current Stake</Text>
-                                            <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{stakeAmount} TAO</Text>
-                                        </div>
-                                    </div>
-
-                                    <div >
-                                        <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white opacity-75"}`} size='large' loading={isFinalize} disabled={amount === 0 || amount <= 0 || !amount || amount > totalBalance} onClick={delegateStake}>Delegate</Button>
-                                    </div>
-                                </div>
-                            </div>
-                        </Col>
-                    </Row>
+                    </div>
                 </div>
-            </div>
-        </div >
+            </div >
+        </div>
     )
 }
