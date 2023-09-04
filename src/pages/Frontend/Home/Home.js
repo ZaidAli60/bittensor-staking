@@ -336,9 +336,6 @@ export default function Home() {
                             const supplyStake = item?.delegated_supply
                             const circulateSupply = item?.current_supply
                             const getPercentageStake = (supplyStake / circulateSupply) * 100
-                            const volume_24hInMillon = (volume_24h / 1000000)
-                            // const formattedTotalSupply = item.total_supply.replace(/,/g, '.');
-
 
                             return <Row key={i} gutter={[16, 16]} className='mb-4'>
                                 <Col xs={24} sm={12} md={12} lg={6}>
@@ -352,7 +349,7 @@ export default function Home() {
                                             <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>$ {item?.price}</Title>
                                         </div>
                                         <div>
-                                            <Typography className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>24h Volume: {volume_24hInMillon.toFixed(3)}m</Typography>
+                                            <Typography className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>24h Volume:  $ {Math.floor(parseFloat(volume_24h)).toLocaleString('de-DE')}</Typography>
                                         </div>
                                     </div>
                                 </Col>
@@ -363,9 +360,8 @@ export default function Home() {
                                             <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Market Cap</Title>
                                         </div>
                                         <div>
-
                                             <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
-                                                $ {parseFloat(item?.market_cap).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                $ {Math.floor(parseFloat(item?.market_cap)).toLocaleString('de-DE')}
                                             </Title>
                                         </div>
                                         <div>
@@ -389,15 +385,13 @@ export default function Home() {
                                         </div>
                                         <div>
                                             <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
-                                                {parseFloat(item?.current_supply).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TAO
+                                                {Math.floor(parseFloat(item?.current_supply)).toLocaleString('de-DE')} TAO
                                             </Title>
                                         </div>
                                         <div>
-                                            {/* <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>Total Supply: {parseFloat(item?.total_supply).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TAO</Typography> */}
                                             <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>
-                                                Total Supply: {parseFloat(item?.total_supply.replace('.', '.')).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TAO
+                                                Total Supply: {Math.floor(parseFloat(item?.total_supply)).toLocaleString('de-DE')} TAO
                                             </Typography>
-
                                         </div>
                                     </div>
                                 </Col>
@@ -408,7 +402,7 @@ export default function Home() {
                                             <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Supply Staked</Title>
                                         </div>
                                         <div>
-                                            <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>{parseFloat(item?.delegated_supply).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TAO</Title>
+                                            <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>{Math.floor(parseFloat(item?.delegated_supply)).toLocaleString('de-DE')} TAO</Title>
                                         </div>
                                         <div>
                                             <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>Percentage Staked: {getPercentageStake.toFixed(1)} %</Typography>
