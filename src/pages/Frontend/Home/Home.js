@@ -61,9 +61,12 @@ export default function Home() {
         setAccount(state.accounts.length > 0 ? state.accounts[0] : "")
     }, [state])
 
-    // useEffect(() => {
-    //     setValidator(documents.length > 0 ? documents[0] : {})
-    // }, [documents])
+    useEffect(() => {
+        if (state.accounts.length > 0) {
+            setValidator(documents.length > 0 ? documents.find((item) => item.name === "FirstTensor.com") : "")
+        }
+        // eslint-disable-next-line
+    }, [state])
 
     const handleCurrentAPY = (value) => {
         const currentApyValue = documents.find((validator) => validator.name === value);
