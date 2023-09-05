@@ -108,6 +108,12 @@ $fira-code-font: 'Fira Code', monospace;
                 .ant-select-selection-item {
                     color: white !important;
                 }
+
+                .ant-select-selection-search-input {
+                    margin-top: 10px;
+                    margin-left: 0px;
+                    color: white !important;
+                }
             }
 
             .ant-select-open {
@@ -123,6 +129,7 @@ $fira-code-font: 'Fira Code', monospace;
             .ant-select-selection-placeholder {
                 color: rgba(255, 255, 255, 0.623)
             }
+
         }
 
         .ant-select-selector {
@@ -133,9 +140,8 @@ $fira-code-font: 'Fira Code', monospace;
             .ant-select-selection-search-input {
                 margin-top: 10px;
                 margin-left: 0px;
-                color: white !important;
+                // color: white !important;
             }
-
         }
 
         .ant-input {
@@ -169,8 +175,8 @@ $fira-code-font: 'Fira Code', monospace;
             .ant-select-selection-search-input {
                 margin-top: 10px;
                 margin-left: 0px;
-                color: white !important;
             }
+
         }
 
         .input-with-button {
@@ -200,6 +206,12 @@ $fira-code-font: 'Fira Code', monospace;
             .ant-select-selector {
                 background-color: #171e2e;
 
+                .ant-select-selection-search-input {
+                    margin-top: 10px;
+                    margin-left: 0px;
+                    color: white !important;
+                }
+
                 .ant-select-selection-item {
                     color: white !important;
                 }
@@ -219,8 +231,13 @@ $fira-code-font: 'Fira Code', monospace;
                 color: rgba(255, 255, 255, 0.623)
             }
 
+
         }
 
+        .ant-select-selection-search-input {
+            margin-top: 10px;
+            margin-left: 0px;
+        }
 
         .input-placeholder::placeholder {
             color: rgba(255, 255, 255, 0.623);

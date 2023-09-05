@@ -481,7 +481,7 @@ export default function Home() {
                                         <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                             <div className="d-flex justify-content-between">
                                                 <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Commission</Text>
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{currentAPY?.commission?.toFixed(2)}</Text>
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{currentAPY?.commission * 100 || 0} %</Text>
                                             </div>
                                         </div>
                                         <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
