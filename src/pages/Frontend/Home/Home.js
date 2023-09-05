@@ -329,7 +329,7 @@ export default function Home() {
     return (
         <div className={`home dashboard ${theme} min-vh-100`}>
             <div className="container-fluid px-xxl-5 px-lg-4 py-5">
-                <div className="px-xxl-5 ">
+                <div className="px-xxl-5 custom-lg-padding custom-xxl-padding">
                     {
                         taoInfo?.map((item, i) => {
                             const volume_24h = Number(item['24h_volume'])

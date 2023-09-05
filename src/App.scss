@@ -28,28 +28,9 @@ main {
     flex: 1 0 auto;
 }
 
-// @media screen and (min-width: 1900px) {
-//     .container-fluid {
-//         max-width: 1700px;
-//     }
-// }
-
-// @media screen and (min-width: 1950px) {
-//     .container-fluid {
-//         max-width: 1600px;
-//     }
-// }
-
-// .container-fluid {
-//     width: 100%;
-//     margin-right: auto;
-//     margin-left: auto;
-
-// }
-
-// @media (min-width: 1300px) {
-
-//     .container {
-//         max-width: 1580px;
-//     }
-// }
+@media (min-width: 1920px) {
+    .custom-xxl-padding {
+        padding-left: 5rem !important;
+        padding-right: 5rem !important;
+    }
+}

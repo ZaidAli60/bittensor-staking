@@ -89,7 +89,7 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className={` navbar navbar-expand-lg px-xxl-5 py-3 custom-navbar sticky-top dashboard ${theme} ${isNavbarShadowed ? "shadow" : ""}`}>
+            <nav className={` navbar navbar-expand-lg px-xxl-5 custom-lg-padding custom-xxl-padding py-3 custom-navbar sticky-top dashboard ${theme} ${isNavbarShadowed ? "shadow" : ""}`}>
                 <div className="container-fluid px-xxl-5 px-lg-4">
                     <img src={`${theme === "dark" ? window.logoLight : window.logoDark}`} className='img-fluid me-5' alt="Bittensor Staking" />
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
