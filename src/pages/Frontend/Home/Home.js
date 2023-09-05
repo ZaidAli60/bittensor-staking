@@ -20,12 +20,12 @@ export default function Home() {
     const { taoInfo } = useTaoInfoContext()
     const [documents, setDocuments] = useState([])
     const [isProcessing, setIsProcessing] = useState(false)
-    const [currentAPY, setCurrentAPY] = useState({})
+    const [currentAPY, setCurrentAPY] = useState('')
     const [taoAmount, setTaoAmount] = useState(0)
     const [yearReward, setYearReward] = useState(0)
     const [monthlyReward, setMonthlyReward] = useState(0)
     const [account, setAccount] = useState({})
-    const [validator, setValidator] = useState({})
+    const [validator, setValidator] = useState('')
     const [amount, setAmount] = useState(0)
     const [totalBalance, setTotalBalance] = useState(null)
     const [rao, setRao] = useState(null)
@@ -33,8 +33,6 @@ export default function Home() {
     const [status, setStatus] = useState('');
     const [isFinalize, setIsFinalize] = useState(false)
     const [isFinalize1, setIsFinalize1] = useState(false)
-    const [filteredOptions, setFilteredOptions] = useState([]);
-    const [searchText, setSearchText] = useState('')
 
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
@@ -60,15 +58,6 @@ export default function Home() {
     }, [handleFatch])
 
     useEffect(() => {
-        // documents.sort((a, b) => a.name.localeCompare(b.name));
-        // Initialize filteredOptions with the same data as documents
-        const filtered = documents.filter((validator) =>
-            validator.name.toLowerCase().includes(searchText.toLowerCase())
-        );
-        setFilteredOptions(filtered);
-    }, [documents, searchText]);
-
-    useEffect(() => {
         setAccount(state.accounts.length > 0 ? state.accounts[0] : "")
     }, [state])
 
@@ -76,23 +65,19 @@ export default function Home() {
     //     setValidator(documents.length > 0 ? documents[0] : {})
     // }, [documents])
 
-    const handleSearch = (value) => {
-        setSearchText(value)
-    }
-
     const handleCurrentAPY = (value) => {
         const currentApyValue = documents.find((validator) => validator.name === value);
         setCurrentAPY(currentApyValue);
     }
 
+    const handleStakeValidator = (value) => {
+        const validator = documents.find((validator) => validator.name === value);
+        setValidator(validator)
+    }
+
     const handleAccounts = (value) => {
         const userAccounts = state.accounts.find(account => account.address === value)
         setAccount(userAccounts)
-    }
-
-    const handleValidators = (value) => {
-        const selectValidator = documents.find(item => item.name === value)
-        setValidator(selectValidator)
     }
 
     useEffect(() => {
@@ -143,6 +128,7 @@ export default function Home() {
             title: 'Nominators',
             dataIndex: 'nominators',
             sorter: (a, b) => a.nominators - b.nominators,
+            // sortOrder: 'descend',
         }
 
     ];
@@ -454,7 +440,7 @@ export default function Home() {
                                         <div className='card border-0 p-3 mb-3' style={{ backgroundColor: "#b5e61d" }}>
                                             <div className='d-flex justify-content-between'>
                                                 <Text className='fontFamily fw-bold'>Current APY</Text>
-                                                <Text className='fontFamily fw-bold'>{currentAPY.apy?.toFixed(2)}%</Text>
+                                                <Text className='fontFamily fw-bold'>{currentAPY.apy?.toFixed(2) || 0}%</Text>
                                             </div>
                                         </div>
                                         <div style={{ width: "100%" }} className='mb-3'>
@@ -464,16 +450,11 @@ export default function Home() {
                                                         showSearch
                                                         value={currentAPY.name}
                                                         onChange={handleCurrentAPY}
-                                                        onSearch={handleSearch}
-                                                        optionFilterProp="children"
-                                                        filterOption={false}
-                                                    >
-                                                        {filteredOptions.map((validator) => (
-                                                            <Option key={validator.name} value={validator.name}>
-                                                                {validator.name}
-                                                            </Option>
-                                                        ))}
-                                                    </Select>
+                                                        filterOption={(input, option) =>
+                                                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                                        }
+                                                        options={documents.map(item => ({ value: item.name, label: item.name }))}
+                                                    />
                                                     <Input type='number' onChange={(e) => setTaoAmount(e.target.value)} placeholder='TAO Amount' className={`rtl-input ${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
                                                 </Space.Compact>
                                             </Space>
@@ -529,19 +510,14 @@ export default function Home() {
                                                         className={`fontFamily ${theme === "dark" && "dark-dropdown select-placeholder"}`}
                                                         style={{ width: "100%" }}
                                                         showSearch
-                                                        value={validator.name}
-                                                        onChange={(value) => handleValidators(value)}
-                                                        onSearch={handleSearch}
                                                         placeholder="Select Validator"
-                                                        optionFilterProp="children"
-                                                        filterOption={false}
-                                                    >
-                                                        {filteredOptions.map((validator) => (
-                                                            <Option key={validator.name} value={validator.name}>
-                                                                {validator.name}
-                                                            </Option>
-                                                        ))}
-                                                    </Select>
+                                                        value={validator.name}
+                                                        onChange={handleStakeValidator}
+                                                        filterOption={(input, option) =>
+                                                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                                        }
+                                                        options={documents.map(item => ({ value: item.name, label: item.name }))}
+                                                    />
                                                 </Form.Item>
                                                 <Form.Item label="Amount" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} name="Amount">
                                                     <div className="input-with-button" style={{ width: "100%" }}>
