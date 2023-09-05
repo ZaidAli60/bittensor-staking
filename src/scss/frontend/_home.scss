@@ -119,12 +119,23 @@ $fira-code-font: 'Fira Code', monospace;
             .ant-select-arrow {
                 color: white;
             }
+
+            .ant-select-selection-placeholder {
+                color: rgba(255, 255, 255, 0.623)
+            }
         }
 
         .ant-select-selector {
             width: 100% !important;
             height: 50px !important;
             padding: 10px !important;
+
+            .ant-select-selection-search-input {
+                margin-top: 10px;
+                margin-left: 0px;
+                color: white !important;
+            }
+
         }
 
         .ant-input {
@@ -154,6 +165,12 @@ $fira-code-font: 'Fira Code', monospace;
             width: 100%;
             height: 50px;
             padding: 10px;
+
+            .ant-select-selection-search-input {
+                margin-top: 10px;
+                margin-left: 0px;
+                color: white !important;
+            }
         }
 
         .input-with-button {
