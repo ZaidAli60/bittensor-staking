@@ -460,7 +460,7 @@ export default function Home() {
                                         <div style={{ width: "100%" }} className='mb-3'>
                                             <Space>
                                                 <Space.Compact >
-                                                    <Select placeholder="Select a validator" style={{ width: "50%" }} className={`dashboard ${theme} ${theme === "dark" && "dark-dropdown"}`}
+                                                    <Select placeholder="Select Validator" style={{ width: "50%" }} className={`dashboard ${theme} ${theme === "dark" && "dark-dropdown"}`}
                                                         showSearch
                                                         value={currentAPY.name}
                                                         onChange={handleCurrentAPY}
@@ -532,7 +532,7 @@ export default function Home() {
                                                         value={validator.name}
                                                         onChange={(value) => handleValidators(value)}
                                                         onSearch={handleSearch}
-                                                        placeholder="Select a validator"
+                                                        placeholder="Select Validator"
                                                         optionFilterProp="children"
                                                         filterOption={false}
                                                     >
