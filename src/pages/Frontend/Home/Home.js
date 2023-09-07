@@ -237,12 +237,14 @@ export default function Home() {
 
     const delegateStake = async () => {
 
-        if (!validator.name) { return message.error('Please select a validator') }
-
         if (!state.accounts.length > 0) {
             message.error('No wallet available, please connect your Polkadot wallet first.')
             return;
         }
+        if (!validator.name) { return message.error('Please select a validator') }
+
+        if (amount === 0 || amount <= 0 || !amount || amount > totalBalance) { return message.error('Your wallet has insufficient TAO to stake the requested amount.') }
+
         const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
         const api = await ApiPromise.create({ provider: wsProvider });
 
@@ -286,6 +288,11 @@ export default function Home() {
             message.error('No wallet available, please connect your Polkadot wallet first.')
             return;
         }
+        if (!validator.name) { return message.error('Please select a validator') }
+
+        if (amount === 0 || amount <= 0 || !amount) { return message.error('Invalid undelegation amount. Please enter a valid amount.') }
+        if (amount > stakeAmount) { return message.error('The undelegate amount you requested is more than the delegated amount with validator.') }
+
         const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
         const api = await ApiPromise.create({ provider: wsProvider });
 
@@ -333,7 +340,6 @@ export default function Home() {
                 <div className="px-xxl-5 custom-lg-padding custom-xxl-padding">
                     {
                         taoInfo?.map((item, i) => {
-                            const volume_24h = item.volume_24h
                             return <Row key={i} gutter={[16, 16]} className='mb-4'>
                                 <Col xs={24} sm={12} md={12} lg={6}>
                                     <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
@@ -345,7 +351,7 @@ export default function Home() {
                                             <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>$ {item?.current_price}</Title>
                                         </div>
                                         <div>
-                                            <Typography className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>24h Volume: {parseFloat(volume_24h / 1e6).toFixed(3)}m</Typography>
+                                            <Typography className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>24h Volume: $ {Math.floor(parseFloat(item?.volume_24h)).toLocaleString('de-DE')}</Typography>
                                         </div>
                                     </div>
                                 </Col>
@@ -461,7 +467,7 @@ export default function Home() {
                                         <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                             <div className="d-flex justify-content-between">
                                                 <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Commission</Text>
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{currentAPY?.commission * 100 || 0} %</Text>
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{currentAPY?.commission * 100 || 0}%</Text>
                                             </div>
                                         </div>
                                         <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
@@ -486,8 +492,8 @@ export default function Home() {
                                         {status && <Alert message={`${status}`} type={status === "Transaction failed" ? "error" : "success"} showIcon className='mb-2' />}
                                         <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Stake Tao</Title>
                                         <div className='d-flex justify-content-between mb-3'>
-                                            <Button type='primary' className={`text-uppercase fontFamily ${theme === "dark" && "text-white opacity-75"}`} loading={isFinalize} disabled={amount === 0 || amount <= 0 || !amount || amount > totalBalance} onClick={delegateStake}>Delegate</Button>
-                                            <Button type='primary' className={`text-uppercase fontFamily ${theme === "dark" && "text-white opacity-75"}`} loading={isFinalize1} disabled={amount === 0 || amount <= 0 || !amount || amount > stakeAmount} onClick={handleUndelegate}>UnDelegate</Button>
+                                            <Button type='primary' className={`text-uppercase fontFamily ${theme === "dark" && "text-white opacity-75"}`} loading={isFinalize} onClick={delegateStake}>Delegate</Button>
+                                            <Button type='primary' className={`text-uppercase fontFamily ${theme === "dark" && "text-white opacity-75"}`} loading={isFinalize1} onClick={handleUndelegate}>UnDelegate</Button>
                                         </div>
                                         <div className='mb-2'>
                                             <Form layout="vertical">
@@ -540,7 +546,7 @@ export default function Home() {
                                         </div>
 
                                         <div >
-                                            <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white opacity-75"}`} size='large' loading={isFinalize} disabled={amount === 0 || amount <= 0 || !amount || amount > totalBalance} onClick={delegateStake}>Delegate</Button>
+                                            <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white opacity-75"}`} size='large' loading={isFinalize} onClick={delegateStake}>Delegate</Button>
                                         </div>
                                     </div>
                                 </div>
