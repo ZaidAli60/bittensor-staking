@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Drawer, Menu, Modal, Tooltip, Typography, message } from 'antd'
+import { Button, Drawer, Dropdown, Menu, Modal, Tooltip, Typography, message } from 'antd'
 import { Link } from 'react-router-dom';
 import { items } from "pages/Dashboard/SidebarItems"
 import { useThemeContext } from 'context/ThemeContext';
@@ -8,6 +8,7 @@ import { MdOutlineLightMode } from 'react-icons/md'
 import { LiaBarsSolid } from 'react-icons/lia'
 import { web3Accounts, web3Enable } from '@polkadot/extension-dapp';
 import { useConnectWallet } from 'context/ConnectWalletContext';
+import { DownOutlined } from "@ant-design/icons";
 
 const { Title } = Typography
 
@@ -87,6 +88,29 @@ export default function Navbar() {
         });
     };
 
+    const items = [
+        {
+            label: <a className='text-decoration-none' href="https://www.gate.io/trade/TAO_USDT" target="_blank" rel="noopener noreferrer">Gate.io</a>,
+            key: '0',
+        },
+        {
+            label: <a className='text-decoration-none' href="https://www.mexc.com/exchange/TAO_USDT" target="_blank" rel="noopener noreferrer">MEXC</a>,
+            key: '1',
+        },
+        {
+            label: <a className='text-decoration-none' href="https://www.bitget.com/spot/TAOUSDT?type=spot" target="_blank" rel="noopener noreferrer">BITGET</a>,
+            key: '2',
+        },
+        {
+            label: <a className='text-decoration-none' href="https://www.bitmart.com/trade/en-US?symbol=%24TAO_USDT" target="_blank" rel="noopener noreferrer">BITMART</a>,
+            key: '3',
+        },
+        {
+            label: <a className='text-decoration-none' href="https://tensor.exchange/" target="_blank" rel="noopener noreferrer">TENSOR EXCHANGE</a>,
+            key: '4',
+        },
+    ];
+
     return (
         <>
             <nav className={` navbar navbar-expand-lg px-xxl-5 custom-lg-padding custom-xxl-padding py-3 custom-navbar sticky-top dashboard ${theme} ${isNavbarShadowed ? "shadow" : ""}`}>
@@ -97,10 +121,12 @@ export default function Navbar() {
                             <Link to="/" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`}>Home</Link>
                             <Link to="/balance" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} href="#">Balance</Link>
                             <Link to="/vote" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} href="#">Vote</Link>
-                            <Link to="/" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} href="#">Buy Tao</Link>
+                            <Dropdown menu={{ items }} trigger={['click']}>
+                                <a onClick={(e) => e.preventDefault()} className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} href="#">Buy Tao <DownOutlined /></a>
+                            </Dropdown>
                         </div>
                     </div>
-
+                    <a href="http://" ></a>
                     <div className='icon-container me-3 d-flex' style={{ cursor: 'pointer' }}>
                         <Tooltip title="Light theme"> <MdOutlineLightMode className="fs-5 me-2" onClick={() => setTheme("light")} /> </Tooltip>
                         <Tooltip title="Dark theme"> <BiMoon className='text-center fs-5' onClick={() => setTheme("dark")} /> </Tooltip>
