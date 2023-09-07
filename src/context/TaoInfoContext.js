@@ -4,7 +4,7 @@ const TaoInfoProvider = createContext()
 
 export default function TaoInfoContext({ children }) {
 
-    const [taoInfo, setTaoInfo] = useState(null)
+    const [taoInfo, setTaoInfo] = useState([])
     const [isProcessing, setIsProcessing] = useState(false)
 
     const handleFetch = useCallback(async () => {
