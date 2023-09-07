@@ -13,7 +13,7 @@ const { Title } = Typography
 
 export default function Navbar() {
     const { theme, setTheme } = useThemeContext()
-    const [selectedItem, setSelectedItem] = useState("");
+    const [selectedItem, setSelectedItem] = useState("home");
     const [drawerVisible, setDrawerVisible] = useState(false);
     const [isNavbarShadowed, setIsNavbarShadowed] = useState(false);
     const { state, dispatch } = useConnectWallet()
@@ -142,7 +142,21 @@ export default function Navbar() {
                 className={`custome-drawer dashboard ${theme}`}
             >
                 <div className='py-4'>
-                    {selectedItem && <Menu theme='dark' mode="inline" items={items} defaultSelectedKeys={[selectedItem]} className={`dashboard ${theme}`} />}
+                    {selectedItem && <Menu theme='dark' mode="inline" defaultSelectedKeys={[selectedItem]} className={`dashboard ${theme}`}>
+                        {items.map((item) => (
+                            <Menu.Item
+                                key={item.key}
+                                icon={item.icon}
+                                onClick={() => {
+                                    item.onClick && item.onClick();
+                                    toggleDrawer(); // Close the drawer when a menu item is clicked
+                                }}
+                            >
+                                {item.label}
+                            </Menu.Item>
+                        ))}
+                    </Menu>}
+                    {/* {selectedItem && <Menu theme='dark' mode="inline" items={items} defaultSelectedKeys={[selectedItem]} className={`dashboard ${theme}`} />} */}
                 </div>
             </Drawer>
 

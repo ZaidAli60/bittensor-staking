@@ -7,26 +7,18 @@ function App() {
   const { theme } = useThemeContext()
 
   return (
-    <div className={`App dashboard ${theme} min-vh-100`}>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: '#323743',
-          },
-        }}
-      >
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#323743',
+        },
+      }}
+    >
+      <div className={`App dashboard ${theme} min-vh-100`}>
         <Routes />
-      </ConfigProvider>
-      {/* <div className="screen-loader">
-        <div className="wrapper">
-          <svg>
-            <text x="50%" y="50%" dy=".35em" textAnchor="middle">
-              Bittensor Staking
-            </text>
-          </svg>
-        </div>
-      </div> */}
-    </div>
+      </div>
+    </ConfigProvider>
+
   );
 }
 
