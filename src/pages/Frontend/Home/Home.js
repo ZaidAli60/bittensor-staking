@@ -121,7 +121,7 @@ export default function Home() {
             render: (_, row) => {
                 return (<Tooltip title={row.tooltip}>
                     <span className='d-flex justify-content-between' style={{ fontWeight: 600 }}>
-                        {row.commission * 100} % <InfoCircleOutlined className='d-flex flex-end' />
+                        {row.commission * 100}% <InfoCircleOutlined className='d-flex flex-end' />
                     </span>
                 </Tooltip>)
             }
@@ -387,7 +387,7 @@ export default function Home() {
                                     <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
                                         <div className='d-flex mb-2'>
                                             <MdOutlinePriceCheck className='fs-5 me-2' />
-                                            <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`} style={{ fontSize: "13px" }}>Current Price</Title>
+                                            <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Current Price</Title>
                                         </div>
                                         <div>
                                             <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>$ {item?.current_price}</Title>
@@ -401,7 +401,7 @@ export default function Home() {
                                     <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
                                         <div className='d-flex mb-2'>
                                             <SiCoinmarketcap className='fs-5 me-2' />
-                                            <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Market Cap</Title>
+                                            <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>Market Cap</Title>
                                         </div>
                                         <div>
                                             <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
@@ -425,7 +425,7 @@ export default function Home() {
                                     <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
                                         <div className='d-flex mb-2'>
                                             <TbAnalyze className='fs-5 me-2' />
-                                            <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Circulating Supply</Title>
+                                            <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>Circulating Supply</Title>
                                         </div>
                                         <div>
                                             <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
@@ -443,7 +443,7 @@ export default function Home() {
                                     <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
                                         <div className='d-flex  mb-2'>
                                             <TbBrandGoogleAnalytics className='fs-5 me-2' />
-                                            <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`} style={{ fontSize: "13px" }}>Supply Staked</Title>
+                                            <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>Supply Staked</Title>
                                         </div>
                                         <div>
                                             <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>{Math.floor(parseFloat(item?.total_stakes)).toLocaleString('de-DE')} TAO</Title>
@@ -467,7 +467,7 @@ export default function Home() {
                                             expandedRowRender: (record) => {
                                                 const absoluteUrl = record.details?.url.startsWith('http') ? record.details?.url : `https://${record.details?.url}`;
                                                 return (
-                                                    <div className='px-5' >
+                                                    <div className='px-5 fw-bold' >
                                                         <Text className={`${theme === "dark" && "text-white"}`}>Description: {record.details?.description}</Text> <br />
                                                         <Text className={`${theme === "dark" && "text-white"}`}>Hotkey: {record.details?.hot_key}</Text> <br />
                                                         <Text className={`${theme === "dark" && "text-white"}`}>Website: <a href={absoluteUrl} target="_blank" rel="noopener noreferrer">{record.details?.url}</a></Text>
@@ -508,20 +508,20 @@ export default function Home() {
                                         </div>
                                         <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                             <div className="d-flex justify-content-between">
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Commission</Text>
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{currentAPY?.commission * 100 || 0} %</Text>
+                                                <Text className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>Commission</Text>
+                                                <Text className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>{currentAPY?.commission * 100 || 0}%</Text>
                                             </div>
                                         </div>
                                         <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                             <div className="d-flex justify-content-between">
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Monthly Rewards</Text>
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{monthlyReward.toFixed(2)} TAO</Text>
+                                                <Text className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>Monthly Rewards</Text>
+                                                <Text className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>{monthlyReward.toFixed(2)} TAO</Text>
                                             </div>
                                         </div>
                                         <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                             <div className="d-flex justify-content-between">
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Yearly Rewards</Text>
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{yearReward.toFixed(2)} TAO</Text>
+                                                <Text className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>Yearly Rewards</Text>
+                                                <Text className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>{yearReward.toFixed(2)} TAO</Text>
                                             </div>
                                         </div>
                                         <div>
@@ -576,14 +576,14 @@ export default function Home() {
                                         </div>
                                         <div className='mb-3'>
                                             <div className="d-flex justify-content-between">
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>My Balance</Text>
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{totalBalance || 0} TAO</Text>
+                                                <Text className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>My Balance</Text>
+                                                <Text className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>{totalBalance || 0} TAO</Text>
                                             </div>
                                         </div>
                                         <div className='mb-3'>
                                             <div className="d-flex justify-content-between">
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Your Current Stake</Text>
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{stakeAmount} TAO</Text>
+                                                <Text className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>Your Current Stake</Text>
+                                                <Text className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>{stakeAmount} TAO</Text>
                                             </div>
                                         </div>
 
@@ -599,7 +599,7 @@ export default function Home() {
                                                     </div>
                                                 ) : (
                                                     allStakeValidators.length === 0 ? (
-                                                        <div className={`${theme === "dark" && "text-white"}`}>This wallet has not been delegated yet!</div>
+                                                        <div className={`fw-bold ${theme === "dark" && "text-white"}`}>This wallet has not been delegated yet!</div>
                                                     ) : (
                                                         allStakeValidators.map((validator, i) => (
                                                             <div key={i} className='d-flex justify-content-between'>
