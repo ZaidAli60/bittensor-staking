@@ -396,7 +396,7 @@ export default function Home() {
                                             <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>$ {item?.current_price}</Title>
                                         </div>
                                         <div>
-                                            <Typography className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>24h Volume: $ {Math.floor(parseFloat(item?.volume_24h)).toLocaleString('de-DE')}</Typography>
+                                            <Typography className={`fontFamily fw-bold ${theme === "dark" ? "text-white" : ""}`}>24h Volume: $ {Math.floor(parseFloat(item?.volume_24h)).toLocaleString('de-DE')}</Typography>
                                         </div>
                                     </div>
                                 </Col>
@@ -412,7 +412,7 @@ export default function Home() {
                                             </Title>
                                         </div>
                                         <div>
-                                            <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>
+                                            <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>
                                                 24h Change: {item && item.change_24h < 0 ? (
                                                     <span className='fw-bold' style={{ color: 'red' }}>
                                                         <HiMiniArrowLongDown /> {item.change_24h.toFixed(2)}
@@ -436,7 +436,7 @@ export default function Home() {
                                             </Title>
                                         </div>
                                         <div>
-                                            <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>
+                                            <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>
                                                 Total Supply: {Math.floor(parseFloat(item?.total_supply)).toLocaleString('de-DE')} TAO
                                             </Typography>
                                         </div>
@@ -452,7 +452,7 @@ export default function Home() {
                                             <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>{Math.floor(parseFloat(item?.total_stakes)).toLocaleString('de-DE')} TAO</Title>
                                         </div>
                                         <div>
-                                            <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>Percentage Staked: {item.percent_staked?.toFixed(1)} %</Typography>
+                                            <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>Percentage Staked: {item.percent_staked?.toFixed(1)} %</Typography>
                                         </div>
                                     </div>
                                 </Col>
@@ -594,7 +594,7 @@ export default function Home() {
                                             <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white opacity-75"}`} size='large' loading={isFinalize} onClick={delegateStake}>Delegate</Button>
                                         </div>
                                         <div>
-                                            <Title level={4} className='fontFamily text-uppercase'>Delegated Stake</Title>
+                                            <Title level={4} className={`fontFamily text-uppercase ${theme === "dark" && "text-white"}`}>Delegated Stake</Title>
                                             {
                                                 isLoading ? (
                                                     <div className='text-center'>
@@ -602,12 +602,12 @@ export default function Home() {
                                                     </div>
                                                 ) : (
                                                     allStakeValidators.length === 0 ? (
-                                                        <div>This wallet has not been delegated yet!</div>
+                                                        <div className={`${theme === "dark" && "text-white"}`}>This wallet has not been delegated yet!</div>
                                                     ) : (
                                                         allStakeValidators.map((validator, i) => (
                                                             <div key={i} className='d-flex justify-content-between'>
-                                                                <p className='mb-1'>{validator.name}</p>
-                                                                <p className='mb-1 '>{validator.stakeAmount} TAO</p>
+                                                                <p className={`mb-1 ${theme === "dark" && "text-white"}`}>{validator.name}</p>
+                                                                <p className={`mb-1 ${theme === "dark" && "text-white"}`}>{validator.stakeAmount} TAO</p>
                                                             </div>
                                                         ))
                                                     )
