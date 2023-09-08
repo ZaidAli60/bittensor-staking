@@ -603,8 +603,8 @@ export default function Home() {
                                                     ) : (
                                                         allStakeValidators.map((validator, i) => (
                                                             <div key={i} className='d-flex justify-content-between'>
-                                                                <p className={`mb-1 ${theme === "dark" && "text-white"}`}>{validator.name}</p>
-                                                                <p className={`mb-1 ${theme === "dark" && "text-white"}`}>{validator.stakeAmount} TAO</p>
+                                                                <p className={`mb-1 fw-bold ${theme === "dark" && "text-white"}`}>{validator.name}</p>
+                                                                <p className={`mb-1 fw-bold ${theme === "dark" && "text-white"}`}>{validator.stakeAmount} TAO</p>
                                                             </div>
                                                         ))
                                                     )
