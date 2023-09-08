@@ -387,7 +387,7 @@ export default function Home() {
                                     <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
                                         <div className='d-flex mb-2'>
                                             <MdOutlinePriceCheck className='fs-5 me-2' />
-                                            <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>Current Price</Title>
+                                            <Title level={5} className={`fontFamily mb-0 ${theme === "dark" ? "text-white" : ""}`}>Current Price</Title>
                                         </div>
                                         <div>
                                             <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>$ {item?.current_price}</Title>
@@ -401,7 +401,7 @@ export default function Home() {
                                     <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
                                         <div className='d-flex mb-2'>
                                             <SiCoinmarketcap className='fs-5 me-2' />
-                                            <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>Market Cap</Title>
+                                            <Title level={5} className={`fontFamily mb-0 ${theme === "dark" && "text-white"}`}>Market Cap</Title>
                                         </div>
                                         <div>
                                             <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
@@ -425,7 +425,7 @@ export default function Home() {
                                     <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
                                         <div className='d-flex mb-2'>
                                             <TbAnalyze className='fs-5 me-2' />
-                                            <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>Circulating Supply</Title>
+                                            <Title level={5} className={`fontFamily mb-0 ${theme === "dark" && "text-white"}`}>Circulating Supply</Title>
                                         </div>
                                         <div>
                                             <Title level={5} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
@@ -443,13 +443,13 @@ export default function Home() {
                                     <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
                                         <div className='d-flex  mb-2'>
                                             <TbBrandGoogleAnalytics className='fs-5 me-2' />
-                                            <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>Supply Staked</Title>
+                                            <Title level={5} className={`fontFamily mb-0 ${theme === "dark" && "text-white"}`}>Supply Staked</Title>
                                         </div>
                                         <div>
                                             <Title level={5} className={`fontFamily ${theme === "dark" && "text-white"}`}>{Math.floor(parseFloat(item?.total_stakes)).toLocaleString('de-DE')} TAO</Title>
                                         </div>
                                         <div>
-                                            <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>Percentage Staked: {item.percent_staked?.toFixed(1)} %</Typography>
+                                            <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>Percentage Staked: {item.percent_staked?.toFixed(1)}%</Typography>
                                         </div>
                                     </div>
                                 </Col>
