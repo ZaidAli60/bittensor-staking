@@ -45,6 +45,8 @@ export default function Home() {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
+            data.sort((a, b) => a.name.localeCompare(b.name));
+
             setDocuments(data)
             setIsProcessing(false)
         } catch (error) {
@@ -343,14 +345,9 @@ export default function Home() {
     }
 
     const fatchAllStakeValidators = async () => {
-        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
         const api = await ApiPromise.create({ provider: wsProvider });
         setIsLoading(true)
-
-        // const data = Object.keys(validators).map(key => ({
-        //     key: key,
-        //     name: validators[key].name,
-        // }));
 
         const stakeAmountValidators = []
 
