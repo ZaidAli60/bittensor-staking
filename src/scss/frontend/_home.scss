@@ -23,15 +23,15 @@ $fira-code-font: 'Fira Code', monospace;
 
     .dark-table {
         .ant-table {
-            background-color: #171e2e;
+            background-color: #383838;
 
             .ant-table-thead {
                 .ant-table-cell {
-                    background-color: #171e2e !important;
+                    background-color: #383838 !important;
                 }
 
                 .ant-table-cell:hover {
-                    background-color: #171e2e !important;
+                    background-color: #383838 !important;
                 }
 
             }
@@ -39,18 +39,18 @@ $fira-code-font: 'Fira Code', monospace;
             .ant-table-tbody {
                 .ant-table-cell {
                     .ant-table-row-expand-icon {
-                        background-color: #171e2e;
+                        background-color: #383838;
                         color: white;
                     }
                 }
 
                 .ant-table-column-sort {
-                    background-color: #171e2e;
+                    background-color: #383838;
                     color: white;
                 }
 
                 .ant-table-cell-fix-left {
-                    background-color: #171e2e;
+                    background-color: #383838;
                     color: white;
                 }
             }
@@ -61,7 +61,7 @@ $fira-code-font: 'Fira Code', monospace;
         }
 
         .ant-table-thead>tr>th {
-            background-color: #171e2e;
+            background-color: #383838;
             color: white !important;
         }
 
@@ -70,12 +70,12 @@ $fira-code-font: 'Fira Code', monospace;
         }
 
         .ant-table-cell-row-hover {
-            background-color: #171e2e !important;
+            background-color: #383838 !important;
             color: white !important;
         }
 
         .ant-table-expanded-row-fixed {
-            background-color: #171e2e !important;
+            background-color: #383838 !important;
         }
 
         .ant-empty-description {
@@ -103,7 +103,7 @@ $fira-code-font: 'Fira Code', monospace;
 
         .dark-dropdown {
             .ant-select-selector {
-                background-color: #171e2e;
+                background-color: #383838;
 
                 .ant-select-selection-item {
                     color: white !important;
@@ -204,7 +204,7 @@ $fira-code-font: 'Fira Code', monospace;
 
         .dark-dropdown {
             .ant-select-selector {
-                background-color: #171e2e;
+                background-color: #383838;
 
                 .ant-select-selection-search-input {
                     margin-top: 10px;
