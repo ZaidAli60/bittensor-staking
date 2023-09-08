@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Alert, Button, Col, Form, Input, Row, Select, Space, Table, Tooltip, Typography, message } from 'antd'
+import { Alert, Button, Col, Form, Input, Row, Select, Space, Spin, Table, Tooltip, Typography, message } from 'antd'
 import { MdOutlinePriceCheck } from "react-icons/md"
 import { SiCoinmarketcap } from "react-icons/si"
 import { TbAnalyze, TbBrandGoogleAnalytics } from "react-icons/tb"
@@ -33,6 +33,8 @@ export default function Home() {
     const [status, setStatus] = useState('');
     const [isFinalize, setIsFinalize] = useState(false)
     const [isFinalize1, setIsFinalize1] = useState(false)
+    const [allStakeValidators, setAllStakeValidators] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
@@ -340,6 +342,43 @@ export default function Home() {
         setAmount(getTotalBalance)
     }
 
+    const fatchAllStakeValidators = async () => {
+        const wsProvider = new WsProvider('wss://entrypoint-finney.opentensor.ai:443');
+        const api = await ApiPromise.create({ provider: wsProvider });
+        setIsLoading(true)
+
+        // const data = Object.keys(validators).map(key => ({
+        //     key: key,
+        //     name: validators[key].name,
+        // }));
+
+        const stakeAmountValidators = []
+
+        for (const validator of documents) { // Corrected variable name from 'object' to 'data'
+            const res = await api.query.subtensorModule.stake(validator.details.hot_key, account?.address);
+
+            let stakeAmount = 0;
+            if (!res.isEmpty) {
+                stakeAmount = parseFloat(res.toString()) / 1000000000;
+            }
+            if (stakeAmount > 0) {
+                stakeAmountValidators.push({
+                    name: validator.name,
+                    stakeAmount: stakeAmount,
+                });
+            }
+        }
+        setAllStakeValidators(stakeAmountValidators)
+        setIsLoading(false)
+
+    }
+    useEffect(() => {
+        if (state.accounts.length > 0) {
+            fatchAllStakeValidators()
+        }
+        // eslint-disable-next-line
+    }, [account, totalBalance])
+
     return (
         <div className={`home dashboard ${theme} min-vh-100`}>
             <div className="container-fluid px-xxl-5 px-lg-4 py-5">
@@ -423,7 +462,7 @@ export default function Home() {
 
                     <div className="py-3 ">
                         <Row gutter={[16, 16]}>
-                            <Col xs={24} md={24} lg={18}>
+                            <Col xs={24} md={24} lg={16} xxl={18}>
                                 <div className={`fontFamily ${theme === "dark" ? "card p-3 bg-secondary border-0" : "card p-3 shadow"} h-100`}>
                                     <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Bittensor Validators</Title>
                                     <Table columns={columns} bordered dataSource={dataWithKeys} loading={isProcessing} onChange={onChange} scroll={{ x: true }} className={`${theme === "dark" ? "dark-table" : "light-table"}`}
@@ -444,7 +483,7 @@ export default function Home() {
                                     />
                                 </div>
                             </Col>
-                            <Col xs={24} md={24} lg={6}>
+                            <Col xs={24} md={24} lg={8} xxl={6}>
                                 <div className='mb-3 staking-calculator'>
                                     <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
                                         <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Staking Calculator</Title>
@@ -551,8 +590,30 @@ export default function Home() {
                                             </div>
                                         </div>
 
-                                        <div >
+                                        <div className='mb-3' >
                                             <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white opacity-75"}`} size='large' loading={isFinalize} onClick={delegateStake}>Delegate</Button>
+                                        </div>
+                                        <div>
+                                            <Title level={4} className='fontFamily text-uppercase'>Delegated Stake</Title>
+                                            {
+                                                isLoading ? (
+                                                    <div className='text-center'>
+                                                        <Spin />
+                                                    </div>
+                                                ) : (
+                                                    allStakeValidators.length === 0 ? (
+                                                        <div>This wallet has not been delegated yet!</div>
+                                                    ) : (
+                                                        allStakeValidators.map((validator, i) => (
+                                                            <div key={i} className='d-flex justify-content-between'>
+                                                                <p className='mb-1'>{validator.name}</p>
+                                                                <p className='mb-1 '>{validator.stakeAmount} TAO</p>
+                                                            </div>
+                                                        ))
+                                                    )
+                                                )
+                                            }
+
                                         </div>
                                     </div>
                                 </div>
