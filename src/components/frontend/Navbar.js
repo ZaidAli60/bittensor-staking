@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Drawer, Dropdown, Menu, Modal, Tooltip, Typography, message } from 'antd'
 import { Link } from 'react-router-dom';
-import { items } from "pages/Dashboard/SidebarItems"
+import { data } from "pages/Dashboard/SidebarItems"
 import { useThemeContext } from 'context/ThemeContext';
 import { BiMoon } from 'react-icons/bi'
 import { MdOutlineLightMode } from 'react-icons/md'
@@ -90,7 +90,7 @@ export default function Navbar() {
 
     const items = [
         {
-            label: <a className='text-decoration-none' href="https://www.gate.io/trade/TAO_USDT" target="_blank" rel="noopener noreferrer">Gate.io</a>,
+            label: <a className='text-decoration-none text-uppercase' href="https://www.gate.io/trade/TAO_USDT" target="_blank" rel="noopener noreferrer">Gate.io</a>,
             key: '0',
         },
         {
@@ -122,7 +122,7 @@ export default function Navbar() {
                             <Link to="/balance" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} href="#">Balance</Link>
                             <Link to="/vote" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} href="#">Vote</Link>
                             <Dropdown menu={{ items }} trigger={['click']}>
-                                <a onClick={(e) => e.preventDefault()} className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} href="#">Buy Tao <DownOutlined /></a>
+                                <a onClick={(e) => e.preventDefault()} className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"} `}>Buy Tao <DownOutlined /></a>
                             </Dropdown>
                         </div>
                     </div>
@@ -169,7 +169,7 @@ export default function Navbar() {
             >
                 <div className='py-4'>
                     {selectedItem && <Menu theme='dark' mode="inline" defaultSelectedKeys={[selectedItem]} className={`dashboard ${theme}`}>
-                        {items.map((item) => (
+                        {data.map((item) => (
                             <Menu.Item
                                 key={item.key}
                                 icon={item.icon}

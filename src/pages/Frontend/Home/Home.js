@@ -99,13 +99,16 @@ export default function Home() {
             title: 'Name',
             dataIndex: 'name',
             sorter: (a, b) => a.name.localeCompare(b.name),
+            render: (_, row) => {
+                return <Text className={`${theme === "dark" && "text-white"}`} style={{ fontWeight: 600 }}>{row?.name}</Text>
+            },
             fixed: 'left',
         },
         {
             title: 'APY',
             sorter: (a, b) => a.apy - b.apy,
             render: (_, row) => {
-                return <Text className={`${theme === "dark" && "text-white"}`}>{row.apy?.toFixed(2)}%</Text>
+                return <Text className={`${theme === "dark" && "text-white"}`} style={{ fontWeight: 600 }}>{row.apy?.toFixed(2)}%</Text>
             }
         },
         {
@@ -113,7 +116,7 @@ export default function Home() {
             sorter: (a, b) => a.commission - b.commission,
             render: (_, row) => {
                 return (<Tooltip title={row.tooltip}>
-                    <span className='d-flex justify-content-between'>
+                    <span className='d-flex justify-content-between' style={{ fontWeight: 600 }}>
                         {row.commission * 100} % <InfoCircleOutlined className='d-flex flex-end' />
                     </span>
                 </Tooltip>)
@@ -124,13 +127,16 @@ export default function Home() {
             dataIndex: 'total_stake',
             sorter: (a, b) => a.total_stake - b.total_stake,
             render: (_, row) => {
-                return <Text className={`${theme === "dark" && "text-white"}`}> {parseInt(row?.total_stake).toLocaleString('en-US')} TAO</Text>
+                return <Text className={`${theme === "dark" && "text-white"}`} style={{ fontWeight: 600 }}> {parseInt(row?.total_stake).toLocaleString('en-US')} TAO</Text>
             }
         },
         {
             title: 'Nominators',
             dataIndex: 'nominators',
             sorter: (a, b) => a.nominators - b.nominators,
+            render: (_, row) => {
+                return <Text className={`${theme === "dark" && "text-white"}`} style={{ fontWeight: 600 }}>{row?.nominators}</Text>
+            },
             defaultSortOrder: 'descend',
         }
     ];
@@ -445,7 +451,8 @@ export default function Home() {
                                         <div className='card border-0 p-3 mb-3' style={{ backgroundColor: "#b5e61d" }}>
                                             <div className='d-flex justify-content-between'>
                                                 <Text className='fontFamily fw-bold'>Current APY</Text>
-                                                <Text className='fontFamily fw-bold'>{currentAPY.apy?.toFixed(2) || 0}%</Text>
+                                                {/* <Text className='fontFamily fw-bold'>{currentAPY.apy?.toFixed(2) || 0}%</Text> */}
+                                                <Text className='fontFamily fw-bold'>{documents[0]?.apy.toFixed(2) || 0}%</Text>
                                             </div>
                                         </div>
                                         <div style={{ width: "100%" }} className='mb-3'>
@@ -467,19 +474,19 @@ export default function Home() {
                                         <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                             <div className="d-flex justify-content-between">
                                                 <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Commission</Text>
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{currentAPY?.commission * 100 || 0}%</Text>
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{currentAPY?.commission * 100 || 0} %</Text>
                                             </div>
                                         </div>
                                         <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                             <div className="d-flex justify-content-between">
                                                 <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Monthly Rewards</Text>
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{monthlyReward.toFixed(2)}</Text>
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{monthlyReward.toFixed(2)} TAO</Text>
                                             </div>
                                         </div>
                                         <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                             <div className="d-flex justify-content-between">
                                                 <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Yearly Rewards</Text>
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{yearReward.toFixed(2)}</Text>
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{yearReward.toFixed(2)} TAO</Text>
                                             </div>
                                         </div>
                                         <div>
