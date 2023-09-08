@@ -451,7 +451,6 @@ export default function Home() {
                                         <div className='card border-0 p-3 mb-3' style={{ backgroundColor: "#b5e61d" }}>
                                             <div className='d-flex justify-content-between'>
                                                 <Text className='fontFamily fw-bold'>Current APY</Text>
-                                                {/* <Text className='fontFamily fw-bold'>{currentAPY.apy?.toFixed(2) || 0}%</Text> */}
                                                 <Text className='fontFamily fw-bold'>{documents[0]?.apy.toFixed(2) || 0}%</Text>
                                             </div>
                                         </div>

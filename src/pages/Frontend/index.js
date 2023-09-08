@@ -6,6 +6,7 @@ import Home from './Home'
 import { Content } from 'antd/es/layout/layout'
 import { Layout } from 'antd'
 import Balance from 'pages/Frontend/Balance'
+import Footer from 'components/frontend/footer/Footer'
 
 export default function Index() {
     return (
@@ -18,6 +19,7 @@ export default function Index() {
                     <Route path='*' element={<NotFound />} />
                 </Routes>
             </Content>
+            <Footer />
         </Layout>
     )
 }

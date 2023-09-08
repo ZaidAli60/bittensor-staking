@@ -16,9 +16,17 @@
 @import "./scss/buttons";
 @import "./scss/utilities";
 @import "./scss/frontend/home";
+@import "./scss/frontend/footer";
 @import "./scss/frontend/404page";
 
 #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.ant-layout {
+
     display: flex;
     flex-direction: column;
     min-height: 100vh;

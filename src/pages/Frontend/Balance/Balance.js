@@ -4,7 +4,7 @@ import React from 'react'
 export default function Balance() {
     const { theme } = useThemeContext()
     return (
-        <div className={`dashboard ${theme}`}>
+        <div className={`dashboard ${theme} min-vh-100`}>
             <div className="container-fluid py-4">
                 <h5 className='mb-0'>Balance</h5>
             </div>

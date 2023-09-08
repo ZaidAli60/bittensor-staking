@@ -13,3 +13,4 @@ window.image404Light = image404light
 // window.defaultDP = defaultDP
 
 window.getRandomId = () => Math.random().toString(36).slice(2)
+window.year = new Date().getFullYear()
