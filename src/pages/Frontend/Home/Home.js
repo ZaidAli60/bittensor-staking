@@ -35,6 +35,7 @@ export default function Home() {
     const [isFinalize1, setIsFinalize1] = useState(false)
     const [allStakeValidators, setAllStakeValidators] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [activeButton, setActiveButton] = useState('delegate'); // Initial active button
 
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
@@ -343,6 +344,10 @@ export default function Home() {
         const getTotalBalance = totalBalance;
         setAmount(getTotalBalance)
     }
+    const handleCurrentStakeMax = () => {
+        const getCurrentStake = stakeAmount;
+        setAmount(getCurrentStake)
+    }
 
     const fatchAllStakeValidators = async () => {
         const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
@@ -534,8 +539,20 @@ export default function Home() {
                                         {status && <Alert message={`${status}`} type={status === "Transaction failed" ? "error" : "success"} showIcon className='mb-2' />}
                                         <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Stake Tao</Title>
                                         <div className='d-flex justify-content-between mb-3'>
-                                            <Button type='primary' className={`text-uppercase fontFamily ${theme === "dark" && "text-white opacity-75"}`} loading={isFinalize} onClick={delegateStake}>Delegate</Button>
-                                            <Button type='primary' className={`text-uppercase fontFamily ${theme === "dark" && "text-white opacity-75"}`} loading={isFinalize1} onClick={handleUndelegate}>UnDelegate</Button>
+                                            <Button
+                                                type={`${activeButton === "delegate" ? "primary" : ""}`}
+                                                className={`text-uppercase fontFamily ${theme === 'dark' && 'text-white opacity-75'}`}
+                                                onClick={() => setActiveButton('delegate')}
+                                            >
+                                                Delegate
+                                            </Button>
+                                            <Button
+                                                type={`${activeButton === "undelegate" ? "primary" : ""}`}
+                                                className={`text-uppercase fontFamily ${theme === 'dark' && 'text-white opacity-75'}`}
+                                                onClick={() => setActiveButton('undelegate')}
+                                            >
+                                                UnDelegate
+                                            </Button>
                                         </div>
                                         <div className='mb-2'>
                                             <Form layout="vertical">
@@ -566,10 +583,14 @@ export default function Home() {
                                                         options={documents.map(item => ({ value: item.name, label: item.name }))}
                                                     />
                                                 </Form.Item>
-                                                <Form.Item label="Amount" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} name="Amount">
+                                                <Form.Item label={`${activeButton === "delegate" ? "Delegate Amount" : "Undelegate Amount"}`} className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} name="Amount">
                                                     <div className="input-with-button" style={{ width: "100%" }}>
                                                         <Input placeholder="Amount" name='amount' value={amount} onChange={(e) => setAmount(e.target.value)} type='number' className={`${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
-                                                        <button className='btn btn-sm btn-primary text-white fontFamily' onClick={handleTotalBalanceMax}>MAX</button>
+                                                        {activeButton === 'delegate' ?
+                                                            <button className='btn btn-sm btn-primary text-white fontFamily' onClick={handleTotalBalanceMax}>MAX</button>
+                                                            :
+                                                            <button className='btn btn-sm btn-primary text-white fontFamily' onClick={handleCurrentStakeMax}>MAX</button>
+                                                        }
                                                     </div>
                                                 </Form.Item>
                                             </Form>
@@ -588,7 +609,12 @@ export default function Home() {
                                         </div>
 
                                         <div className='mb-3' >
-                                            <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white opacity-75"}`} size='large' loading={isFinalize} onClick={delegateStake}>Delegate</Button>
+                                            {
+                                                activeButton === "delegate" ?
+                                                    <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white opacity-75"}`} size='large' loading={isFinalize} onClick={delegateStake}>Delegate</Button>
+                                                    :
+                                                    <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white opacity-75"}`} size='large' loading={isFinalize1} onClick={handleUndelegate}>Undelegate</Button>
+                                            }
                                         </div>
                                         <div>
                                             <Title level={4} className={`fontFamily text-uppercase ${theme === "dark" && "text-white"}`}>Delegated Stake</Title>
@@ -610,7 +636,6 @@ export default function Home() {
                                                     )
                                                 )
                                             }
-
                                         </div>
                                     </div>
                                 </div>
