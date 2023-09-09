@@ -165,7 +165,7 @@ export default function Navbar() {
                 onClose={toggleDrawer}
                 open={drawerVisible}
                 bodyStyle={{ padding: 0 }}
-                className={`custome-drawer dashboard ${theme}`}
+                className={`custom-drawer dashboard ${theme}`}
             >
                 <div className='py-4'>
                     {selectedItem && <Menu theme='dark' mode="inline" defaultSelectedKeys={[selectedItem]} className={`dashboard ${theme}`}>

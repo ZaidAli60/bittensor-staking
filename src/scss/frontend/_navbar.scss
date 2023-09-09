@@ -57,6 +57,11 @@ $fira-code-font: 'Fira Code', monospace;
 
 }
 
+.custom-drawer {
+    font-family: $fira-code-font;
+
+}
+
 .ant-drawer {
     z-index: 1100 !important;
 }
