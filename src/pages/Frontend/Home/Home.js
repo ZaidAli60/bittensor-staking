@@ -541,14 +541,14 @@ export default function Home() {
                                         <div className='d-flex justify-content-between mb-3'>
                                             <Button
                                                 type={`${activeButton === "delegate" ? "primary" : ""}`}
-                                                className={`text-uppercase fontFamily ${theme === 'dark' && 'text-white opacity-75'}`}
+                                                className={`text-uppercase fontFamily ${theme === 'dark' && 'text-white'}`}
                                                 onClick={() => setActiveButton('delegate')}
                                             >
                                                 Delegate
                                             </Button>
                                             <Button
                                                 type={`${activeButton === "undelegate" ? "primary" : ""}`}
-                                                className={`text-uppercase fontFamily ${theme === 'dark' && 'text-white opacity-75'}`}
+                                                className={`text-uppercase fontFamily ${theme === 'dark' && 'text-white'}`}
                                                 onClick={() => setActiveButton('undelegate')}
                                             >
                                                 UnDelegate
@@ -611,9 +611,9 @@ export default function Home() {
                                         <div className='mb-3' >
                                             {
                                                 activeButton === "delegate" ?
-                                                    <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white opacity-75"}`} size='large' loading={isFinalize} onClick={delegateStake}>Delegate</Button>
+                                                    <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white"}`} size='large' loading={isFinalize} onClick={delegateStake}>Delegate</Button>
                                                     :
-                                                    <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white opacity-75"}`} size='large' loading={isFinalize1} onClick={handleUndelegate}>Undelegate</Button>
+                                                    <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white"}`} size='large' loading={isFinalize1} onClick={handleUndelegate}>Undelegate</Button>
                                             }
                                         </div>
                                         <div>
