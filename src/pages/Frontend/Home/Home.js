@@ -530,7 +530,7 @@ export default function Home() {
                                             </div>
                                         </div>
                                         <div>
-                                            <Button type='primary' className='w-100 fontFamily text-uppercase' size='large' onClick={handleStakeCalculator}>Calculate</Button>
+                                            <Button type={`${theme === "dark" ? "default" : "primary"}`} className='w-100 fontFamily text-uppercase' size='large' onClick={handleStakeCalculator}>Calculate</Button>
                                         </div>
                                     </div>
                                 </div>
@@ -539,20 +539,43 @@ export default function Home() {
                                         {status && <Alert message={`${status}`} type={status === "Transaction failed" ? "error" : "success"} showIcon className='mb-2' />}
                                         <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Stake Tao</Title>
                                         <div className='d-flex justify-content-between mb-3'>
-                                            <Button
-                                                type={`${activeButton === "delegate" ? "primary" : ""}`}
-                                                className={`text-uppercase fontFamily ${theme === 'dark' && 'text-white'}`}
-                                                onClick={() => setActiveButton('delegate')}
-                                            >
-                                                Delegate
-                                            </Button>
-                                            <Button
-                                                type={`${activeButton === "undelegate" ? "primary" : ""}`}
-                                                className={`text-uppercase fontFamily ${theme === 'dark' && 'text-white'}`}
-                                                onClick={() => setActiveButton('undelegate')}
-                                            >
-                                                UnDelegate
-                                            </Button>
+                                            {
+                                                theme === 'dark' ?
+                                                    <>
+                                                        <Button
+                                                            type={`${activeButton === "delegate" ? "default" : ""}`}
+                                                            className={`text-uppercase fontFamily ${activeButton === "undelegate" && "text-white"}`}
+                                                            onClick={() => setActiveButton('delegate')}
+                                                        >
+                                                            Delegate
+                                                        </Button>
+                                                        <Button
+                                                            type={`${activeButton === "undelegate" ? "default" : ""}`}
+                                                            className={`text-uppercase fontFamily ${activeButton === "delegate" && "text-white"}`}
+                                                            onClick={() => setActiveButton('undelegate')}
+                                                        >
+                                                            UnDelegate
+                                                        </Button>
+
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <Button
+                                                            type={`${activeButton === "delegate" ? "primary" : ""}`}
+                                                            className={`text-uppercase fontFamily`}
+                                                            onClick={() => setActiveButton('delegate')}
+                                                        >
+                                                            Delegate
+                                                        </Button>
+                                                        <Button
+                                                            type={`${activeButton === "undelegate" ? "primary" : ""}`}
+                                                            className={`text-uppercase fontFamily`}
+                                                            onClick={() => setActiveButton('undelegate')}
+                                                        >
+                                                            UnDelegate
+                                                        </Button>
+                                                    </>
+                                            }
                                         </div>
                                         <div className='mb-2'>
                                             <Form layout="vertical">
@@ -587,9 +610,9 @@ export default function Home() {
                                                     <div className="input-with-button" style={{ width: "100%" }}>
                                                         <Input placeholder="Amount" name='amount' value={amount} onChange={(e) => setAmount(e.target.value)} type='number' className={`${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
                                                         {activeButton === 'delegate' ?
-                                                            <button className='btn btn-sm btn-primary text-white fontFamily' onClick={handleTotalBalanceMax}>MAX</button>
+                                                            <button className={`${theme === "dark" ? "btn btn-sm bg-white fontFamily" : "btn btn-sm btn-primary text-white fontFamily"}`} onClick={handleTotalBalanceMax}>MAX</button>
                                                             :
-                                                            <button className='btn btn-sm btn-primary text-white fontFamily' onClick={handleCurrentStakeMax}>MAX</button>
+                                                            <button className={`${theme === "dark" ? "btn btn-sm bg-white fontFamily" : "btn btn-sm btn-primary text-white fontFamily"}`} onClick={handleCurrentStakeMax}>MAX</button>
                                                         }
                                                     </div>
                                                 </Form.Item>
@@ -611,9 +634,9 @@ export default function Home() {
                                         <div className='mb-3' >
                                             {
                                                 activeButton === "delegate" ?
-                                                    <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white"}`} size='large' loading={isFinalize} onClick={delegateStake}>Delegate</Button>
+                                                    <Button type={`${theme === "dark" ? "default" : "primary"}`} className={`w-100 fontFamily text-uppercase`} size='large' loading={isFinalize} onClick={delegateStake}>Delegate</Button>
                                                     :
-                                                    <Button type='primary' className={`w-100 fontFamily text-uppercase ${theme === "dark" && "text-white"}`} size='large' loading={isFinalize1} onClick={handleUndelegate}>Undelegate</Button>
+                                                    <Button type={`${theme === "dark" ? "default" : "primary"}`} className={`w-100 fontFamily text-uppercase`} size='large' loading={isFinalize1} onClick={handleUndelegate}>Undelegate</Button>
                                             }
                                         </div>
                                         <div>

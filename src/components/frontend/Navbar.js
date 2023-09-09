@@ -134,9 +134,9 @@ export default function Navbar() {
                     <div className="d-none d-lg-block">
                         {
                             !isAccounts ?
-                                <Button type='primary' className={`px-4 custom-btn`} size="large" shape="round" onClick={handleConnectWallet}>Connect</Button>
+                                <Button type={`${theme === "dark" ? "default" : "primary"}`} className={`px-4 custom-btn`} size="large" shape="round" onClick={handleConnectWallet}>Connect</Button>
                                 :
-                                <Button type='primary' className={`px-4 custom-btn`} size="large" shape="round" onClick={() => setModalOpen(true)}>View Account</Button>
+                                <Button type={`${theme === "dark" ? "default" : "primary"}`} className={`px-4 custom-btn`} size="large" shape="round" onClick={() => setModalOpen(true)}>View Account</Button>
                         }
                     </div>
                     <button className="navbar-toggler rounded-5 py-2 px-2" type="button" onClick={toggleDrawer} data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -155,9 +155,9 @@ export default function Navbar() {
                         <img src={`${theme === "dark" ? window.logoLight : window.logoDark}`} alt="Bittensor Staking" />
                         {
                             !isAccounts ?
-                                <Button type='primary' className={`px-4 custom-btn`} shape="round" onClick={handleConnectWallet}>Connect</Button>
+                                <Button type={`${theme === "dark" ? "default" : "primary"}`} className={`px-4 custom-btn`} shape="round" onClick={handleConnectWallet}>Connect</Button>
                                 :
-                                <Button type='primary' className={`px-4 custom-btn`} shape="round" onClick={() => setModalOpen(true)}>View Account</Button>
+                                <Button type={`${theme === "dark" ? "default" : "primary"}`} className={`px-4 custom-btn`} shape="round" onClick={() => setModalOpen(true)}>View Account</Button>
                         }
                     </div>
                 }
