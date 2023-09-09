@@ -644,7 +644,7 @@ export default function Home() {
                                             {
                                                 isLoading ? (
                                                     <div className='text-center'>
-                                                        <Spin />
+                                                        <Spin className={`${theme === "dark" && "spinner-dark-mode"}`} />
                                                     </div>
                                                 ) : (
                                                     allStakeValidators.length === 0 ? (

@@ -105,6 +105,14 @@ $fira-code-font: 'Fira Code', monospace;
         .ant-empty-description {
             color: white;
         }
+
+        .ant-spin {
+            .ant-spin-dot {
+                .ant-spin-dot-item {
+                    background-color: white;
+                }
+            }
+        }
     }
 
     .staking-calculator {
@@ -282,6 +290,15 @@ $fira-code-font: 'Fira Code', monospace;
                     }
                 }
             }
+        }
+
+        .spinner-dark-mode {
+            .ant-spin-dot {
+                .ant-spin-dot-item {
+                    background-color: white;
+                }
+            }
+
         }
     }
 }
