@@ -641,7 +641,7 @@ export default function Home() {
                                             }
                                         </div>
                                         <div>
-                                            <Title level={4} className={`fontFamily text-uppercase ${theme === "dark" && "text-white"}`}>Delegated Balance</Title>
+                                            {state?.accounts.length > 0 && <Title level={4} className={`fontFamily text-uppercase ${theme === "dark" && "text-white"}`}>Delegated Balance</Title>}
                                             {
                                                 isLoading ? (
                                                     <div className='text-center'>
