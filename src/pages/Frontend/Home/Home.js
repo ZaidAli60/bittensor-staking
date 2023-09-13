@@ -473,10 +473,10 @@ export default function Home() {
                                             expandedRowRender: (record) => {
                                                 const absoluteUrl = record.details?.url.startsWith('http') ? record.details?.url : `https://${record.details?.url}`;
                                                 return (
-                                                    <div className='px-5 fw-bold' >
-                                                        <Text className={`${theme === "dark" && "text-white"} fw-bold`}>Description: <span>{record.details?.description}</span></Text> <br />
-                                                        <Text className={`${theme === "dark" && "text-white"} fw-bold`}>Hotkey: <span>{record.details?.hot_key}</span></Text> <br />
-                                                        <Text className={`${theme === "dark" && "text-white"} fw-bold`}>Website:<span><a href={absoluteUrl} target="_blank" rel="noopener noreferrer">{record.details?.url}</a></span> </Text>
+                                                    <div className='px-5'>
+                                                        <Text className={theme === "dark" && "text-white"}><span className="fw-bold">Description:</span> {record.details?.description}</Text> <br />
+                                                        <Text className={theme === "dark" && "text-white"}><span className="fw-bold">Hotkey:</span> {record.details?.hot_key}</Text> <br />
+                                                        <Text className={theme === "dark" && "text-white"}><span className="fw-bold">Website:</span> <a href={absoluteUrl} target="_blank" rel="noopener noreferrer">{record.details?.url}</a></Text>
                                                     </div>
                                                 )
                                             },
