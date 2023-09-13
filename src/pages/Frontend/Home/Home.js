@@ -51,7 +51,7 @@ export default function Home() {
             setDocuments(data)
             setIsProcessing(false)
         } catch (error) {
-            console.error('Error fetching data:', error);
+            // console.error('Error fetching data:', error);
             message.error('Failed to fetch data. Please try again later.')
             setIsProcessing(false)
             return null;
@@ -195,7 +195,7 @@ export default function Home() {
         setIsLoading(true)
         const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
         const api = await ApiPromise.create({ provider: wsProvider });
-        console.log('api', api)
+
         if (!api) {
             console.error('API not initialized');
             return;
@@ -474,9 +474,9 @@ export default function Home() {
                                                 const absoluteUrl = record.details?.url.startsWith('http') ? record.details?.url : `https://${record.details?.url}`;
                                                 return (
                                                     <div className='px-5 fw-bold' >
-                                                        <Text className={`${theme === "dark" && "text-white"}`}>Description: {record.details?.description}</Text> <br />
-                                                        <Text className={`${theme === "dark" && "text-white"}`}>Hotkey: {record.details?.hot_key}</Text> <br />
-                                                        <Text className={`${theme === "dark" && "text-white"}`}>Website: <a href={absoluteUrl} target="_blank" rel="noopener noreferrer">{record.details?.url}</a></Text>
+                                                        <Text className={`${theme === "dark" && "text-white"} fw-bold`}>Description: <span>{record.details?.description}</span></Text> <br />
+                                                        <Text className={`${theme === "dark" && "text-white"} fw-bold`}>Hotkey: <span>{record.details?.hot_key}</span></Text> <br />
+                                                        <Text className={`${theme === "dark" && "text-white"} fw-bold`}>Website:<span><a href={absoluteUrl} target="_blank" rel="noopener noreferrer">{record.details?.url}</a></span> </Text>
                                                     </div>
                                                 )
                                             },
@@ -580,11 +580,11 @@ export default function Home() {
                                         </div>
                                         <div className='mb-2'>
                                             <Form layout="vertical">
-                                                <Form.Item label="Choose Account" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`}>
+                                                <Form.Item label="Account" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`}>
                                                     <Select
                                                         className={`fontFamily ${theme === "dark" && "dark-dropdown select-placeholder"}`}
                                                         style={{ width: "100%" }}
-                                                        placeholder="Choose Account"
+                                                        placeholder="Select Account"
                                                         value={account.meta?.name}
                                                         onChange={(value) => handleAccounts(value)}
                                                     >
@@ -593,7 +593,7 @@ export default function Home() {
                                                         )}
                                                     </Select>
                                                 </Form.Item>
-                                                <Form.Item label="Validators" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} >
+                                                <Form.Item label="Validator" className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} >
                                                     <Select
                                                         className={`fontFamily ${theme === "dark" && "dark-dropdown select-placeholder"}`}
                                                         style={{ width: "100%" }}
@@ -607,7 +607,7 @@ export default function Home() {
                                                         options={documents.map(item => ({ value: item.name, label: item.name }))}
                                                     />
                                                 </Form.Item>
-                                                <Form.Item label={`${activeButton === "delegate" ? "Delegate Amount" : "Undelegate Amount"}`} className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} name="Amount">
+                                                <Form.Item label={`${activeButton === "delegate" ? "Amount to Delegate" : " Amount to Undelegate"}`} className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} name="Amount">
                                                     <div className="input-with-button" style={{ width: "100%" }}>
                                                         <Input placeholder="Amount" name='amount' value={amount} onChange={(e) => setAmount(e.target.value)} type='number' className={`${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
                                                         {activeButton === 'delegate' ?

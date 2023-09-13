@@ -19,7 +19,7 @@ export default function TaoInfoContext({ children }) {
             setTaoInfo(data);
         } catch (error) {
             message.error("Something went wrong")
-            console.error('Error fetching data:', error);
+            // console.error('Error fetching data:', error);
         } finally {
             setIsProcessing(false);
         }

@@ -186,7 +186,7 @@ export default function Navbar() {
                 </div>
             </Drawer>
 
-            <Modal className={`dashboard ${theme === "dark" ? "account-modal" : ''} `} title="Accounts" centered open={modalOpen} onOk={() => setModalOpen(false)} onCancel={() => setModalOpen(false)} footer={null}   >
+            <Modal className={`custom-navbar dashboard ${theme === "dark" ? "account-modal" : ''} `} title="Accounts" centered open={modalOpen} onOk={() => setModalOpen(false)} onCancel={() => setModalOpen(false)} footer={null}   >
                 <div className="py-2">
                     {state && state.accounts?.map((account, index) => {
                         return <div key={index} className={`card p-2 border-1 mb-2 ${theme === "dark" && "bg-secondary text-white"}`}>

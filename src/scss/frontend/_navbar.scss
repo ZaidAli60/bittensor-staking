@@ -20,11 +20,11 @@ $fira-code-font: 'Fira Code', monospace;
 
 .ant-modal-root {
     .ant-modal-mask {
-        z-index: 1100;
+        z-index: 1110;
     }
 
     .ant-modal-wrap {
-        z-index: 1100;
+        z-index: 1110;
     }
 }
 
@@ -34,7 +34,7 @@ $fira-code-font: 'Fira Code', monospace;
     }
 
     .ant-modal-content {
-        background-color: #121212 !important;
+        background-color: #202020 !important;
         color: white;
 
         .ant-modal-close-x {
@@ -43,7 +43,7 @@ $fira-code-font: 'Fira Code', monospace;
 
         .ant-modal-header {
             .ant-modal-title {
-                background-color: #121212;
+                background-color: #202020;
                 color: white;
             }
         }

@@ -23,15 +23,15 @@ $fira-code-font: 'Fira Code', monospace;
 
     .dark-table {
         .ant-table {
-            background-color: #383838;
+            background-color: #202020;
 
             .ant-table-thead {
                 .ant-table-cell {
-                    background-color: #383838 !important;
+                    background-color: #202020 !important;
                 }
 
                 .ant-table-cell:hover {
-                    background-color: #383838 !important;
+                    background-color: #202020 !important;
                 }
 
             }
@@ -39,18 +39,18 @@ $fira-code-font: 'Fira Code', monospace;
             .ant-table-tbody {
                 .ant-table-cell {
                     .ant-table-row-expand-icon {
-                        background-color: #383838;
+                        background-color: #202020;
                         color: white;
                     }
                 }
 
                 .ant-table-column-sort {
-                    background-color: #383838;
+                    background-color: #202020;
                     color: white;
                 }
 
                 .ant-table-cell-fix-left {
-                    background-color: #383838;
+                    background-color: #202020;
                     color: white;
                 }
             }
@@ -65,7 +65,7 @@ $fira-code-font: 'Fira Code', monospace;
             }
 
             .ant-pagination-item-active {
-                color: #383838 !important;
+                color: #202020 !important;
             }
 
             .ant-pagination-item {
@@ -85,7 +85,7 @@ $fira-code-font: 'Fira Code', monospace;
         }
 
         .ant-table-thead>tr>th {
-            background-color: #383838;
+            background-color: #202020;
             color: white !important;
         }
 
@@ -94,12 +94,12 @@ $fira-code-font: 'Fira Code', monospace;
         }
 
         .ant-table-cell-row-hover {
-            background-color: #383838 !important;
+            background-color: #202020 !important;
             color: white !important;
         }
 
         .ant-table-expanded-row-fixed {
-            background-color: #383838 !important;
+            background-color: #202020 !important;
         }
 
         .ant-empty-description {
@@ -134,10 +134,10 @@ $fira-code-font: 'Fira Code', monospace;
         }
 
         .dark-dropdown {
-            background-color: #383838;
+            background-color: #202020;
 
             .ant-select-selector {
-                background-color: #383838;
+                background-color: #202020;
 
                 .ant-select-selection-item {
                     color: white !important;
@@ -238,7 +238,7 @@ $fira-code-font: 'Fira Code', monospace;
 
         .dark-dropdown {
             .ant-select-selector {
-                background-color: #383838;
+                background-color: #202020;
 
                 .ant-select-selection-search-input {
                     margin-top: 10px;
