@@ -1,5 +1,5 @@
-import logoLight from "assets/images/logo-white.svg"
-import logoDark from "assets/images/logo.dark.svg"
+import logoLight from "assets/images/logo2.png"
+import logoDark from "assets/images/logo.png"
 import image404light from "assets/images/404-light.svg"
 import image404dark from "assets/images/404-dark.svg"
 

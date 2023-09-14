@@ -115,7 +115,7 @@ export default function Navbar() {
         <>
             <nav className={` navbar navbar-expand-lg px-xxl-5 custom-lg-padding custom-xxl-padding py-3 custom-navbar sticky-top dashboard ${theme} ${isNavbarShadowed ? "shadow" : ""}`}>
                 <div className="container-fluid px-xxl-5 px-lg-4">
-                    <img src={`${theme === "dark" ? window.logoLight : window.logoDark}`} className='img-fluid me-5' alt="Bittensor Staking" />
+                    <img src={`${theme === "dark" ? window.logoLight : window.logoDark}`} className='img-fluid me-5' style={{ width: "170px", height: "auto" }} alt="Bittensor Staking" />
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav me-auto">
                             <Link to="/" className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }}>Home</Link>
@@ -151,14 +151,18 @@ export default function Navbar() {
 
             <Drawer
                 title={
-                    <div className='d-flex justify-content-between'>
-                        <img src={`${theme === "dark" ? window.logoLight : window.logoDark}`} alt="Bittensor Staking" />
-                        {
-                            !isAccounts ?
-                                <Button type={`${theme === "dark" ? "default" : "primary"}`} className={`px-4 custom-btn`} shape="round" onClick={handleConnectWallet}>Connect</Button>
-                                :
-                                <Button type={`${theme === "dark" ? "default" : "primary"}`} className={`px-4 custom-btn`} shape="round" onClick={() => setModalOpen(true)}>View Account</Button>
-                        }
+                    <div className='d-flex justify-content-between align-items-center'>
+                        <div className='me-2'>
+                            <img src={`${theme === "dark" ? window.logoLight : window.logoDark}`} className='img-fluid' style={{ width: "170px", height: "auto" }} alt="Bittensor Staking" />
+                        </div>
+                        <div>
+                            {
+                                !isAccounts ?
+                                    <Button type={`${theme === "dark" ? "default" : "primary"}`} className={`px-3 custom-btn`} shape="round" onClick={handleConnectWallet}>Connect</Button>
+                                    :
+                                    <Button type={`${theme === "dark" ? "default" : "primary"}`} className={`px-3 custom-btn`} shape="round" onClick={() => setModalOpen(true)}>View Account</Button>
+                            }
+                        </div>
                     </div>
                 }
                 placement="left"
