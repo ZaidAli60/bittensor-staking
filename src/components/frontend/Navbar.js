@@ -71,10 +71,10 @@ export default function Navbar() {
 
     const error = () => {
         Modal.error({
-            title: 'No accounts found in the extension',
+            title: 'Wallet account not detected',
             content: (
                 <div>
-                    <p>Make sure you have the polkadot.js extension installed and you have authorised delegate bittensor staking</p>
+                    <p>Please ensure that the Polkadot JS extension is properly installed and that you have granted the necessary authorization for application access.</p>
                     <a href="https://polkadot.js.org/extension/" target="_blank" rel="noopener noreferrer" className='text-primary'>Install Polkadot.js Extension</a>
                 </div>
             ),
