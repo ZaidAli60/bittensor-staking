@@ -116,7 +116,7 @@ export default function Home() {
             dataIndex: 'name',
             sorter: (a, b) => a.name.localeCompare(b.name),
             render: (_, row) => {
-                return <Text className={`${theme === "dark" && "text-white"}`} style={{ fontWeight: 600 }}>{row?.name}</Text>
+                return <span className={`${theme === "dark" && "text-white"}`} style={{ fontWeight: 600 }}>{row?.name}</span>
             },
             fixed: 'left',
         },
