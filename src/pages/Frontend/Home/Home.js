@@ -103,7 +103,8 @@ export default function Home() {
         setRao(taoToRao)
     }, [amount])
 
-    const dataWithKeys = documents?.filter((record) => record.nominators !== 0)
+    const dataWithKeys = documents
+        ?.filter((record) => record.nominators !== 0 && record.total_stake >= 1024)
         .map((record) => ({
             ...record,
             key: record.details?.hot_key?.toString(), // Use optional chaining for safety
@@ -506,7 +507,7 @@ export default function Home() {
                                                         filterOption={(input, option) =>
                                                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                                         }
-                                                        options={documents.map(item => ({ value: item.name, label: item.name }))}
+                                                        options={dataWithKeys?.map(item => ({ value: item.name, label: item.name }))}
                                                     />
                                                     <Input type='number' onChange={(e) => setTaoAmount(e.target.value)} placeholder='TAO Amount' className={`rtl-input ${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
                                                 </Space.Compact>
