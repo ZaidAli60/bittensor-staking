@@ -118,7 +118,7 @@ export default function Navbar() {
                     <img src={`${theme === "dark" ? window.logoLight : window.logoDark}`} className='img-fluid me-5' style={{ width: "170px", height: "auto" }} alt="Bittensor Staking" />
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav me-auto">
-                            <Link to="/" className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }}>Homes</Link>
+                            <Link to="/" className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }}>Home</Link>
                             <Link to="/balance" className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }}>Balance</Link>
                             <Link to="/vote" className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }} >Vote</Link>
                             <Dropdown menu={{ items }} trigger={['click']}>
