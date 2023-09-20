@@ -182,7 +182,7 @@ export default function Home() {
         }
 
         const calculateWithAPY = Number(taoAmount) * (apy / 100)
-        const calculateWithcommsion = apy * (commission / 100)
+        const calculateWithcommsion = apy * commission
 
         const yearRewards = calculateWithAPY - calculateWithcommsion
         setYearReward(yearRewards)
