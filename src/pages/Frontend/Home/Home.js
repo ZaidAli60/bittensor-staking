@@ -490,7 +490,7 @@ export default function Home() {
                                 <div className='mb-3 staking-calculator'>
                                     <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
                                         <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Staking Calculator</Title>
-                                        <div className='card border-0 p-3 mb-3' style={{ backgroundColor: "#b5e61d" }}>
+                                        <div className='card border-0 p-3 mb-3' style={{ backgroundColor: "#4caf50" }}>
                                             <div className='d-flex justify-content-between'>
                                                 <Text className='fontFamily fw-bold'>Current APY</Text>
                                                 <Text className='fontFamily fw-bold'>{documents[0]?.apy.toFixed(2) || 0}%</Text>
@@ -621,13 +621,13 @@ export default function Home() {
                                         </div>
                                         <div className='mb-3'>
                                             <div className="d-flex justify-content-between">
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>My Balance</Text>
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Balance</Text>
                                                 <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{totalBalance || 0} TAO</Text>
                                             </div>
                                         </div>
                                         <div className='mb-3'>
                                             <div className="d-flex justify-content-between">
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>My Current Stake</Text>
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>Current Stake</Text>
                                                 <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{stakeAmount} TAO</Text>
                                             </div>
                                         </div>
@@ -649,7 +649,7 @@ export default function Home() {
                                                     </div>
                                                 ) : (
                                                     state?.accounts.length > 0 && allStakeValidators.length === 0 ? (
-                                                        <div className={`${theme === "dark" && "text-white"}`}>You don't hava any tao delegated yet.</div>
+                                                        <div className={`${theme === "dark" && "text-white"}`}>You don't have any TAO delegated yet.</div>
                                                     ) : (
                                                         allStakeValidators.map((validator, i) => (
                                                             <div key={i} className='d-flex justify-content-between'>
