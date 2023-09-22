@@ -128,8 +128,12 @@ export default function Navbar() {
                     </div>
                     <a href="http://" ></a>
                     <div className='icon-container me-3 d-flex' style={{ cursor: 'pointer' }}>
-                        <Tooltip title="Light theme"> <MdOutlineLightMode className="fs-5 me-2" onClick={() => setTheme("light")} /> </Tooltip>
-                        <Tooltip title="Dark theme"> <BiMoon className='text-center fs-5' onClick={() => setTheme("dark")} /> </Tooltip>
+                        {
+                            theme === 'dark' ?
+                                <Tooltip title="Light theme"> <MdOutlineLightMode className="fs-5 me-2" onClick={() => setTheme("light")} /> </Tooltip>
+                                :
+                                <Tooltip title="Dark theme"> <BiMoon className='text-center fs-5' onClick={() => setTheme("dark")} /> </Tooltip>
+                        }
                     </div>
                     <div className="d-none d-lg-block">
                         {
