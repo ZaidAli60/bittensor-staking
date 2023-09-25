@@ -18,6 +18,7 @@ export default function TaoInfoContext({ children }) {
             const data = await response.json()
             setTaoInfo(data);
         } catch (error) {
+            console.log('error', error)
             message.error("Something went wrong")
             // console.error('Error fetching data:', error);
         } finally {

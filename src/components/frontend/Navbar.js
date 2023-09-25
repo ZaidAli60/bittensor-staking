@@ -115,7 +115,7 @@ export default function Navbar() {
         <>
             <nav className={` navbar navbar-expand-lg px-xxl-5 custom-lg-padding custom-xxl-padding py-3 custom-navbar sticky-top dashboard ${theme} ${isNavbarShadowed ? "shadow" : ""}`}>
                 <div className="container-fluid px-xxl-5 px-lg-4">
-                    <img src={`${theme === "dark" ? window.logoLight : window.logoDark}`} className='img-fluid me-5' style={{ width: "170px", height: "auto" }} alt="Bittensor Staking" />
+                    <img src={`${theme === "dark" ? window.logoLight : window.logoDark}`} className='img-fluid me-lg-5 me-auto' style={{ width: "170px", height: "auto" }} alt="Bittensor Staking" />
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav me-auto">
                             <Link to="/" className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }}>Home</Link>
@@ -126,11 +126,10 @@ export default function Navbar() {
                             </Dropdown>
                         </div>
                     </div>
-                    <a href="http://" ></a>
-                    <div className='icon-container me-3 d-flex' style={{ cursor: 'pointer' }}>
+                    <div className='icon-container me-3' style={{ cursor: 'pointer' }}>
                         {
                             theme === 'dark' ?
-                                <Tooltip title="Light theme"> <MdOutlineLightMode className="fs-5 me-2" onClick={() => setTheme("light")} /> </Tooltip>
+                                <Tooltip title="Light theme"> <MdOutlineLightMode className="fs-5" onClick={() => setTheme("light")} /> </Tooltip>
                                 :
                                 <Tooltip title="Dark theme"> <BiMoon className='text-center fs-5' onClick={() => setTheme("dark")} /> </Tooltip>
                         }
