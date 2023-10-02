@@ -102,12 +102,8 @@ export default function Navbar() {
             key: '2',
         },
         {
-            label: <a className='custom-navbar text-decoration-none fw-bold' href="https://www.bitmart.com/trade/en-US?symbol=%24TAO_USDT" target="_blank" rel="noopener noreferrer">BITMART</a>,
-            key: '3',
-        },
-        {
             label: <a className='custom-navbar text-decoration-none fw-bold' href="https://tensor.exchange/" target="_blank" rel="noopener noreferrer">TENSOR EXCHANGE</a>,
-            key: '4',
+            key: '3',
         },
     ];
 
