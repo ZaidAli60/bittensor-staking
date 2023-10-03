@@ -7,6 +7,7 @@ import { Content } from 'antd/es/layout/layout'
 import { Layout } from 'antd'
 // import Balance from 'pages/Frontend/Balance'
 import Footer from 'components/frontend/footer/Footer'
+import Faqs from './Faqs/Faqs'
 
 export default function Index() {
     return (
@@ -15,7 +16,7 @@ export default function Index() {
             <Content>
                 <Routes>
                     <Route index element={<Home />} />
-                    {/* <Route path='/balance' element={<Balance />} /> */}
+                    <Route path='/faq' element={<Faqs />} />
                     <Route path='*' element={<NotFound />} />
                 </Routes>
             </Content>

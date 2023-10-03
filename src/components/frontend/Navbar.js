@@ -117,6 +117,7 @@ export default function Navbar() {
                             <Link to="/" className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }}>Home</Link>
                             <Link to="/balance" className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }}>Balance</Link>
                             <Link to="/vote" className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }} >Vote</Link>
+                            <Link to="/faq" className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }} >FAQ's</Link>
                             <Dropdown menu={{ items }} trigger={['click']}>
                                 <a onClick={(e) => e.preventDefault()} className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"} `} style={{ fontSize: "16px" }}>Buy Tao <DownOutlined className="fw-bold" style={{ fontSize: "12px" }} /></a>
                             </Dropdown>
