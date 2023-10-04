@@ -104,7 +104,7 @@ export default function Home() {
     }, [amount])
 
     const dataWithKeys = documents
-        ?.filter((record) => record.nominators !== 0 && record.total_stake >= 1024)
+        ?.filter((record) => record.nominators !== 0 && record.total_stake >= 1000)
         .map((record) => ({
             ...record,
             key: record.details?.hot_key?.toString(), // Use optional chaining for safety
@@ -604,7 +604,7 @@ export default function Home() {
                                                         filterOption={(input, option) =>
                                                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                                         }
-                                                        options={documents.map(item => ({ value: item.name, label: item.name }))}
+                                                        options={dataWithKeys?.map(item => ({ value: item.name, label: item.name }))}
                                                     />
                                                 </Form.Item>
                                                 <Form.Item label={`${activeButton === "delegate" ? "Amount to Delegate" : " Amount to Undelegate"}`} className={`fw-bold fontFamily  ${theme === "dark" && "input-label"}`} name="Amount">
