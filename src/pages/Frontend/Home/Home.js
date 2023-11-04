@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Alert, Button, Col, Form, Input, Row, Select, Space, Spin, Table, Tooltip, Typography, message } from 'antd'
+import { Alert, Button, Col, Form, Input, Row, Select, Space, Spin, Table, Typography, message } from 'antd'
 import { MdOutlinePriceCheck } from "react-icons/md"
 import { SiCoinmarketcap } from "react-icons/si"
 import { TbAnalyze, TbBrandGoogleAnalytics } from "react-icons/tb"
 import { HiMiniArrowLongDown, HiMiniArrowLongUp } from "react-icons/hi2"
 import { useThemeContext } from 'context/ThemeContext'
 import { useTaoInfoContext } from 'context/TaoInfoContext'
-import { InfoCircleOutlined } from "@ant-design/icons"
 import { useConnectWallet } from 'context/ConnectWalletContext'
 import { ApiPromise, WsProvider } from '@polkadot/api'
 import { web3FromSource } from '@polkadot/extension-dapp'
@@ -125,17 +124,6 @@ export default function Home() {
             sorter: (a, b) => a.apy - b.apy,
             render: (_, row) => {
                 return <Text className={`${theme === "dark" && "text-white"}`} >{row.apy?.toFixed(2)}%</Text>
-            }
-        },
-        {
-            title: 'Commission',
-            sorter: (a, b) => a.commission - b.commission,
-            render: (_, row) => {
-                return (<Tooltip title={row.tooltip}>
-                    <span className='d-flex justify-content-between' >
-                        {row.commission * 100}% <InfoCircleOutlined className='d-flex flex-end' />
-                    </span>
-                </Tooltip>)
             }
         },
         {
@@ -396,10 +384,10 @@ export default function Home() {
                                             <Title level={5} className={`fontFamily mb-0 ${theme === "dark" ? "text-white" : ""}`}>Current Price</Title>
                                         </div>
                                         <div>
-                                            <Title level={5} style={{ fontWeight: "570" }} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>$ {item?.current_price}</Title>
+                                            <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>$ {item?.current_price}</Title>
                                         </div>
                                         <div>
-                                            <Typography className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>24h Volume: $ {Math.floor(parseFloat(item?.volume_24h)).toLocaleString('de-DE')}</Typography>
+                                            <Typography className={`fontFamily fw-bold ${theme === "dark" ? "text-white" : ""}`}>24h Volume: $ {Math.floor(parseFloat(item?.volume_24h)).toLocaleString('de-DE')}</Typography>
                                         </div>
                                     </div>
                                 </Col>
@@ -410,12 +398,12 @@ export default function Home() {
                                             <Title level={5} className={`fontFamily mb-0 ${theme === "dark" && "text-white"}`}>Market Cap</Title>
                                         </div>
                                         <div>
-                                            <Title level={5} style={{ fontWeight: "570" }} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
+                                            <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
                                                 $ {Math.floor(parseFloat(item?.market_cap)).toLocaleString('de-DE')}
                                             </Title>
                                         </div>
                                         <div>
-                                            <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>
+                                            <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>
                                                 24h Change: {item && item.change_24h < 0 ? (
                                                     <span className='fw-bold' style={{ color: 'red' }}>
                                                         <HiMiniArrowLongDown /> {item.change_24h.toFixed(2)}
@@ -434,12 +422,12 @@ export default function Home() {
                                             <Title level={5} className={`fontFamily mb-0 ${theme === "dark" && "text-white"}`}>Circulating Supply</Title>
                                         </div>
                                         <div>
-                                            <Title level={5} style={{ fontWeight: "570" }} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
+                                            <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
                                                 {Math.floor(parseFloat(item?.circulating_supply)).toLocaleString('de-DE')} TAO
                                             </Title>
                                         </div>
                                         <div>
-                                            <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>
+                                            <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>
                                                 Total Supply: {Math.floor(parseFloat(item?.total_supply)).toLocaleString('de-DE')} TAO
                                             </Typography>
                                         </div>
@@ -452,10 +440,10 @@ export default function Home() {
                                             <Title level={5} className={`fontFamily mb-0 ${theme === "dark" && "text-white"}`}>Supply Staked</Title>
                                         </div>
                                         <div>
-                                            <Title level={5} style={{ fontWeight: "570" }} className={`fontFamily ${theme === "dark" && "text-white"}`}>{Math.floor(parseFloat(item?.total_stakes)).toLocaleString('de-DE')} TAO</Title>
+                                            <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" && "text-white"}`}>{Math.floor(parseFloat(item?.total_stakes)).toLocaleString('de-DE')} TAO</Title>
                                         </div>
                                         <div>
-                                            <Typography className={`fontFamily ${theme === "dark" && "text-white"}`}>Percentage Staked: {item.percent_staked?.toFixed(1)}%</Typography>
+                                            <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>Percentage Staked: {item.percent_staked?.toFixed(1)}%</Typography>
                                         </div>
                                     </div>
                                 </Col>
@@ -482,7 +470,7 @@ export default function Home() {
                                             },
                                             rowExpandable: (record) => record.name !== 'Not Expandable',
                                         }}
-                                        pagination={{ pageSize: 15 }}
+                                        pagination={{ pageSize: 14 }}
                                     />
                                 </div>
                             </Col>
@@ -490,12 +478,12 @@ export default function Home() {
                                 <div className='mb-3 staking-calculator'>
                                     <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
                                         <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Staking Calculator</Title>
-                                        <div className='card border-0 p-3 mb-3' style={{ backgroundColor: "#4caf50" }}>
+                                        {/* <div className='card border-0 p-3 mb-3' style={{ backgroundColor: "#4caf50" }}>
                                             <div className='d-flex justify-content-between'>
                                                 <Text className='fontFamily fw-bold'>Current APY</Text>
                                                 <Text className='fontFamily fw-bold'>{documents[0]?.apy.toFixed(2) || 0}%</Text>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <div style={{ width: "100%" }} className='mb-3'>
                                             <Space>
                                                 <Space.Compact >
