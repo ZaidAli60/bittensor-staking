@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Alert, Button, Col, Form, Input, Row, Select, Space, Spin, Table, Typography, message } from 'antd'
+import { Alert, Button, Col, Form, Input, Row, Select, Skeleton, Space, Spin, Table, Typography, message } from 'antd'
 import { MdOutlinePriceCheck } from "react-icons/md"
 import { SiCoinmarketcap } from "react-icons/si"
 import { TbAnalyze, TbBrandGoogleAnalytics } from "react-icons/tb"
@@ -16,7 +16,7 @@ const { Option } = Select;
 export default function Home() {
     const { theme } = useThemeContext()
     const { state } = useConnectWallet()
-    const { taoInfo } = useTaoInfoContext()
+    const { isSkeleton, taoInfo } = useTaoInfoContext()
     const [documents, setDocuments] = useState([])
     const [isProcessing, setIsProcessing] = useState(false)
     const [currentAPY, setCurrentAPY] = useState('')
@@ -36,17 +36,17 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(false)
     const [activeButton, setActiveButton] = useState('delegate'); // Initial active button
 
+
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
         try {
-            const url = process.env.REACT_APP_BETTENSOR_VALIDATORS_END_POINT;
+            const url = 'http://85.239.241.96:8000/api/delegates/';
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
             data.sort((a, b) => a.name.localeCompare(b.name));
-
             setDocuments(data)
             setIsProcessing(false)
         } catch (error) {
@@ -60,6 +60,7 @@ export default function Home() {
     useEffect(() => {
         handleFatch()
     }, [handleFatch])
+
 
     useEffect(() => {
         setAccount(state.accounts.length > 0 ? state.accounts[0] : "")
@@ -110,6 +111,7 @@ export default function Home() {
         }));
 
     const columns = [
+
         {
             title: 'Name',
             dataIndex: 'name',
@@ -120,12 +122,37 @@ export default function Home() {
             fixed: 'left',
         },
         {
-            title: 'APY',
-            sorter: (a, b) => a.apy - b.apy,
+            title: 'APR',
+            sorter: (a, b) => a.apr - b.apr,
             render: (_, row) => {
-                return <Text className={`${theme === "dark" && "text-white"}`} >{row.apy?.toFixed(2)}%</Text>
+                // const adjustedAprFormatted = row.apr * 100
+                return <Text className={`${theme === "dark" && "text-white"}`} >{row.apr?.toFixed(2)}%</Text>
             }
         },
+        // {
+        //     title: 'APR',
+        //     sorter: (a, b) => a.apr - b.apr,
+        //     render: (_, row) => {
+        //         let adjustedApr;
+
+        //         if (row.name === 'FirstTensor.com') {
+        //             adjustedApr = row.apr;
+        //         } else if (row.name === 'TAO-Validator.com') {
+        //             adjustedApr = row.apr - (9 / 100) * row.apr;
+        //         } else {
+        //             adjustedApr = row.apr - (18 / 100) * row.apr;
+        //         }
+
+        //         const adjustedAprFormatted = (adjustedApr * 100).toFixed(2)
+        //         return (
+        //             <Text className={`${theme === 'dark' && 'text-white'}`}>
+        //                 {adjustedAprFormatted}%
+        //             </Text>
+        //         );
+        //     },
+        // }
+
+        ,
         {
             title: 'Total Staked',
             dataIndex: 'total_stake',
@@ -150,7 +177,7 @@ export default function Home() {
     }
 
     const handleStakeCalculator = () => {
-        if (!currentAPY.apy) {
+        if (!currentAPY.apr) {
             return message.error("Please select a validator")
         }
         if (taoAmount <= 0) {
@@ -161,23 +188,51 @@ export default function Home() {
             return;
         }
 
-        const apy = currentAPY.apy.toFixed(2);
-        const commission = currentAPY.commission;
+        const apr = currentAPY.apr;
+        // const commission = currentAPY.commission;
 
-        if (isNaN(apy) || isNaN(commission)) {
-            console.error('Invalid APY or commission values.');
+        if (isNaN(apr)) {
+            console.error('Invalid APY ');
             return;
         }
 
-        const calculateWithAPY = Number(taoAmount) * (apy / 100)
-        const calculateWithcommsion = calculateWithAPY * commission
-
-        const yearRewards = calculateWithAPY - calculateWithcommsion
-        setYearReward(yearRewards)
-        const monthlyReward = (yearRewards / 12)
+        const calculateWithAPR = Number(taoAmount) * (apr / 100)
+        // const calculateWithcommsion = calculateWithAPY * commission
+        // const yearRewards = calculateWithAPY - calculateWithcommsion
+        setYearReward(calculateWithAPR)
+        const monthlyReward = (calculateWithAPR / 12)
         setMonthlyReward(monthlyReward)
 
     }
+    // const handleStakeCalculator = () => {
+    //     if (!currentAPY.apy) {
+    //         return message.error("Please select a validator")
+    //     }
+    //     if (taoAmount <= 0) {
+    //         return message.error("Please enter tao amount")
+    //     }
+    //     if (!currentAPY) {
+    //         console.error('No APY data available.');
+    //         return;
+    //     }
+
+    //     const apy = currentAPY.apy.toFixed(2);
+    //     const commission = currentAPY.commission;
+
+    //     if (isNaN(apy) || isNaN(commission)) {
+    //         console.error('Invalid APY or commission values.');
+    //         return;
+    //     }
+
+    //     const calculateWithAPY = Number(taoAmount) * (apy / 100)
+    //     const calculateWithcommsion = calculateWithAPY * commission
+
+    //     const yearRewards = calculateWithAPY - calculateWithcommsion
+    //     setYearReward(yearRewards)
+    //     const monthlyReward = (yearRewards / 12)
+    //     setMonthlyReward(monthlyReward)
+
+    // }
 
     const handleBalance = async () => {
         setIsLoading(true)
@@ -375,81 +430,138 @@ export default function Home() {
             <div className="container-fluid px-xxl-5 px-lg-4 py-5">
                 <div className="px-xxl-5 custom-lg-padding custom-xxl-padding">
                     {
-                        taoInfo?.map((item, i) => {
-                            return <Row key={i} gutter={[16, 16]} className='mb-4'>
-                                <Col xs={24} sm={12} md={12} lg={6}>
-                                    <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
-                                        <div className='d-flex mb-2'>
-                                            <MdOutlinePriceCheck className='fs-5 me-2' />
-                                            <Title level={5} className={`fontFamily mb-0 ${theme === "dark" ? "text-white" : ""}`}>Current Price</Title>
+                        isSkeleton ?
+                            (
+                                <Row gutter={[16, 16]} className='mb-4'>
+                                    <Col xs={24} sm={12} md={12} lg={6}>
+                                        <div className="card p-3 shadow" >
+                                            <Space>
+                                                <Skeleton.Avatar active size="default" shape='square' />
+                                                <Skeleton.Input active size='default' />
+                                            </Space>
+                                            <br />
+                                            <Skeleton.Input active size='small' block='false' />
+                                            <br />
+                                            <Skeleton.Input active size='small' block='false' />
                                         </div>
-                                        <div>
-                                            <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>$ {item?.current_price}</Title>
+                                    </Col>
+                                    <Col xs={24} sm={12} md={12} lg={6}>
+                                        <div className="card p-3 shadow" >
+                                            <Space>
+                                                <Skeleton.Avatar active size="default" shape='square' />
+                                                <Skeleton.Input active size='default' />
+                                            </Space>
+                                            <br />
+                                            <Skeleton.Input active size='small' block='false' />
+                                            <br />
+                                            <Skeleton.Input active size='small' block='false' />
                                         </div>
-                                        <div>
-                                            <Typography className={`fontFamily fw-bold ${theme === "dark" ? "text-white" : ""}`}>24h Volume: $ {Math.floor(parseFloat(item?.volume_24h)).toLocaleString('de-DE')}</Typography>
+                                    </Col>
+                                    <Col xs={24} sm={12} md={12} lg={6}>
+                                        <div className="card p-3 shadow" >
+                                            <Space>
+                                                <Skeleton.Avatar active size="default" shape='square' />
+                                                <Skeleton.Input active size='default' />
+                                            </Space>
+                                            <br />
+                                            <Skeleton.Input active size='small' block='false' />
+                                            <br />
+                                            <Skeleton.Input active size='small' block='false' />
                                         </div>
-                                    </div>
-                                </Col>
-                                <Col xs={24} sm={12} md={12} lg={6}>
-                                    <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
-                                        <div className='d-flex mb-2'>
-                                            <SiCoinmarketcap className='fs-5 me-2' />
-                                            <Title level={5} className={`fontFamily mb-0 ${theme === "dark" && "text-white"}`}>Market Cap</Title>
+                                    </Col>
+                                    <Col xs={24} sm={12} md={12} lg={6}>
+                                        <div className="card p-3 shadow" >
+                                            <Space>
+                                                <Skeleton.Avatar active size="default" shape='square' />
+                                                <Skeleton.Input active size='default' />
+                                            </Space>
+                                            <br />
+                                            <Skeleton.Input active size='small' block='false' />
+                                            <br />
+                                            <Skeleton.Input active size='small' block='false' />
                                         </div>
-                                        <div>
-                                            <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
-                                                $ {Math.floor(parseFloat(item?.market_cap)).toLocaleString('de-DE')}
-                                            </Title>
-                                        </div>
-                                        <div>
-                                            <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>
-                                                24h Change: {item && item.change_24h < 0 ? (
-                                                    <span className='fw-bold' style={{ color: 'red' }}>
-                                                        <HiMiniArrowLongDown /> {item.change_24h.toFixed(2)}
-                                                    </span>
-                                                ) : (
-                                                    <span className='fw-bold' style={{ color: "#22b14c" }}> <HiMiniArrowLongUp /> {item.change_24h.toFixed(2)}</span>
-                                                )}
-                                            </Typography>
-                                        </div>
-                                    </div>
-                                </Col>
-                                <Col xs={24} sm={12} md={12} lg={6}>
-                                    <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
-                                        <div className='d-flex mb-2'>
-                                            <TbAnalyze className='fs-5 me-2' />
-                                            <Title level={5} className={`fontFamily mb-0 ${theme === "dark" && "text-white"}`}>Circulating Supply</Title>
-                                        </div>
-                                        <div>
-                                            <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
-                                                {Math.floor(parseFloat(item?.circulating_supply)).toLocaleString('de-DE')} TAO
-                                            </Title>
-                                        </div>
-                                        <div>
-                                            <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>
-                                                Total Supply: {Math.floor(parseFloat(item?.total_supply)).toLocaleString('de-DE')} TAO
-                                            </Typography>
-                                        </div>
-                                    </div>
-                                </Col>
-                                <Col xs={24} sm={12} md={12} lg={6}>
-                                    <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
-                                        <div className='d-flex  mb-2'>
-                                            <TbBrandGoogleAnalytics className='fs-5 me-2' />
-                                            <Title level={5} className={`fontFamily mb-0 ${theme === "dark" && "text-white"}`}>Supply Staked</Title>
-                                        </div>
-                                        <div>
-                                            <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" && "text-white"}`}>{Math.floor(parseFloat(item?.total_stakes)).toLocaleString('de-DE')} TAO</Title>
-                                        </div>
-                                        <div>
-                                            <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>Percentage Staked: {item.percent_staked?.toFixed(1)}%</Typography>
-                                        </div>
-                                    </div>
-                                </Col>
-                            </Row>
-                        })
+                                    </Col>
+                                </Row>
+                            )
+                            :
+                            (
+                                taoInfo?.map((item, i) => {
+                                    return <Row key={i} gutter={[16, 16]} className='mb-4'>
+                                        <Col xs={24} sm={12} md={12} lg={6}>
+                                            <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
+                                                <div className='d-flex mb-2'>
+                                                    <MdOutlinePriceCheck className='fs-5 me-2' />
+                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" ? "text-white" : ""}`}>Current Price</Title>
+                                                </div>
+                                                <div>
+                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>$ {item?.current_price}</Title>
+                                                </div>
+                                                <div>
+                                                    <Typography className={`fontFamily fw-bold ${theme === "dark" ? "text-white" : ""}`}>24h Volume: $ {Math.floor(parseFloat(item?.volume_24h)).toLocaleString('de-DE')}</Typography>
+                                                </div>
+                                            </div>
+                                        </Col>
+                                        <Col xs={24} sm={12} md={12} lg={6}>
+                                            <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
+                                                <div className='d-flex mb-2'>
+                                                    <SiCoinmarketcap className='fs-5 me-2' />
+                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" && "text-white"}`}>Market Cap</Title>
+                                                </div>
+                                                <div>
+                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
+                                                        $ {Math.floor(parseFloat(item?.market_cap)).toLocaleString('de-DE')}
+                                                    </Title>
+                                                </div>
+                                                <div>
+                                                    <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>
+                                                        24h Change: {item && item.change_24h < 0 ? (
+                                                            <span className='fw-bold' style={{ color: 'red' }}>
+                                                                <HiMiniArrowLongDown /> {item.change_24h.toFixed(2)}
+                                                            </span>
+                                                        ) : (
+                                                            <span className='fw-bold' style={{ color: "#22b14c" }}> <HiMiniArrowLongUp /> {item.change_24h.toFixed(2)}</span>
+                                                        )}
+                                                    </Typography>
+                                                </div>
+                                            </div>
+                                        </Col>
+                                        <Col xs={24} sm={12} md={12} lg={6}>
+                                            <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
+                                                <div className='d-flex mb-2'>
+                                                    <TbAnalyze className='fs-5 me-2' />
+                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" && "text-white"}`}>Circulating Supply</Title>
+                                                </div>
+                                                <div>
+                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
+                                                        {Math.floor(parseFloat(item?.circulating_supply)).toLocaleString('de-DE')} TAO
+                                                    </Title>
+                                                </div>
+                                                <div>
+                                                    <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>
+                                                        Total Supply: {Math.floor(parseFloat(item?.total_supply)).toLocaleString('de-DE')} TAO
+                                                    </Typography>
+                                                </div>
+                                            </div>
+                                        </Col>
+                                        <Col xs={24} sm={12} md={12} lg={6}>
+                                            <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
+                                                <div className='d-flex  mb-2'>
+                                                    <TbBrandGoogleAnalytics className='fs-5 me-2' />
+                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" && "text-white"}`}>Supply Staked</Title>
+                                                </div>
+                                                <div>
+                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" && "text-white"}`}>{Math.floor(parseFloat(item?.total_stakes)).toLocaleString('de-DE')} TAO</Title>
+                                                </div>
+                                                <div>
+                                                    <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>Percentage Staked: {item.percent_staked?.toFixed(1)}%</Typography>
+                                                </div>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                })
+                            )
                     }
+
 
                     <div className="py-3 ">
                         <Row gutter={[16, 16]}>
@@ -502,8 +614,8 @@ export default function Home() {
                                         </div>
                                         <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                             <div className="d-flex justify-content-between">
-                                                <Text className={`fontFamily  ${theme === "dark" && "text-white"}`}>Commission</Text>
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{currentAPY?.commission * 100 || 0}%</Text>
+                                                <Text className={`fontFamily  ${theme === "dark" && "text-white"}`}>APR</Text>
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{currentAPY?.apr || 0}%</Text>
                                             </div>
                                         </div>
                                         <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>

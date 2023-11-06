@@ -5,10 +5,10 @@ const TaoInfoProvider = createContext()
 export default function TaoInfoContext({ children }) {
 
     const [taoInfo, setTaoInfo] = useState([])
-    const [isProcessing, setIsProcessing] = useState(false)
+    const [isSkeleton, setIsSkeleton] = useState(false)
 
     const handleFetch = useCallback(async () => {
-        setIsProcessing(true);
+        setIsSkeleton(true);
         try {
             const url = process.env.REACT_APP_BITTENSOR_DATA_API_END_POINT;
             const response = await fetch(url);
@@ -17,12 +17,13 @@ export default function TaoInfoContext({ children }) {
             }
             const data = await response.json()
             setTaoInfo(data);
+            setIsSkeleton(false);
         } catch (error) {
             console.log('error', error)
             message.error("Something went wrong")
             // console.error('Error fetching data:', error);
         } finally {
-            setIsProcessing(false);
+            setIsSkeleton(false);
         }
     }, []);
 
@@ -31,7 +32,7 @@ export default function TaoInfoContext({ children }) {
     }, [handleFetch]);
 
     return (
-        <TaoInfoProvider.Provider value={{ isProcessing, taoInfo }}>
+        <TaoInfoProvider.Provider value={{ isSkeleton, taoInfo }}>
             {children}
         </TaoInfoProvider.Provider>
     )
