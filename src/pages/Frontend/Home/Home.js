@@ -40,7 +40,7 @@ export default function Home() {
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
         try {
-            const url = 'http://85.239.241.96:8000/api/delegates/';
+            const url = 'https://85.239.241.96/api/delegates/';
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -198,6 +198,7 @@ export default function Home() {
 
         const calculateWithAPR = Number(taoAmount) * (apr / 100)
         // const calculateWithcommsion = calculateWithAPY * commission
+        // console.log('calculateWithAPR', calculateWithAPR)
         // const yearRewards = calculateWithAPY - calculateWithcommsion
         setYearReward(calculateWithAPR)
         const monthlyReward = (calculateWithAPR / 12)
