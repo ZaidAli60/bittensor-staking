@@ -435,7 +435,7 @@ export default function Home() {
                             (
                                 <Row gutter={[16, 16]} className='mb-4'>
                                     <Col xs={24} sm={12} md={12} lg={6}>
-                                        <div className="card p-3 shadow" >
+                                        <div className="card p-3 shadow bg-primary" >
                                             <Space>
                                                 <Skeleton.Avatar active size="default" shape='square' />
                                                 <Skeleton.Input active size='default' />
@@ -447,7 +447,7 @@ export default function Home() {
                                         </div>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={6}>
-                                        <div className="card p-3 shadow" >
+                                        <div className="card p-3 shadow bg-primary" >
                                             <Space>
                                                 <Skeleton.Avatar active size="default" shape='square' />
                                                 <Skeleton.Input active size='default' />
@@ -459,7 +459,7 @@ export default function Home() {
                                         </div>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={6}>
-                                        <div className="card p-3 shadow" >
+                                        <div className="card p-3 shadow bg-primary" >
                                             <Space>
                                                 <Skeleton.Avatar active size="default" shape='square' />
                                                 <Skeleton.Input active size='default' />
@@ -471,7 +471,7 @@ export default function Home() {
                                         </div>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={6}>
-                                        <div className="card p-3 shadow" >
+                                        <div className="card p-3 shadow bg-primary" >
                                             <Space>
                                                 <Skeleton.Avatar active size="default" shape='square' />
                                                 <Skeleton.Input active size='default' />
@@ -489,32 +489,32 @@ export default function Home() {
                                 taoInfo?.map((item, i) => {
                                     return <Row key={i} gutter={[16, 16]} className='mb-4'>
                                         <Col xs={24} sm={12} md={12} lg={6}>
-                                            <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
+                                            <div className={`card p-3 ${theme === "dark" ? "bg-white text-primary border-0" : "shadow bg-primary text-white"} h-100`}>
                                                 <div className='d-flex mb-2'>
                                                     <MdOutlinePriceCheck className='fs-5 me-2' />
-                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" ? "text-white" : ""}`}>Current Price</Title>
+                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" ? "text-primary" : "text-white"}`}>Current Price</Title>
                                                 </div>
                                                 <div>
-                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>$ {item?.current_price}</Title>
+                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-primary" : "text-white"}`}>$ {item?.current_price}</Title>
                                                 </div>
                                                 <div>
-                                                    <Typography className={`fontFamily fw-bold ${theme === "dark" ? "text-white" : ""}`}>24h Volume: $ {Math.floor(parseFloat(item?.volume_24h)).toLocaleString('de-DE')}</Typography>
+                                                    <Typography className={`fontFamily fw-bold ${theme === "dark" ? "text-primary" : "text-white"}`}>24h Volume: $ {Math.floor(parseFloat(item?.volume_24h)).toLocaleString('de-DE')}</Typography>
                                                 </div>
                                             </div>
                                         </Col>
                                         <Col xs={24} sm={12} md={12} lg={6}>
-                                            <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
+                                            <div className={`card p-3 ${theme === "dark" ? "bg-white text-primary border-0" : "shadow bg-primary text-white"} h-100`}>
                                                 <div className='d-flex mb-2'>
                                                     <SiCoinmarketcap className='fs-5 me-2' />
-                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" && "text-white"}`}>Market Cap</Title>
+                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" ? "text-primary" : "text-white"}`}>Market Cap</Title>
                                                 </div>
                                                 <div>
-                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
+                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-primary" : "text-white"}`}>
                                                         $ {Math.floor(parseFloat(item?.market_cap)).toLocaleString('de-DE')}
                                                     </Title>
                                                 </div>
                                                 <div>
-                                                    <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>
+                                                    <Typography className={`fontFamily fw-bold ${theme === "dark" ? "text-primary" : "text-white"}`}>
                                                         24h Change: {item && item.change_24h < 0 ? (
                                                             <span className='fw-bold' style={{ color: 'red' }}>
                                                                 <HiMiniArrowLongDown /> {item.change_24h.toFixed(2)}
@@ -527,34 +527,34 @@ export default function Home() {
                                             </div>
                                         </Col>
                                         <Col xs={24} sm={12} md={12} lg={6}>
-                                            <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
+                                            <div className={`card p-3 ${theme === "dark" ? "bg-white text-primary border-0" : "shadow bg-primary text-white"} h-100`}>
                                                 <div className='d-flex mb-2'>
                                                     <TbAnalyze className='fs-5 me-2' />
-                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" && "text-white"}`}>Circulating Supply</Title>
+                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" ? "text-primary" : "text-white"}`}>Circulating Supply</Title>
                                                 </div>
                                                 <div>
-                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-white" : ""}`}>
+                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-primary" : "text-white"}`}>
                                                         {Math.floor(parseFloat(item?.circulating_supply)).toLocaleString('de-DE')} TAO
                                                     </Title>
                                                 </div>
                                                 <div>
-                                                    <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>
+                                                    <Typography className={`fontFamily fw-bold ${theme === "dark" ? "text-primary" : "text-white"}`}>
                                                         Total Supply: {Math.floor(parseFloat(item?.total_supply)).toLocaleString('de-DE')} TAO
                                                     </Typography>
                                                 </div>
                                             </div>
                                         </Col>
                                         <Col xs={24} sm={12} md={12} lg={6}>
-                                            <div className={`card p-3 ${theme === "dark" ? "bg-secondary text-white border-0" : "shadow"} h-100`}>
+                                            <div className={`card p-3 ${theme === "dark" ? "bg-white text-primary border-0" : "shadow bg-primary text-white"} h-100`}>
                                                 <div className='d-flex  mb-2'>
                                                     <TbBrandGoogleAnalytics className='fs-5 me-2' />
-                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" && "text-white"}`}>Supply Staked</Title>
+                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" ? "text-primary" : "text-white"}`}>Supply Staked</Title>
                                                 </div>
                                                 <div>
-                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" && "text-white"}`}>{Math.floor(parseFloat(item?.total_stakes)).toLocaleString('de-DE')} TAO</Title>
+                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-primary" : "text-white"}`}>{Math.floor(parseFloat(item?.total_stakes)).toLocaleString('de-DE')} TAO</Title>
                                                 </div>
                                                 <div>
-                                                    <Typography className={`fontFamily fw-bold ${theme === "dark" && "text-white"}`}>Percentage Staked: {item.percent_staked?.toFixed(1)}%</Typography>
+                                                    <Typography className={`fontFamily fw-bold ${theme === "dark" ? "text-primary" : "text-white"}`}>Percentage Staked: {item.percent_staked?.toFixed(1)}%</Typography>
                                                 </div>
                                             </div>
                                         </Col>
