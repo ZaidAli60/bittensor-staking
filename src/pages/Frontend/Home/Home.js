@@ -36,7 +36,7 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(false)
     const [activeButton, setActiveButton] = useState('delegate'); // Initial active button
 
-
+    console.log('documents', documents)
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
         try {
@@ -125,8 +125,15 @@ export default function Home() {
             title: 'APR',
             sorter: (a, b) => a.apr - b.apr,
             render: (_, row) => {
-                // const adjustedAprFormatted = row.apr * 100
                 return <Text className={`${theme === "dark" && "text-white"}`} >{row.apr?.toFixed(2)}%</Text>
+            }
+        },
+        {
+            title: 'Reward',
+            sorter: (a, b) => a.reward - b.reward,
+            render: (_, row) => {
+                let rewardNumber = parseFloat(row.reward);
+                return <Text className={`${theme === "dark" && "text-white"}`} >{rewardNumber?.toFixed(2)}</Text>
             }
         },
         // {
