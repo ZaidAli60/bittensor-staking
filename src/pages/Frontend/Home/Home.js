@@ -36,7 +36,6 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(false)
     const [activeButton, setActiveButton] = useState('delegate'); // Initial active button
 
-    console.log('documents', documents)
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
         try {
