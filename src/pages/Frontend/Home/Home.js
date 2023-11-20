@@ -45,12 +45,12 @@ export default function Home() {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            // data.sort((a, b) => a.name.localeCompare(b.name));
-            data.sort((a, b) => b.total_stake - a.total_stake);
+            data.sort((a, b) => a.name.localeCompare(b.name));
+            // data.sort((a, b) => b.total_stake - a.total_stake);
 
             // Get the top ten validators
-            const topTenValidators = data.slice(0, 10);
-            setDocuments(topTenValidators)
+            // const topTenValidators = data.slice(0, 10);
+            setDocuments(data)
             setIsProcessing(false)
         } catch (error) {
             // console.error('Error fetching data:', error);
