@@ -90,19 +90,19 @@ export default function Navbar() {
 
     const items = [
         {
-            label: <a className='custom-navbar text-decoration-none text-uppercase fw-bold' href="https://www.gate.io/trade/TAO_USDT" target="_blank" rel="noopener noreferrer">Gate.io</a>,
+            label: <a className='custom-navbar text-decoration-none text-uppercase' href="https://www.gate.io/trade/TAO_USDT" target="_blank" rel="noopener noreferrer">Gate.io</a>,
             key: '0',
         },
         {
-            label: <a className='custom-navbar text-decoration-none fw-bold' href="https://www.mexc.com/exchange/TAO_USDT" target="_blank" rel="noopener noreferrer">MEXC</a>,
+            label: <a className='custom-navbar text-decoration-none' href="https://www.mexc.com/exchange/TAO_USDT" target="_blank" rel="noopener noreferrer">MEXC</a>,
             key: '1',
         },
         {
-            label: <a className='custom-navbar text-decoration-none fw-bold' href="https://www.bitget.com/spot/TAOUSDT?type=spot" target="_blank" rel="noopener noreferrer">BITGET</a>,
+            label: <a className='custom-navbar text-decoration-none' href="https://www.bitget.com/spot/TAOUSDT?type=spot" target="_blank" rel="noopener noreferrer">BITGET</a>,
             key: '2',
         },
         {
-            label: <a className='custom-navbar text-decoration-none fw-bold' href="https://tensor.exchange/" target="_blank" rel="noopener noreferrer">TENSOR EXCHANGE</a>,
+            label: <a className='custom-navbar text-decoration-none' href="https://tensor.exchange/" target="_blank" rel="noopener noreferrer">TENSOR EXCHANGE</a>,
             key: '3',
         },
     ];
