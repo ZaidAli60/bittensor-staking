@@ -141,7 +141,7 @@ export default function Home() {
                 return (
                     <>
                         {isTensorValidator ?
-                            <Tooltip title="Check the conditions on validator website">
+                            <Tooltip title="Please check the conditions on the validator's website">
                                 <span className='d-flex justify-content-between'>
                                     Yes <InfoCircleOutlined className='d-flex flex-end' />
                                 </span>
