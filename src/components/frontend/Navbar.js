@@ -114,12 +114,12 @@ export default function Navbar() {
                     <img src={`${theme === "dark" ? window.logoLight : window.logoDark}`} className='img-fluid me-lg-5 me-auto' style={{ width: "170px", height: "auto" }} alt="Bittensor Staking" />
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav me-auto">
-                            <Link to="/" className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }}>Home</Link>
-                            <Link to="/balance" className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }}>Balance</Link>
-                            <Link to="/vote" className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }} >Vote</Link>
-                            <Link to="/faq" className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }} >FAQ's</Link>
+                            <Link to="/" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }}>Home</Link>
+                            <Link to="/balance" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }}>Balance</Link>
+                            <Link to="/vote" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }} >Vote</Link>
+                            <Link to="/faq" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }} >FAQ's</Link>
                             <Dropdown menu={{ items }} trigger={['click']}>
-                                <a onClick={(e) => e.preventDefault()} className={`nav-link fw-bold ${theme === "dark" ? "text-white" : "text-dark"} `} style={{ fontSize: "16px" }}>Buy Tao <DownOutlined className="fw-bold" style={{ fontSize: "12px" }} /></a>
+                                <a onClick={(e) => e.preventDefault()} className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"} `} style={{ fontSize: "16px" }}>Buy Tao <DownOutlined className="fw-bold" style={{ fontSize: "12px" }} /></a>
                             </Dropdown>
                         </div>
                     </div>

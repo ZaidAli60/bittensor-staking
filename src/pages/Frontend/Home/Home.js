@@ -1,14 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Alert, Button, Col, Form, Input, Row, Select, Skeleton, Space, Spin, Table, Typography, message } from 'antd'
+import { Alert, Button, Col, Form, Input, Row, Select, Skeleton, Space, Spin, Table, Tooltip, Typography, message } from 'antd'
 import { MdOutlinePriceCheck } from "react-icons/md"
 import { SiCoinmarketcap } from "react-icons/si"
 import { TbAnalyze, TbBrandGoogleAnalytics } from "react-icons/tb"
 import { HiMiniArrowLongDown, HiMiniArrowLongUp } from "react-icons/hi2"
+import { InfoCircleOutlined } from "@ant-design/icons"
 import { useThemeContext } from 'context/ThemeContext'
 import { useTaoInfoContext } from 'context/TaoInfoContext'
 import { useConnectWallet } from 'context/ConnectWalletContext'
 import { ApiPromise, WsProvider } from '@polkadot/api'
 import { web3FromSource } from '@polkadot/extension-dapp'
+
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -45,12 +47,12 @@ export default function Home() {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            data.sort((a, b) => a.name.localeCompare(b.name));
-            // data.sort((a, b) => b.total_stake - a.total_stake);
+            // data.sort((a, b) => a.name.localeCompare(b.name));
+            data.sort((a, b) => b.total_stake - a.total_stake);
 
             // Get the top ten validators
-            // const topTenValidators = data.slice(0, 10);
-            setDocuments(data)
+            const topTenValidators = data.slice(0, 10);
+            setDocuments(topTenValidators)
             setIsProcessing(false)
         } catch (error) {
             // console.error('Error fetching data:', error);
@@ -132,37 +134,33 @@ export default function Home() {
             }
         },
         {
-            title: 'Reward',
-            sorter: (a, b) => a.reward - b.reward,
+            title: 'Tax Return',
+            sorter: (a, b) => a.apr - b.apr,
             render: (_, row) => {
-                let rewardNumber = parseFloat(row.reward);
-                return <Text className={`${theme === "dark" && "text-white"}`} >{rewardNumber?.toFixed(2)}</Text>
+                const isTensorValidator = row.name === "FirstTensor.com" || row.name === "TAO-Validator.com";
+                return (
+                    <>
+                        {isTensorValidator ?
+                            <Tooltip title="Check the conditions on validator website">
+                                <span className='d-flex justify-content-between'>
+                                    Yes <InfoCircleOutlined className='d-flex flex-end' />
+                                </span>
+                            </Tooltip>
+                            :
+                            <Text className={`${theme === "dark" && "text-white"}`}>No</Text>
+                        }
+                    </>
+                )
             }
         },
         // {
-        //     title: 'APR',
-        //     sorter: (a, b) => a.apr - b.apr,
+        //     title: 'Reward',
+        //     sorter: (a, b) => a.reward - b.reward,
         //     render: (_, row) => {
-        //         let adjustedApr;
-
-        //         if (row.name === 'FirstTensor.com') {
-        //             adjustedApr = row.apr;
-        //         } else if (row.name === 'TAO-Validator.com') {
-        //             adjustedApr = row.apr - (9 / 100) * row.apr;
-        //         } else {
-        //             adjustedApr = row.apr - (18 / 100) * row.apr;
-        //         }
-
-        //         const adjustedAprFormatted = (adjustedApr * 100).toFixed(2)
-        //         return (
-        //             <Text className={`${theme === 'dark' && 'text-white'}`}>
-        //                 {adjustedAprFormatted}%
-        //             </Text>
-        //         );
-        //     },
-        // }
-
-        ,
+        //         let rewardNumber = parseFloat(row.reward);
+        //         return <Text className={`${theme === "dark" && "text-white"}`} >{rewardNumber?.toFixed(2)}</Text>
+        //     }
+        // },
         {
             title: 'Total Staked',
             dataIndex: 'total_stake',
@@ -502,10 +500,10 @@ export default function Home() {
                                             <div className={`card p-3 ${theme === "dark" ? "bg-white text-primary border-0" : "shadow bg-primary text-white"} h-100`}>
                                                 <div className='d-flex mb-2'>
                                                     <MdOutlinePriceCheck className='fs-5 me-2' />
-                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" ? "text-primary" : "text-white"}`}>Current Price</Title>
+                                                    <Title level={5} style={{ fontWeight: 'unset' }} className={`fontFamily mb-0 ${theme === "dark" ? "text-primary" : "text-white"}`}>Current Price</Title>
                                                 </div>
                                                 <div>
-                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-primary" : "text-white"}`}>$ {item?.current_price}</Title>
+                                                    <Title level={5} style={{ fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-primary" : "text-white"}`}>$ {item?.current_price}</Title>
                                                 </div>
                                                 <div>
                                                     <Typography className={`fontFamily fw-bold ${theme === "dark" ? "text-primary" : "text-white"}`}>24h Volume: $ {Math.floor(parseFloat(item?.volume_24h)).toLocaleString('de-DE')}</Typography>
@@ -516,10 +514,10 @@ export default function Home() {
                                             <div className={`card p-3 ${theme === "dark" ? "bg-white text-primary border-0" : "shadow bg-primary text-white"} h-100`}>
                                                 <div className='d-flex mb-2'>
                                                     <SiCoinmarketcap className='fs-5 me-2' />
-                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" ? "text-primary" : "text-white"}`}>Market Cap</Title>
+                                                    <Title level={5} style={{ fontWeight: 'unset' }} className={`fontFamily mb-0 ${theme === "dark" ? "text-primary" : "text-white"}`}>Market Cap</Title>
                                                 </div>
                                                 <div>
-                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-primary" : "text-white"}`}>
+                                                    <Title level={5} style={{ fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-primary" : "text-white"}`}>
                                                         $ {Math.floor(parseFloat(item?.market_cap)).toLocaleString('de-DE')}
                                                     </Title>
                                                 </div>
@@ -540,10 +538,10 @@ export default function Home() {
                                             <div className={`card p-3 ${theme === "dark" ? "bg-white text-primary border-0" : "shadow bg-primary text-white"} h-100`}>
                                                 <div className='d-flex mb-2'>
                                                     <TbAnalyze className='fs-5 me-2' />
-                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" ? "text-primary" : "text-white"}`}>Circulating Supply</Title>
+                                                    <Title level={5} style={{ fontWeight: 'unset' }} className={`fontFamily mb-0 ${theme === "dark" ? "text-primary" : "text-white"}`}>Circulating Supply</Title>
                                                 </div>
                                                 <div>
-                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-primary" : "text-white"}`}>
+                                                    <Title level={5} style={{ fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-primary" : "text-white"}`}>
                                                         {Math.floor(parseFloat(item?.circulating_supply)).toLocaleString('de-DE')} TAO
                                                     </Title>
                                                 </div>
@@ -558,10 +556,10 @@ export default function Home() {
                                             <div className={`card p-3 ${theme === "dark" ? "bg-white text-primary border-0" : "shadow bg-primary text-white"} h-100`}>
                                                 <div className='d-flex  mb-2'>
                                                     <TbBrandGoogleAnalytics className='fs-5 me-2' />
-                                                    <Title level={5} className={`fontFamily mb-0 ${theme === "dark" ? "text-primary" : "text-white"}`}>Supply Staked</Title>
+                                                    <Title level={5} style={{ fontWeight: 'unset' }} className={`fontFamily  mb-0 ${theme === "dark" ? "text-primary" : "text-white"}`}>Supply Staked</Title>
                                                 </div>
                                                 <div>
-                                                    <Title level={5} style={{ fontWeight: "bold", fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-primary" : "text-white"}`}>{Math.floor(parseFloat(item?.total_stakes)).toLocaleString('de-DE')} TAO</Title>
+                                                    <Title level={5} style={{ fontSize: "20px" }} className={`fontFamily ${theme === "dark" ? "text-primary" : "text-white"}`}>{Math.floor(parseFloat(item?.total_stakes)).toLocaleString('de-DE')} TAO</Title>
                                                 </div>
                                                 <div>
                                                     <Typography className={`fontFamily fw-bold ${theme === "dark" ? "text-primary" : "text-white"}`}>Percentage Staked: {item.percent_staked?.toFixed(1)}%</Typography>
