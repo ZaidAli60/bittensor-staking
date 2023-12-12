@@ -43,7 +43,7 @@ export default function Home() {
         setIsProcessing(true)
         try {
             // const url = process.env.REACT_APP_BETTENSOR_VALIDATORS_END_POINT;
-            const url = "http://85.239.241.96/api/delegates/";
+            const url = "https://85.239.241.96/api/delegates/";
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
