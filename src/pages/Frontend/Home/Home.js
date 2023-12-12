@@ -10,6 +10,7 @@ import { useTaoInfoContext } from 'context/TaoInfoContext'
 import { useConnectWallet } from 'context/ConnectWalletContext'
 import { ApiPromise, WsProvider } from '@polkadot/api'
 import { web3FromSource } from '@polkadot/extension-dapp'
+import axios from 'axios'
 
 
 const { Title, Text } = Typography;
@@ -41,7 +42,8 @@ export default function Home() {
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
         try {
-            const url = process.env.REACT_APP_BETTENSOR_VALIDATORS_END_POINT;
+            // const url = process.env.REACT_APP_BETTENSOR_VALIDATORS_END_POINT;
+            const url = "http://85.239.241.96/api/delegates/";
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -378,6 +380,13 @@ export default function Home() {
         setIsFinalize(true)
         setStatus('Transaction is being processed...');
 
+        const data = {
+            wallet_address: selectedAccount.address,
+            amount: amount,
+            action: "delegate",
+            validator: validator.name,
+        }
+
         try {
             await transferExtrinsic.signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
                 if (status.isInBlock) {
@@ -391,6 +400,7 @@ export default function Home() {
                         setAmount(0)
                         setStatus(`Current status: ${status.type}`);
                         setIsFinalize(false)
+                        postDelegateInfo(data)
                     }
                 }
             })
@@ -426,6 +436,13 @@ export default function Home() {
         setIsFinalize1(true)
         setStatus('Transaction is being processed...');
 
+        const data = {
+            wallet_address: selectedAccount.address,
+            amount: amount,
+            action: "undelegate",
+            validator: validator.name,
+        }
+
         try {
             await undelegateExtrinsic.signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
                 if (status.isInBlock) {
@@ -438,6 +455,7 @@ export default function Home() {
                         setAmount(0)
                         setIsFinalize1(false)
                         setStatus(`Current status: ${status.type}`);
+                        postDelegateInfo(data)
                     }
                 }
             })
@@ -446,6 +464,22 @@ export default function Home() {
             console.error(':( Transaction failed', error);
             setIsFinalize1(false);
         }
+    };
+
+    const postDelegateInfo = async (delegateInfo) => {
+
+        try {
+            const response = await axios.post('https://85.239.241.96/api/delegate_undelegate_status', delegateInfo);
+
+            if (response.status === 200) {
+                // console.log(response.data); // Handle the response data as needed
+            } else {
+                console.error('Error:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+
     };
 
     return (
