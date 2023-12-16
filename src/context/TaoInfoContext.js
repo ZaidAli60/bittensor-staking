@@ -21,10 +21,9 @@ export default function TaoInfoContext({ children }) {
             setIsSkeleton(false);
         } catch (error) {
             console.log('error', error)
+            setIsSkeleton(true);
             message.error("Something went wrong")
             // console.error('Error fetching data:', error);
-        } finally {
-            setIsSkeleton(false);
         }
     }, []);
 
