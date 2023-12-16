@@ -129,8 +129,8 @@ export default function Home() {
             fixed: 'left',
         },
         {
-            title: 'APR',
-            sorter: (a, b) => a.apr - b.apr,
+            title: 'Apr Average',
+            sorter: (a, b) => a.apr_average - b.apr_average,
             render: (_, row) => {
                 const isTensorValidator = row.name === 'FirstTensor.com' || row.name === 'TAO-Validator.com' || row.name === 'RoundTable21';
                 return (
@@ -138,16 +138,36 @@ export default function Home() {
                         {isTensorValidator ? (
                             <Tooltip title="The APR percentage takes into account the extra APR that results from tax returns">
                                 <span className='d-flex justify-content-between'>
-                                    {row.apr?.toFixed(2)}% <InfoCircleOutlined className='d-flex flex-end' />
+                                    {row.apr_average}<InfoCircleOutlined className='d-flex flex-end' />
                                 </span>
                             </Tooltip>
                         ) : (
-                            <Text className={`${theme === 'dark' && 'text-white'}`}>{row.apr?.toFixed(2)}%</Text>
+                            <Text className={`${theme === 'dark' && 'text-white'}`}>{row.apr_average}</Text>
                         )}
                     </>
                 );
             },
         },
+        // {
+        //     title: 'APR',
+        //     sorter: (a, b) => a.apr - b.apr,
+        //     render: (_, row) => {
+        //         const isTensorValidator = row.name === 'FirstTensor.com' || row.name === 'TAO-Validator.com' || row.name === 'RoundTable21';
+        //         return (
+        //             <>
+        //                 {isTensorValidator ? (
+        //                     <Tooltip title="The APR percentage takes into account the extra APR that results from tax returns">
+        //                         <span className='d-flex justify-content-between'>
+        //                             {row.apr?.toFixed(2)}% <InfoCircleOutlined className='d-flex flex-end' />
+        //                         </span>
+        //                     </Tooltip>
+        //                 ) : (
+        //                     <Text className={`${theme === 'dark' && 'text-white'}`}>{row.apr?.toFixed(2)}%</Text>
+        //                 )}
+        //             </>
+        //         );
+        //     },
+        // },
 
         {
             title: 'Tax Return',
@@ -201,7 +221,7 @@ export default function Home() {
     }
 
     const handleStakeCalculator = () => {
-        if (!currentAPY.apr) {
+        if (!currentAPY.apr_average) {
             return message.error("Please select a validator")
         }
         if (taoAmount <= 0) {
@@ -212,7 +232,7 @@ export default function Home() {
             return;
         }
 
-        const apr = currentAPY.apr;
+        const apr = currentAPY.apr_average;
         // const commission = currentAPY.commission;
 
         if (isNaN(apr)) {
