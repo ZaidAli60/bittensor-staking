@@ -138,11 +138,11 @@ export default function Home() {
                         {isTensorValidator ? (
                             <Tooltip title="The APR percentage takes into account the extra APR that results from tax returns">
                                 <span className='d-flex justify-content-between'>
-                                    {row.apr_average}<InfoCircleOutlined className='d-flex flex-end' />
+                                    {row.apr_average?.toFixed(2)}%<InfoCircleOutlined className='d-flex flex-end' />
                                 </span>
                             </Tooltip>
                         ) : (
-                            <Text className={`${theme === 'dark' && 'text-white'}`}>{row.apr_average}</Text>
+                            <Text className={`${theme === 'dark' && 'text-white'}`}>{row.apr_average?.toFixed(2)}%</Text>
                         )}
                     </>
                 );
