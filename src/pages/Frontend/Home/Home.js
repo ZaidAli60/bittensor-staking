@@ -129,7 +129,7 @@ export default function Home() {
             fixed: 'left',
         },
         {
-            title: 'Apr Average',
+            title: 'APR (7D AVG)',
             sorter: (a, b) => a.apr_average - b.apr_average,
             render: (_, row) => {
                 const isTensorValidator = row.name === 'FirstTensor.com' || row.name === 'TAO-Validator.com' || row.name === 'RoundTable21';
@@ -488,18 +488,18 @@ export default function Home() {
 
     const postDelegateInfo = async (delegateInfo) => {
 
+
         try {
             const response = await axios.post('https://85.239.241.96/api/delegate_undelegate_status', delegateInfo);
 
             if (response.status === 200) {
-                // console.log(response.data); // Handle the response data as needed
+                // console.log(response); // Handle the response data as needed
             } else {
                 console.error('Error:', response.statusText);
             }
         } catch (error) {
             console.error('Error:', error.message);
         }
-
     };
 
     return (
