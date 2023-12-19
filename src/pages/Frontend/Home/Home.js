@@ -39,6 +39,8 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(false)
     const [activeButton, setActiveButton] = useState('delegate'); // Initial active button
 
+    console.log('documents', documents)
+
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
         try {
@@ -132,7 +134,7 @@ export default function Home() {
             title: 'APR (7D AVG)',
             sorter: (a, b) => a.apr_average - b.apr_average,
             render: (_, row) => {
-                const isTensorValidator = row.name === 'FirstTensor.com' || row.name === 'TAO-Validator.com' || row.name === 'RoundTable21';
+                const isTensorValidator = row.name === 'FirstTensor.com' || row.name === 'TAO-Validator.com' || row.name === 'RoundTable21' || row.name === 'Bittensor Guru';
                 return (
                     <>
                         {isTensorValidator ? (
@@ -148,27 +150,6 @@ export default function Home() {
                 );
             },
         },
-        // {
-        //     title: 'APR',
-        //     sorter: (a, b) => a.apr - b.apr,
-        //     render: (_, row) => {
-        //         const isTensorValidator = row.name === 'FirstTensor.com' || row.name === 'TAO-Validator.com' || row.name === 'RoundTable21';
-        //         return (
-        //             <>
-        //                 {isTensorValidator ? (
-        //                     <Tooltip title="The APR percentage takes into account the extra APR that results from tax returns">
-        //                         <span className='d-flex justify-content-between'>
-        //                             {row.apr?.toFixed(2)}% <InfoCircleOutlined className='d-flex flex-end' />
-        //                         </span>
-        //                     </Tooltip>
-        //                 ) : (
-        //                     <Text className={`${theme === 'dark' && 'text-white'}`}>{row.apr?.toFixed(2)}%</Text>
-        //                 )}
-        //             </>
-        //         );
-        //     },
-        // },
-
         {
             title: 'Tax Return',
             sorter: (a, b) => a.apr - b.apr,
@@ -189,14 +170,6 @@ export default function Home() {
                 )
             }
         },
-        // {
-        //     title: 'Reward',
-        //     sorter: (a, b) => a.reward - b.reward,
-        //     render: (_, row) => {
-        //         let rewardNumber = parseFloat(row.reward);
-        //         return <Text className={`${theme === "dark" && "text-white"}`} >{rewardNumber?.toFixed(2)}</Text>
-        //     }
-        // },
         {
             title: 'Total Staked',
             dataIndex: 'total_stake',
