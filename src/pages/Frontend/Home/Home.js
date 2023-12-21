@@ -39,7 +39,7 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(false)
     const [activeButton, setActiveButton] = useState('delegate'); // Initial active button
 
-    console.log('documents', documents)
+    // console.log('documents', documents)
 
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
@@ -154,7 +154,7 @@ export default function Home() {
             title: 'Tax Return',
             sorter: (a, b) => a.apr - b.apr,
             render: (_, row) => {
-                const isTensorValidator = row.name === "FirstTensor.com" || row.name === "TAO-Validator.com" || row.name === 'RoundTable21';
+                const isTensorValidator = row.name === "FirstTensor.com" || row.name === "TAO-Validator.com" || row.name === 'RoundTable21' || row.name === 'Bittensor Guru';
                 return (
                     <>
                         {isTensorValidator ?
