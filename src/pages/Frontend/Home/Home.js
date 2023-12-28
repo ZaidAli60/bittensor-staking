@@ -131,8 +131,12 @@ export default function Home() {
             fixed: 'left',
         },
         {
-            title: 'APR (7D AVG)',
-            sorter: (a, b) => a.apr_average - b.apr_average,
+            title: (
+                <Tooltip title="Average APR value over the past 30 days">
+                    APR
+                </Tooltip>
+            ),
+            // sorter: (a, b) => a.apr_average - b.apr_average,
             render: (_, row) => {
                 const isTensorValidator = row.name === 'FirstTensor.com' || row.name === 'TAO-Validator.com' || row.name === 'RoundTable21' || row.name === 'Bittensor Guru';
                 return (
