@@ -44,8 +44,7 @@ export default function Home() {
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
         try {
-            // const url = process.env.REACT_APP_BETTENSOR_VALIDATORS_END_POINT;
-            const url = "https://85.239.241.96/api/delegates/";
+            const url = process.env.REACT_APP_BETTENSOR_VALIDATORS_END_POINT;
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -144,11 +143,11 @@ export default function Home() {
                         {isTensorValidator ? (
                             <Tooltip title="The APR percentage takes into account the extra APR that results from tax returns">
                                 <span className='d-flex justify-content-between'>
-                                    {row.apr_average?.toFixed(2)}%<InfoCircleOutlined className='d-flex flex-end' />
+                                    {row.apr.toFixed(2)}%<InfoCircleOutlined className='d-flex flex-end' />
                                 </span>
                             </Tooltip>
                         ) : (
-                            <Text className={`${theme === 'dark' && 'text-white'}`}>{row.apr_average?.toFixed(2)}%</Text>
+                            <Text className={`${theme === 'dark' && 'text-white'}`}>{row.apr?.toFixed(2)}%</Text>
                         )}
                     </>
                 );
@@ -465,9 +464,10 @@ export default function Home() {
 
     const postDelegateInfo = async (delegateInfo) => {
 
+        const url = process.env.REACT_APP_BITTENSOR_DELEGATE_STATUS
 
         try {
-            const response = await axios.post('https://85.239.241.96/api/delegate_undelegate_status', delegateInfo);
+            const response = await axios.post(url, delegateInfo);
 
             if (response.status === 200) {
                 // console.log(response); // Handle the response data as needed
@@ -477,6 +477,7 @@ export default function Home() {
         } catch (error) {
             console.error('Error:', error.message);
         }
+
     };
 
     return (
