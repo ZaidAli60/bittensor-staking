@@ -135,7 +135,7 @@ export default function Home() {
                     APR
                 </Tooltip>
             ),
-            // sorter: (a, b) => a.apr_average - b.apr_average,
+            sorter: (a, b) => a.apr_average - b.apr_average,
             render: (_, row) => {
                 const isTensorValidator = row.name === 'FirstTensor.com' || row.name === 'TAO-Validator.com' || row.name === 'RoundTable21' || row.name === 'Bittensor Guru';
                 return (
@@ -143,11 +143,11 @@ export default function Home() {
                         {isTensorValidator ? (
                             <Tooltip title="The APR percentage takes into account the extra APR that results from tax returns">
                                 <span className='d-flex justify-content-between'>
-                                    {row.apr.toFixed(2)}%<InfoCircleOutlined className='d-flex flex-end' />
+                                    {row.apr_average?.toFixed(2)}%<InfoCircleOutlined className='d-flex flex-end' />
                                 </span>
                             </Tooltip>
                         ) : (
-                            <Text className={`${theme === 'dark' && 'text-white'}`}>{row.apr?.toFixed(2)}%</Text>
+                            <Text className={`${theme === 'dark' && 'text-white'}`}>{row.apr_average?.toFixed(2)}%</Text>
                         )}
                     </>
                 );
