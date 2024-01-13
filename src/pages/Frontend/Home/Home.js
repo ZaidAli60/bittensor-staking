@@ -130,11 +130,7 @@ export default function Home() {
             fixed: 'left',
         },
         {
-            title: (
-                <Tooltip title="Average APR value over the past 30 days">
-                    APR
-                </Tooltip>
-            ),
+            title: "APR (Avg 30 days)",
             sorter: (a, b) => a.apr_average - b.apr_average,
             render: (_, row) => {
                 const isTensorValidator = row.name === 'FirstTensor.com' || row.name === 'TAO-Validator.com' || row.name === 'RoundTable21' || row.name === 'Bittensor Guru';
