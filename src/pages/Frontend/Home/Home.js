@@ -133,7 +133,7 @@ export default function Home() {
             title: "APR (Avg 30 days)",
             sorter: (a, b) => a.apr_average - b.apr_average,
             render: (_, row) => {
-                const isTensorValidator = row.name === 'FirstTensor.com' || row.name === 'TAO-Validator.com' || row.name === 'RoundTable21' || row.name === 'Bittensor Guru';
+                const isTensorValidator = row.name === 'FirstTensor.com' || row.name === 'TAO-Validator.com' || row.name === 'RoundTable21';
                 return (
                     <>
                         {isTensorValidator ? (
@@ -153,7 +153,7 @@ export default function Home() {
             title: 'Tax Return',
             sorter: (a, b) => a.apr - b.apr,
             render: (_, row) => {
-                const isTensorValidator = row.name === "FirstTensor.com" || row.name === "TAO-Validator.com" || row.name === 'RoundTable21' || row.name === 'Bittensor Guru';
+                const isTensorValidator = row.name === "FirstTensor.com" || row.name === "TAO-Validator.com" || row.name === 'RoundTable21';
                 return (
                     <>
                         {isTensorValidator ?
