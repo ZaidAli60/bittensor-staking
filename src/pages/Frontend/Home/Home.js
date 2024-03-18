@@ -131,7 +131,12 @@ export default function Home() {
         },
         {
             title: "APR (Avg 30 days)",
-            sorter: (a, b) => a.apr_average - b.apr_average,
+            // sorter: (a, b) => a.apr_average - b.apr_average,
+            // sorter: (a, b) => (a.apr_average && b.apr_average) ? b.apr_average - a.apr_average : 0,
+            // defaultSortOrder: 'desc', // Set the default sort order to descending
+            sorter: (a, b) => b.apr_average - a.apr_average,
+            defaultSortOrder: 'ascend', // Set the default sorting order to ascending
+
             render: (_, row) => {
                 const isTensorValidator = row.name === 'FirstTensor.com' || row.name === 'TAO-Validator.com' || row.name === 'RoundTable21';
                 return (
@@ -151,7 +156,7 @@ export default function Home() {
         },
         {
             title: 'Tax Return',
-            sorter: (a, b) => a.apr - b.apr,
+            sorter: (a, b) => b.apr_average - a.apr_average,
             render: (_, row) => {
                 const isTensorValidator = row.name === "FirstTensor.com" || row.name === "TAO-Validator.com" || row.name === 'RoundTable21';
                 return (
