@@ -671,7 +671,7 @@ export default function Home() {
                                         <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
                                             <div className="d-flex justify-content-between">
                                                 <Text className={`fontFamily  ${theme === "dark" && "text-white"}`}>APR</Text>
-                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{currentAPY?.apr || 0}%</Text>
+                                                <Text className={`fontFamily ${theme === "dark" && "text-white"}`}>{currentAPY?.apr_average || 0}%</Text>
                                             </div>
                                         </div>
                                         <div className={`p-3 mb-3 ${theme === "dark" ? "card bg-secondary border-1" : "card"}`}>
