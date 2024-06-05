@@ -39,8 +39,6 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(false)
     const [activeButton, setActiveButton] = useState('delegate'); // Initial active button
 
-    // console.log('documents', documents)
-
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
         try {
@@ -138,7 +136,7 @@ export default function Home() {
             defaultSortOrder: 'ascend', // Set the default sorting order to ascending
 
             render: (_, row) => {
-                const isTensorValidator = row.name === 'FirstTensor.com' || row.name === 'TAO-Validator.com' || row.name === 'RoundTable21';
+                const isTensorValidator = row.name === 'FirstTensor.com';
                 return (
                     <>
                         {isTensorValidator ? (
@@ -155,10 +153,18 @@ export default function Home() {
             },
         },
         {
+            title: 'Fees',
+            // dataIndex: 'fees',
+            sorter: (a, b) => a.fees - b.fees,
+            render: (_, row) => {
+                return <Text className={`${theme === "dark" && "text-white"}`} >{row.fees}%</Text>
+            }
+        },
+        {
             title: 'Tax Return',
             sorter: (a, b) => b.apr_average - a.apr_average,
             render: (_, row) => {
-                const isTensorValidator = row.name === "FirstTensor.com" || row.name === "TAO-Validator.com" || row.name === 'RoundTable21';
+                const isTensorValidator = row.name === "FirstTensor.com";
                 return (
                     <>
                         {isTensorValidator ?
