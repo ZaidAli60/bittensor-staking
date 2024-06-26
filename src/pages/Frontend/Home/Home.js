@@ -111,42 +111,46 @@ export default function Home() {
 
     const dataWithKeys = documents
         ?.filter((record) => record.nominators !== 0 && record.total_stake >= 1000)
+        .filter((record) => record.name !== 'Datura') // Remove the Datura record
         .map((record) => ({
             ...record,
             key: record.details?.hot_key?.toString(), // Use optional chaining for safety
         }));
 
     const columns = [
-
         {
             title: 'Name',
             dataIndex: 'name',
             sorter: (a, b) => a.name.localeCompare(b.name),
             render: (_, row) => {
-                return <span className={`${theme === "dark" && "text-white"}`} style={{ fontWeight: 600 }}>{row?.name}</span>
+                const isFirstTensor = row.name === 'FirstTensor.com';
+                return (
+                    <span
+                        className={`${theme === "dark" && "text-white"}`}
+                        style={{ fontWeight: isFirstTensor ? 'bold' : 'normal' }}
+                    >
+                        {row?.name}
+                    </span>
+                );
             },
             fixed: 'left',
         },
         {
             title: "APR (Avg 30 days)",
-            // sorter: (a, b) => a.apr_average - b.apr_average,
-            // sorter: (a, b) => (a.apr_average && b.apr_average) ? b.apr_average - a.apr_average : 0,
-            // defaultSortOrder: 'desc', // Set the default sort order to descending
             sorter: (a, b) => b.apr_average - a.apr_average,
-            defaultSortOrder: 'ascend', // Set the default sorting order to ascending
-
+            defaultSortOrder: 'ascend',
             render: (_, row) => {
                 const isTensorValidator = row.name === 'FirstTensor.com';
                 return (
                     <>
                         {isTensorValidator ? (
                             <Tooltip title="The APR percentage takes into account the extra APR that results from tax returns">
-                                <span className='d-flex justify-content-between'>
+                                <span className='d-flex justify-content-between fw-bold'>
                                     {row.apr_average?.toFixed(2)}%<InfoCircleOutlined className='d-flex flex-end' />
                                 </span>
                             </Tooltip>
                         ) : (
-                            <Text className={`${theme === 'dark' && 'text-white'}`}>{row.apr_average?.toFixed(2)}%</Text>
+                            <Text className={`${theme === 'dark' && 'text-white '}`}>{row.apr_average?.toFixed(2)}%</Text>
                         )}
                     </>
                 );
@@ -154,10 +158,19 @@ export default function Home() {
         },
         {
             title: 'Fees',
-            // dataIndex: 'fees',
             sorter: (a, b) => a.fees - b.fees,
             render: (_, row) => {
-                return <Text className={`${theme === "dark" && "text-white"}`} >{row.fees}%</Text>
+                const isTensorValidator = row.name === "FirstTensor.com";
+                return (
+                    <>
+                        {
+                            isTensorValidator ?
+                                <Text className={`fw-bold ${theme === "dark" && "text-white"}`} > {row.fees} %</Text >
+                                :
+                                <Text className={`${theme === "dark" && "text-white"}`} >{row.fees}%</Text>
+                        }
+                    </>
+                )
             }
         },
         {
@@ -169,7 +182,7 @@ export default function Home() {
                     <>
                         {isTensorValidator ?
                             <Tooltip title="Please check the conditions on the validator's website">
-                                <span className='d-flex justify-content-between'>
+                                <span className='d-flex justify-content-between fw-bold'>
                                     Yes <InfoCircleOutlined className='d-flex flex-end' />
                                 </span>
                             </Tooltip>
@@ -177,7 +190,7 @@ export default function Home() {
                             <Text className={`${theme === "dark" && "text-white"}`}>No</Text>
                         }
                     </>
-                )
+                );
             }
         },
         {
@@ -185,7 +198,18 @@ export default function Home() {
             dataIndex: 'total_stake',
             sorter: (a, b) => a.total_stake - b.total_stake,
             render: (_, row) => {
-                return <Text className={`${theme === "dark" && "text-white"}`} > {parseInt(row?.total_stake).toLocaleString('en-US')} TAO</Text>
+                const isTensorValidator = row.name === "FirstTensor.com";
+                return (
+                    <>
+                        {
+                            isTensorValidator ?
+                                <Text className={`fw-bold ${theme === "dark" && "text-white"}`} > {parseInt(row?.total_stake).toLocaleString('en-US')} TAO</Text>
+                                :
+                                <Text className={`${theme === "dark" && "text-white"}`} > {parseInt(row?.total_stake).toLocaleString('en-US')} TAO</Text>
+                        }
+                    </>
+                )
+
             }
         },
         {
@@ -193,11 +217,23 @@ export default function Home() {
             dataIndex: 'nominators',
             sorter: (a, b) => a.nominators - b.nominators,
             render: (_, row) => {
-                return <Text className={`${theme === "dark" && "text-white"}`} >{row?.nominators}</Text>
+                const isTensorValidator = row.name === "FirstTensor.com";
+                return (
+                    <>
+                        {
+                            isTensorValidator ?
+                                <Text className={`fw-bold ${theme === "dark" && "text-white"}`} >{row?.nominators}</Text>
+                                :
+                                <Text className={`${theme === "dark" && "text-white"}`} >{row?.nominators}</Text>
+                        }
+                    </>
+                )
+
             },
             defaultSortOrder: 'descend',
         }
     ];
+
 
     const onChange = (pagination, filters, sorter, extra) => {
         // console.log('params', pagination, filters, sorter, extra);
