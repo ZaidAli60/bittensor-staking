@@ -297,7 +297,6 @@ export default function Home() {
     //     setMonthlyReward(monthlyReward)
 
     // }
-
     const handleBalance = async () => {
         setIsLoading(true)
         const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
