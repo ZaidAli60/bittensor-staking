@@ -111,7 +111,7 @@ export default function Home() {
 
     const dataWithKeys = documents
         ?.filter((record) => record.nominators !== 0 && record.total_stake >= 1000)
-        .filter((record) => record.name !== 'Datura') // Remove the Datura record
+        .filter((record) => record.name !== 'Datura'&& record.name !== 'Owl Ventures') // Remove the Datura record
         .map((record) => ({
             ...record,
             key: record.details?.hot_key?.toString(), // Use optional chaining for safety
