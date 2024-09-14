@@ -297,6 +297,17 @@ export default function Home() {
     //     setMonthlyReward(monthlyReward)
 
     // }
+
+    // Retrieve the last timestamp
+        // const now = await api.query.timestamp.now();
+        // Retrieve the account balance & nonce via the system module
+
+    // setIsLoading(false)
+        // console.log('balance', Number(balance.free.toString()))
+        // setBalance(Number(balance.free.toString()))
+        // console.log(api.genesisHash.toHex());
+
+
     const handleBalance = async () => {
         setIsLoading(true)
         const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
@@ -311,18 +322,13 @@ export default function Home() {
             console.error('ADDR not initialized');
             return
         }
-        // Retrieve the last timestamp
-        // const now = await api.query.timestamp.now();
-        // Retrieve the account balance & nonce via the system module
+    
         const { data: balance } = await api.query.system.account(ADDR);
         // console.log(` balance of ${balance.free}`);
         const orginalBalance = (balance.free - 500);
         const balan = Number(orginalBalance) / 1000000000;
         setTotalBalance(balan)
-        // setIsLoading(false)
-        // console.log('balance', Number(balance.free.toString()))
-        // setBalance(Number(balance.free.toString()))
-        // console.log(api.genesisHash.toHex());
+        
     }
 
     useEffect(() => {
@@ -343,7 +349,6 @@ export default function Home() {
             }
 
             const res = await api.query.subtensorModule.stake(validator.details.hot_key, account.address);
-
             if (res.isEmpty) {
                 setStakeAmount(0);
             } else {
@@ -368,7 +373,6 @@ export default function Home() {
         setIsLoading(true)
 
         const stakeAmountValidators = []
-
         for (const validator of documents) { // Corrected variable name from 'object' to 'data'
             const res = await api.query.subtensorModule.stake(validator.details.hot_key, account?.address);
 
@@ -406,7 +410,6 @@ export default function Home() {
 
         const wsProvider = new WsProvider(process.env.REACT_APP_FINNEY_OPENTENSOR_END_POINT);
         const api = await ApiPromise.create({ provider: wsProvider });
-
         if (!api) {
             console.error('API not initialized');
             return;
@@ -426,19 +429,33 @@ export default function Home() {
         }
 
         try {
-            await transferExtrinsic.signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
+            await transferExtrinsic.signAndSend(account.address, { signer: injector.signer }, async ({ status })  => {
+
+                const res = await api.query.subtensorModule.stake(validator.details.hot_key, account?.address);
+                let newStakeBalance = 0
+                if (!res.isEmpty) {
+                    newStakeBalance = parseFloat(res.toString()) / 1000000000;
+                }
+
                 if (status.isInBlock) {
                     setStatus(`Status In Block`);
                 } else {
                     setStatus(`Current status: ${status.type}`);
-                    // setStatus(`You have just delegated ${amount}τ from ${validator.name}`);
                     if (status.type === 'Finalized') {
-                        handleBalance()
-                        fetchStakeAmount()
-                        setAmount(0)
-                        setStatus(`Current status: ${status.type}`);
-                        setIsFinalize(false)
-                        postDelegateInfo(data)
+                        if (newStakeBalance > stakeAmount) {
+                            handleBalance()
+                            fetchStakeAmount()
+                            setAmount(0)
+                            setStatus(`Current status: ${status.type}`);
+                            setIsFinalize(false)
+                            // console.log("delegaet_status",status)
+                            // console.log(`You have successfully delegated ${amount}τ to ${validator.name}.`);
+                            postDelegateInfo(data)
+                            
+                        } else {
+                            setStatus('There was an issue delegating your funds. Please try again');
+                            setIsFinalize(false)
+                        }
                     }
                 }
             })
@@ -448,6 +465,7 @@ export default function Home() {
             setIsFinalize(false);
         }
     };
+
 
     const handleUndelegate = async () => {
 
@@ -482,18 +500,34 @@ export default function Home() {
         }
 
         try {
-            await undelegateExtrinsic.signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
+            await undelegateExtrinsic.signAndSend(account.address, { signer: injector.signer }, async({ status }) => {
+
                 if (status.isInBlock) {
                     setStatus(`Status In Block`);
                 } else {
                     setStatus(`Current status: ${status.type}`);
                     if (status.type === 'Finalized') {
-                        handleBalance()
-                        fetchStakeAmount()
-                        setAmount(0)
-                        setIsFinalize1(false)
-                        setStatus(`Current status: ${status.type}`);
-                        postDelegateInfo(data)
+                        const res = await api.query.subtensorModule.stake(validator.details.hot_key, account?.address);
+
+                        let newStakeBalance = 0
+                        if (!res.isEmpty) {
+                        newStakeBalance = parseFloat(res.toString()) / 1000000000;
+                        }
+
+                        if (newStakeBalance < stakeAmount) {
+                            handleBalance()
+                            fetchStakeAmount()
+                            setAmount(0)
+                            setStatus(`Current status: ${status.type}`);
+                            setIsFinalize1(false)
+                            // console.log("delegaet_status",status)
+                            // console.log(`You have successfully delegated ${amount}τ to ${validator.name}.`);
+                            postDelegateInfo(data)
+                            
+                        } else {
+                            setStatus('There was an issue undelegate your funds. Please try again');
+                            setIsFinalize1(false)
+                        }
                     }
                 }
             })
@@ -734,7 +768,9 @@ export default function Home() {
                                 </div>
                                 <div className='stake-tao'>
                                     <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
-                                        {status && <Alert message={`${status}`} type={status === "Transaction failed" ? "error" : "success"} showIcon className='mb-2' />}
+                                    {status && (
+                                    <Alert message={status} type={status.includes("failed") || status.includes("issue") ? "error" : "success"}  showIcon className='mb-2' /> )}
+                                        {/* {status && <Alert message={`${status}`} type={status || "Transaction failed" || "There was an issue undelegating funds." ? "error" : "success"} showIcon className='mb-2' />} */}
                                         <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Stake Tao</Title>
                                         <div className='d-flex justify-content-between mb-3'>
                                             {
