@@ -115,8 +115,6 @@ export default function Navbar() {
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav me-auto">
                             <Link to="/" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }}>Home</Link>
-                            <Link to="/balance" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }}>Balance</Link>
-                            <Link to="/vote" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }} >Vote</Link>
                             <Link to="/faq" className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"}`} style={{ fontSize: "16px" }} >FAQ's</Link>
                             <Dropdown menu={{ items }} trigger={['click']}>
                                 <a onClick={(e) => e.preventDefault()} className={`nav-link ${theme === "dark" ? "text-white" : "text-dark"} `} style={{ fontSize: "16px" }}>Buy Tao <DownOutlined className="fw-bold" style={{ fontSize: "12px" }} /></a>
