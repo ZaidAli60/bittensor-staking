@@ -117,122 +117,119 @@ export default function Home() {
             key: record.details?.hot_key?.toString(), // Use optional chaining for safety
         }));
 
-    const columns = [
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            sorter: (a, b) => a.name.localeCompare(b.name),
-            render: (_, row) => {
-                const isFirstTensor = row.name === 'FirstTensor.com';
-                return (
-                    <span
-                        className={`${theme === "dark" && "text-white"}`}
-                        style={{ fontWeight: isFirstTensor ? 'bold' : 'normal' }}
-                    >
-                        {row?.name}
-                    </span>
-                );
-            },
-            fixed: 'left',
-        },
-        {
-            title: "APR (Avg 30 days)",
-            sorter: (a, b) => b.apr_average - a.apr_average,
-            defaultSortOrder: 'ascend',
-            render: (_, row) => {
-                const isTensorValidator = row.name === 'FirstTensor.com';
-                return (
-                    <>
-                        {isTensorValidator ? (
-                            <Tooltip title="The APR percentage takes into account the extra APR that results from tax returns">
-                                <span className='d-flex justify-content-between fw-bold'>
-                                    {row.apr_average?.toFixed(2)}%<InfoCircleOutlined className='d-flex flex-end' />
-                                </span>
-                            </Tooltip>
-                        ) : (
-                            <Text className={`${theme === 'dark' && 'text-white '}`}>{row.apr_average?.toFixed(2)}%</Text>
-                        )}
-                    </>
-                );
-            },
-        },
-        {
-            title: 'Fees',
-            sorter: (a, b) => a.fees - b.fees,
-            render: (_, row) => {
-                const isTensorValidator = row.name === "FirstTensor.com";
-                return (
-                    <>
-                        {
-                            isTensorValidator ?
-                                <Text className={`fw-bold ${theme === "dark" && "text-white"}`} > {row.fees} %</Text >
-                                :
-                                <Text className={`${theme === "dark" && "text-white"}`} >{row.fees}%</Text>
-                        }
-                    </>
-                )
-            }
-        },
-        {
-            title: 'Tax Return',
-            sorter: (a, b) => b.apr_average - a.apr_average,
-            render: (_, row) => {
-                const isTensorValidator = row.name === "FirstTensor.com";
-                return (
-                    <>
-                        {isTensorValidator ?
-                            <Tooltip title="Please check the conditions on the validator's website">
-                                <span className='d-flex justify-content-between fw-bold'>
-                                    Yes <InfoCircleOutlined className='d-flex flex-end' />
-                                </span>
-                            </Tooltip>
-                            :
-                            <Text className={`${theme === "dark" && "text-white"}`}>No</Text>
-                        }
-                    </>
-                );
-            }
-        },
-        {
-            title: 'Total Staked',
-            dataIndex: 'total_stake',
-            sorter: (a, b) => a.total_stake - b.total_stake,
-            render: (_, row) => {
-                const isTensorValidator = row.name === "FirstTensor.com";
-                return (
-                    <>
-                        {
-                            isTensorValidator ?
-                                <Text className={`fw-bold ${theme === "dark" && "text-white"}`} > {parseInt(row?.total_stake).toLocaleString('en-US')} TAO</Text>
-                                :
-                                <Text className={`${theme === "dark" && "text-white"}`} > {parseInt(row?.total_stake).toLocaleString('en-US')} TAO</Text>
-                        }
-                    </>
-                )
+const firstTensorRecord = dataWithKeys?.find(record => record.name === 'FirstTensor.com');
+const otherRecords = dataWithKeys?.filter(record => record.name !== 'FirstTensor.com');
 
-            }
-        },
-        {
-            title: 'Nominators',
-            dataIndex: 'nominators',
-            sorter: (a, b) => a.nominators - b.nominators,
-            render: (_, row) => {
-                const isTensorValidator = row.name === "FirstTensor.com";
-                return (
-                    <>
-                        {
-                            isTensorValidator ?
-                                <Text className={`fw-bold ${theme === "dark" && "text-white"}`} >{row?.nominators}</Text>
-                                :
-                                <Text className={`${theme === "dark" && "text-white"}`} >{row?.nominators}</Text>
-                        }
-                    </>
-                )
+// Reorder data
+const reorderedDataWithKeys = firstTensorRecord ? [firstTensorRecord, ...otherRecords] : dataWithKeys;
 
-            },
-            defaultSortOrder: 'descend',
-        }
-    ];
+const columns = [
+    {
+        title: 'Name',
+        dataIndex: 'name',
+        sorter: (a, b) => a.name.localeCompare(b.name),
+        render: (_, row) => {
+            const isFirstTensor = row.name === 'FirstTensor.com';
+            return (
+                <span
+                    className={`${theme === "dark" && "text-white"}`}
+                    style={{ fontWeight: isFirstTensor ? 'bold' : 'normal' }}
+                >
+                    {row?.name}
+                </span>
+            );
+        },
+        fixed: 'left',
+    },
+    {
+        title: "APR (Avg 30 days)",
+        sorter: (a, b) => b.apr_average - a.apr_average,
+        render: (_, row) => {
+            const isTensorValidator = row.name === 'FirstTensor.com';
+            return (
+                <>
+                    {isTensorValidator ? (
+                        <Tooltip title="The APR percentage takes into account the extra APR that results from tax returns">
+                            <span className='d-flex justify-content-between fw-bold'>
+                                {row.apr_average?.toFixed(2)}%<InfoCircleOutlined className='d-flex flex-end' />
+                            </span>
+                        </Tooltip>
+                    ) : (
+                        <Text className={`${theme === 'dark' && 'text-white '}`}>{row.apr_average?.toFixed(2)}%</Text>
+                    )}
+                </>
+            );
+        },
+    },
+    {
+        title: 'Fees',
+        sorter: (a, b) => a.fees - b.fees,
+        render: (_, row) => {
+            const isTensorValidator = row.name === "FirstTensor.com";
+            return (
+                <>
+                    {isTensorValidator ? (
+                        <Text className={`fw-bold ${theme === "dark" && "text-white"}`}>{row.fees}%</Text>
+                    ) : (
+                        <Text className={`${theme === "dark" && "text-white"}`}>{row.fees}%</Text>
+                    )}
+                </>
+            );
+        },
+    },
+    {
+        title: 'Tax Return',
+        render: (_, row) => {
+            const isTensorValidator = row.name === "FirstTensor.com";
+            return (
+                <>
+                    {isTensorValidator ? (
+                        <Tooltip title="Please check the conditions on the validator's website">
+                            <span className='d-flex justify-content-between fw-bold'>
+                                Yes <InfoCircleOutlined className='d-flex flex-end' />
+                            </span>
+                        </Tooltip>
+                    ) : (
+                        <Text className={`${theme === "dark" && "text-white"}`}>No</Text>
+                    )}
+                </>
+            );
+        },
+    },
+    {
+        title: 'Total Staked',
+        dataIndex: 'total_stake',
+        render: (_, row) => {
+            const isTensorValidator = row.name === "FirstTensor.com";
+            return (
+                <>
+                    {isTensorValidator ? (
+                        <Text className={`fw-bold ${theme === "dark" && "text-white"}`}>{parseInt(row?.total_stake).toLocaleString('en-US')} TAO</Text>
+                    ) : (
+                        <Text className={`${theme === "dark" && "text-white"}`}>{parseInt(row?.total_stake).toLocaleString('en-US')} TAO</Text>
+                    )}
+                </>
+            );
+        },
+    },
+    {
+        title: 'Nominators',
+        dataIndex: 'nominators',
+        render: (_, row) => {
+            const isTensorValidator = row.name === "FirstTensor.com";
+            return (
+                <>
+                    {isTensorValidator ? (
+                        <Text className={`fw-bold ${theme === "dark" && "text-white"}`}>{row?.nominators}</Text>
+                    ) : (
+                        <Text className={`${theme === "dark" && "text-white"}`}>{row?.nominators}</Text>
+                    )}
+                </>
+            );
+        },
+    },
+];
+
 
 
     const onChange = (pagination, filters, sorter, extra) => {
@@ -453,7 +450,7 @@ export default function Home() {
                             postDelegateInfo(data)
                             
                         } else {
-                            setStatus('There was an issue delegating your funds. Please try again');
+                            setStatus('You can stake TAO in 1h');
                             setIsFinalize(false)
                         }
                     }
@@ -525,7 +522,7 @@ export default function Home() {
                             postDelegateInfo(data)
                             
                         } else {
-                            setStatus('There was an issue undelegate your funds. Please try again');
+                            setStatus('You can unstake TAO in 1h');
                             setIsFinalize1(false)
                         }
                     }
@@ -699,7 +696,7 @@ export default function Home() {
                             <Col xs={24} md={24} lg={16} xxl={18}>
                                 <div className={`fontFamily ${theme === "dark" ? "card p-3 bg-secondary border-0" : "card p-3 shadow"} h-100`}>
                                     <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Bittensor Validators</Title>
-                                    <Table columns={columns} bordered dataSource={dataWithKeys} loading={isProcessing} onChange={onChange} scroll={{ x: true }} className={`${theme === "dark" ? "dark-table" : "light-table"}`}
+                                    <Table columns={columns} bordered dataSource={reorderedDataWithKeys} loading={isProcessing} onChange={onChange} scroll={{ x: true }} className={`${theme === "dark" ? "dark-table" : "light-table"}`}
                                         expandable={{
                                             expandedRowRender: (record) => {
                                                 const absoluteUrl = record.details?.url.startsWith('http') ? record.details?.url : `https://${record.details?.url}`;
@@ -769,7 +766,7 @@ export default function Home() {
                                 <div className='stake-tao'>
                                     <div className={`fontFamily card p-3 ${theme === "dark" ? "bg-secondary border-0" : "shadow"} h-100`}>
                                     {status && (
-                                    <Alert message={status} type={status.includes("failed") || status.includes("issue") ? "error" : "success"}  showIcon className='mb-2' /> )}
+                                    <Alert message={status} type={status.includes("failed") || status.includes("1h") ? "error" : "success"}  showIcon className='mb-2' /> )}
                                         {/* {status && <Alert message={`${status}`} type={status || "Transaction failed" || "There was an issue undelegating funds." ? "error" : "success"} showIcon className='mb-2' />} */}
                                         <Title level={4} className={`fontFamily ${theme === "dark" ? "text-uppercase text-white mb-3" : "text-uppercase text-primary mb-3"}`}>Stake Tao</Title>
                                         <div className='d-flex justify-content-between mb-3'>
