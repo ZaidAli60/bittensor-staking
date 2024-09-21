@@ -52,7 +52,7 @@ export default function Home() {
             data.sort((a, b) => b.total_stake - a.total_stake);
 
             // Get the top ten validators
-            const topTenValidators = data.slice(0, 10);
+            const topTenValidators = data.slice(0, 13);
             setDocuments(topTenValidators)
             setIsProcessing(false)
         } catch (error) {
