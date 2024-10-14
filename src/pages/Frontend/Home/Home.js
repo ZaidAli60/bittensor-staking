@@ -152,7 +152,7 @@ const otherRecords = dataWithKeys?.filter(record => record.name !== 'FirstTensor
 
 const reorderedDataWithKeys = firstTensorRecord ? [firstTensorRecord, ...otherRecords] : dataWithKeys;
 
-
+// console.log('reorderedDataWithKeys', reorderedDataWithKeys)
 const handleCurrentAPY = (value) => {
     const currentApyValue = reorderedDataWithKeys.find((validator) => validator.name === value);
     setCurrentAPY(currentApyValue);
