@@ -39,6 +39,8 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(false)
     const [activeButton, setActiveButton] = useState('delegate'); // Initial active button
 
+    // console.log("documents",documents)
+
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
         try {
@@ -79,10 +81,10 @@ export default function Home() {
         // eslint-disable-next-line
     }, [state])
 
-    const handleCurrentAPY = (value) => {
-        const currentApyValue = documents.find((validator) => validator.name === value);
-        setCurrentAPY(currentApyValue);
-    }
+    // const handleCurrentAPY = (value) => {
+    //     const currentApyValue = documents.find((validator) => validator.name === value);
+    //     setCurrentAPY(currentApyValue);
+    // }
 
     const handleStakeValidator = (value) => {
         const validator = documents.find((validator) => validator.name === value);
@@ -109,19 +111,52 @@ export default function Home() {
         setRao(taoToRao)
     }, [amount])
 
-    const dataWithKeys = documents
-        ?.filter((record) => record.nominators !== 0 && record.total_stake >= 1000)
-        .filter((record) => record.name !== 'Datura'&& record.name !== 'Owl Ventures') // Remove the Datura record
-        .map((record) => ({
-            ...record,
-            key: record.details?.hot_key?.toString(), // Use optional chaining for safety
-        }));
+//     const dataWithKeys = documents
+//         ?.filter((record) => record.nominators !== 0 && record.total_stake >= 1000)
+//         .filter((record) => record.name !== 'Datura'&& record.name !== 'Owl Ventures' && record.name !== 'Tensorplex Labs') // Remove the Datura record
+//         .map((record) => ({
+//             ...record,
+//             key: record.details?.hot_key?.toString(), // Use optional chaining for safety
+//         }));
 
+// const firstTensorRecord = dataWithKeys?.find(record => record.name === 'FirstTensor.com');
+// const otherRecords = dataWithKeys?.filter(record => record.name !== 'FirstTensor.com');
+
+// // Reorder data
+// const reorderedDataWithKeys = firstTensorRecord ? [firstTensorRecord, ...otherRecords] : dataWithKeys;
+// console.log("reorderedDataWithKeys",reorderedDataWithKeys)
+
+const dataWithKeys = documents
+    ?.filter((record) => record.nominators !== 0 && record.total_stake >= 1000)
+    .filter((record) => record.name !== 'Datura' && record.name !== 'Owl Ventures' && record.name !== 'Tensorplex Labs')
+    .map((record) => {
+        let customAPR = record.apr_average; // Default APR
+        
+        // Set custom APR for specific records
+        if (record.name === 'FirstTensor.com') {
+            customAPR = 17.49; // Custom APR for FirstTensor.com
+        } else if (record.name === 'RoundTable21') {
+            customAPR = 15.68; // Custom APR for RoundTable
+        }
+
+        return {
+            ...record,
+            apr_average: customAPR, // Assign custom or default APR
+            key: record.details?.hot_key?.toString(), // Use optional chaining for safety
+        };
+    });
+
+// Reorder data
 const firstTensorRecord = dataWithKeys?.find(record => record.name === 'FirstTensor.com');
 const otherRecords = dataWithKeys?.filter(record => record.name !== 'FirstTensor.com');
 
-// Reorder data
 const reorderedDataWithKeys = firstTensorRecord ? [firstTensorRecord, ...otherRecords] : dataWithKeys;
+
+
+const handleCurrentAPY = (value) => {
+    const currentApyValue = reorderedDataWithKeys.find((validator) => validator.name === value);
+    setCurrentAPY(currentApyValue);
+}
 
 const columns = [
     {
@@ -229,8 +264,6 @@ const columns = [
         },
     },
 ];
-
-
 
     const onChange = (pagination, filters, sorter, extra) => {
         // console.log('params', pagination, filters, sorter, extra);
@@ -734,7 +767,7 @@ const columns = [
                                                         filterOption={(input, option) =>
                                                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                                         }
-                                                        options={dataWithKeys?.map(item => ({ value: item.name, label: item.name }))}
+                                                        options={reorderedDataWithKeys?.map(item => ({ value: item.name, label: item.name }))}
                                                     />
                                                     <Input type='number' onChange={(e) => setTaoAmount(e.target.value)} placeholder='TAO Amount' className={`rtl-input ${theme === "dark" ? "bg-secondary text-white input-placeholder" : ""}`} />
                                                 </Space.Compact>
