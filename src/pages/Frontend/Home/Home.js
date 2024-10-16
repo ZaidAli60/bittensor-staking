@@ -39,7 +39,6 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(false)
     const [activeButton, setActiveButton] = useState('delegate'); // Initial active button
 
-    // console.log("documents",documents)
 
     const handleFatch = useCallback(async () => {
         setIsProcessing(true)
@@ -54,7 +53,7 @@ export default function Home() {
             data.sort((a, b) => b.total_stake - a.total_stake);
 
             // Get the top ten validators
-            const topTenValidators = data.slice(0, 13);
+            const topTenValidators = data.slice(0, 14);
             setDocuments(topTenValidators)
             setIsProcessing(false)
         } catch (error) {
